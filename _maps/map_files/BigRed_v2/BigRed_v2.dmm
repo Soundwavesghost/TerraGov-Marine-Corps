@@ -260,6 +260,23 @@
 	},
 /turf/open/floor/tile/dark,
 /area/bigredv2/outside/space_port)
+"aaY" = (
+/obj/machinery/door/airlock/mainship/research/glass/free_access{
+	dir = 4;
+	name = "\improper Eta Lab Secure Storage"
+	},
+/turf/open/floor/asteroidfloor,
+/area/bigredv2/outside/nanotrasen_lab/inside)
+"aaZ" = (
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 4;
+	icon_state = "1-4"
+	},
+/turf/open/floor/marking/asteroidwarning{
+	dir = 1
+	},
+/area/bigredv2/outside/s)
 "aba" = (
 /obj/machinery/landinglight/ds1/delaythree{
 	dir = 4
@@ -315,6 +332,16 @@
 /obj/item/tool/pen,
 /turf/open/floor/tile/dark,
 /area/bigredv2/outside/space_port)
+"abi" = (
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/turf/open/floor/marking/asteroidwarning{
+	dir = 1
+	},
+/area/bigredv2/outside/s)
 "abj" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/landinglight/ds1/delaytwo{
@@ -498,12 +525,26 @@
 	dir = 6
 	},
 /area/bigredv2/outside/space_port)
+"abL" = (
+/obj/structure/cable{
+	d1 = 2;
+	d2 = 8;
+	icon_state = "2-8"
+	},
+/turf/open/floor/marking/asteroidwarning{
+	dir = 1
+	},
+/area/bigredv2/outside/s)
 "abM" = (
 /obj/machinery/light{
 	dir = 4
 	},
 /turf/open/floor/plating/ground/mars/random/cave/rock,
 /area/bigredv2/caves)
+"abN" = (
+/obj/structure/filingcabinet,
+/turf/open/floor,
+/area/bigredv2/outside/nanotrasen_lab/inside)
 "abO" = (
 /obj/machinery/power/apc/drained,
 /obj/structure/cable{
@@ -561,6 +602,17 @@
 	dir = 2
 	},
 /area/bigredv2/caves/lambda_lab)
+"abW" = (
+/obj/structure/filingcabinet,
+/obj/machinery/light{
+	dir = 1
+	},
+/turf/open/floor,
+/area/bigredv2/outside/nanotrasen_lab/inside)
+"abX" = (
+/obj/machinery/light,
+/turf/open/floor/podhatch/floor,
+/area/bigredv2/outside/nanotrasen_lab/inside)
 "abY" = (
 /obj/structure/barricade/wooden{
 	dir = 4
@@ -600,6 +652,14 @@
 	},
 /turf/open/floor/plating/ground/mars/random/cave/rock,
 /area/bigredv2/caves)
+"acd" = (
+/obj/machinery/atmospherics/pipe/simple/green/hidden{
+	dir = 4
+	},
+/turf/open/floor/tile/dark/blue2{
+	dir = 9
+	},
+/area/bigredv2/outside/nanotrasen_lab/inside)
 "ace" = (
 /obj/structure/cargo_container/green{
 	dir = 8
@@ -683,6 +743,14 @@
 "acp" = (
 /turf/closed/wall/r_wall,
 /area/bigredv2/outside/marshal_office)
+"acq" = (
+/obj/machinery/atmospherics/pipe/simple/green/hidden{
+	dir = 4
+	},
+/turf/open/floor/tile/dark/blue2{
+	dir = 5
+	},
+/area/bigredv2/outside/nanotrasen_lab/inside)
 "acr" = (
 /turf/closed/wall,
 /area/bigredv2/outside/marshal_office)
@@ -709,12 +777,37 @@
 	dir = 8
 	},
 /area/bigredv2/caves/lambda_lab)
+"acu" = (
+/obj/machinery/atmospherics/pipe/simple/green/hidden{
+	dir = 10
+	},
+/turf/open/floor/tile/dark/blue2{
+	dir = 5
+	},
+/area/bigredv2/outside/nanotrasen_lab/inside)
+"acv" = (
+/obj/machinery/atmospherics/components/unary/vent_pump{
+	dir = 4;
+	on = 1
+	},
+/turf/open/floor/tile/dark/blue2{
+	dir = 8
+	},
+/area/bigredv2/outside/nanotrasen_lab/inside)
 "acw" = (
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/marking/asteroidwarning{
 	dir = 4
 	},
 /area/bigredv2/outside/space_port)
+"acx" = (
+/obj/machinery/atmospherics/pipe/manifold/green/hidden{
+	dir = 4
+	},
+/turf/open/floor/tile/dark/blue2{
+	dir = 4
+	},
+/area/bigredv2/outside/nanotrasen_lab/inside)
 "acy" = (
 /obj/machinery/botany,
 /turf/open/floor/tile/green/whitegreen{
@@ -729,6 +822,10 @@
 "acA" = (
 /turf/closed/wall/r_wall,
 /area/bigredv2/outside/telecomm)
+"acB" = (
+/obj/structure/table,
+/turf/open/floor,
+/area/bigredv2/outside/nanotrasen_lab/inside)
 "acC" = (
 /turf/open/floor/tile/white,
 /area/bigredv2/outside/marshal_office)
@@ -786,6 +883,10 @@
 	},
 /turf/open/floor/elevatorshaft,
 /area/bigredv2/caves/lambda_lab)
+"acL" = (
+/obj/effect/landmark/corpsespawner/pmc,
+/turf/open/floor,
+/area/bigredv2/outside/nanotrasen_lab/inside)
 "acM" = (
 /obj/structure/table,
 /turf/open/floor/tile/white,
@@ -816,10 +917,9 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/obj/machinery/door/airlock/mainship/engineering{
+/obj/machinery/door/airlock/mainship/engineering/free_access{
 	dir = 1;
-	name = "\improper Telecommunications";
-	req_one_access_txt = "0"
+	name = "\improper Telecommunications"
 	},
 /turf/open/floor/tile/dark,
 /area/bigredv2/outside/telecomm)
@@ -881,6 +981,11 @@
 /obj/structure/table,
 /turf/open/floor/tile/dark,
 /area/bigredv2/outside/telecomm)
+"add" = (
+/obj/structure/table,
+/obj/item/weapon/gun/rifle/type71/flamer,
+/turf/open/floor,
+/area/bigredv2/outside/nanotrasen_lab/inside)
 "ade" = (
 /turf/open/floor/tile/dark,
 /area/bigredv2/outside/telecomm)
@@ -990,6 +1095,11 @@
 	},
 /turf/open/floor/tile/darkish,
 /area/bigredv2/caves/lambda_lab)
+"adx" = (
+/turf/open/floor/tile/dark/blue2{
+	dir = 1
+	},
+/area/bigredv2/outside/nanotrasen_lab/inside)
 "ady" = (
 /obj/structure/bed/chair,
 /turf/open/floor/tile/darkish,
@@ -1071,6 +1181,10 @@
 	},
 /turf/open/floor/plating,
 /area/bigredv2/outside/medical)
+"adK" = (
+/obj/machinery/computer/nuke_disk_generator/green,
+/turf/open/floor/tile/white,
+/area/bigredv2/outside/virology)
 "adL" = (
 /obj/machinery/light{
 	dir = 4
@@ -1088,6 +1202,12 @@
 /area/bigredv2/outside/marshal_office)
 "adO" = (
 /turf/open/floor/freezer,
+/area/bigredv2/outside/marshal_office)
+"adP" = (
+/obj/machinery/computer/nuke_disk_generator/red,
+/turf/open/floor/tile/vault{
+	dir = 8
+	},
 /area/bigredv2/outside/marshal_office)
 "adQ" = (
 /obj/structure/closet/walllocker/hydrant/full{
@@ -1139,9 +1259,7 @@
 /turf/closed/wall/r_wall,
 /area/bigredv2/caves/lambda_lab)
 "aea" = (
-/obj/machinery/computer/telecomms/monitor{
-	req_one_access_txt = "19;200"
-	},
+/obj/machinery/computer/telecomms/monitor,
 /turf/open/floor/tile/dark,
 /area/bigredv2/outside/telecomm)
 "aeb" = (
@@ -1204,19 +1322,17 @@
 	},
 /area/bigredv2/outside/space_port)
 "aem" = (
-/obj/machinery/door/airlock/mainship/medical/glass{
+/obj/machinery/door/airlock/mainship/medical/glass/free_access{
 	dir = 1;
-	name = "\improper Marshal Office Prison";
-	req_one_access_txt = "0"
+	name = "\improper Marshal Office Prison"
 	},
 /turf/open/floor/tile/green/whitegreenfull,
 /area/bigredv2/outside/marshal_office)
 "aen" = (
 /obj/machinery/atmospherics/pipe/simple/green/hidden,
-/obj/machinery/door/airlock/mainship/medical/glass{
+/obj/machinery/door/airlock/mainship/medical/glass/free_access{
 	dir = 1;
-	name = "\improper Marshal Office Prison";
-	req_one_access_txt = "0"
+	name = "\improper Marshal Office Prison"
 	},
 /turf/open/floor/tile/green/whitegreenfull,
 /area/bigredv2/outside/marshal_office)
@@ -1296,10 +1412,7 @@
 	},
 /area/bigredv2/caves/lambda_lab)
 "aeB" = (
-/obj/machinery/computer/telecomms/server{
-	req_access = null;
-	req_one_access_txt = "19;200"
-	},
+/obj/machinery/computer/telecomms/server,
 /turf/open/floor/tile/dark,
 /area/bigredv2/outside/telecomm)
 "aeC" = (
@@ -1399,7 +1512,7 @@
 /area/bigredv2/outside/marshal_office)
 "aeP" = (
 /obj/structure/table/woodentable,
-/obj/item/reagent_container/food/drinks/flask/detflask,
+/obj/item/reagent_containers/food/drinks/flask/detflask,
 /turf/open/floor/wood,
 /area/bigredv2/outside/marshal_office)
 "aeQ" = (
@@ -1707,23 +1820,17 @@
 /turf/open/floor/marking/delivery,
 /area/bigredv2/outside/marshal_office)
 "afP" = (
-/obj/machinery/door/airlock/mainship/security/glass{
+/obj/machinery/door/airlock/mainship/security/glass/free_access{
 	dir = 1;
-	icon_state = "door_locked";
-	locked = 1;
-	name = "\improper Marshal Office Prison";
-	req_access_txt = "0"
+	name = "\improper Marshal Office Prison"
 	},
 /turf/open/floor/tile/green/whitegreenfull,
 /area/bigredv2/outside/marshal_office)
 "afQ" = (
 /obj/machinery/atmospherics/pipe/simple/green/hidden,
-/obj/machinery/door/airlock/mainship/security/glass{
+/obj/machinery/door/airlock/mainship/security/glass/free_access{
 	dir = 1;
-	icon_state = "door_locked";
-	locked = 1;
-	name = "\improper Marshal Office Prison";
-	req_access_txt = "0"
+	name = "\improper Marshal Office Prison"
 	},
 /turf/open/floor/tile/green/whitegreenfull,
 /area/bigredv2/outside/marshal_office)
@@ -1777,7 +1884,7 @@
 /turf/open/floor/freezer,
 /area/bigredv2/caves/lambda_lab)
 "agb" = (
-/obj/item/reagent_container/blood/OMinus,
+/obj/item/reagent_containers/blood/OMinus,
 /turf/open/floor/freezer,
 /area/bigredv2/caves/lambda_lab)
 "agc" = (
@@ -1792,10 +1899,9 @@
 /turf/open/floor/tile/dark,
 /area/bigredv2/caves/lambda_lab)
 "age" = (
-/obj/machinery/door/airlock/mainship/maint{
+/obj/machinery/door/airlock/mainship/maint/free_access{
 	dir = 1;
-	name = "\improper Lambda Lab Storage";
-	req_one_access_txt = "0"
+	name = "\improper Lambda Lab Storage"
 	},
 /turf/open/floor/plating,
 /area/bigredv2/caves/lambda_lab)
@@ -1819,10 +1925,9 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/obj/machinery/door/airlock/mainship/research/glass{
+/obj/machinery/door/airlock/mainship/research/glass/free_access{
 	dir = 1;
-	name = "\improper Lambda Lab Chemistry Lab";
-	req_access_txt = "0"
+	name = "\improper Lambda Lab Chemistry Lab"
 	},
 /turf/open/floor/tile/dark,
 /area/bigredv2/caves/lambda_lab)
@@ -2006,10 +2111,9 @@
 	},
 /area/bigredv2/outside/marshal_office)
 "agJ" = (
-/obj/machinery/door/airlock/mainship/security/glass{
+/obj/machinery/door/airlock/mainship/security/glass/free_access{
 	dir = 1;
-	name = "\improper Marshall Head Office";
-	req_access_txt = "0"
+	name = "\improper Marshall Head Office"
 	},
 /turf/open/floor/wood,
 /area/bigredv2/outside/marshal_office)
@@ -2026,9 +2130,8 @@
 /turf/open/floor/freezer,
 /area/bigredv2/caves/lambda_lab)
 "agM" = (
-/obj/machinery/door/airlock/mainship/research/glass{
-	name = "\improper Lambda Lab Surgery";
-	req_access_txt = "0"
+/obj/machinery/door/airlock/mainship/research/glass/free_access{
+	name = "\improper Lambda Lab Surgery"
 	},
 /turf/open/floor/tile/dark,
 /area/bigredv2/caves/lambda_lab)
@@ -2289,7 +2392,7 @@
 /turf/open/floor,
 /area/bigredv2/outside/marshal_office)
 "ahv" = (
-/obj/effect/landmark/start/xeno_spawn,
+/obj/effect/landmark/start/job/xenomorph,
 /turf/open/floor/plating/ground/mars/random/cave,
 /area/bigredv2/caves)
 "ahw" = (
@@ -2316,8 +2419,7 @@
 "ahB" = (
 /obj/machinery/door/airlock/multi_tile/mainship/medidoor{
 	dir = 1;
-	name = "\improper Lambda Lab Surgery";
-	req_one_access_txt = "0"
+	name = "\improper Lambda Lab Surgery"
 	},
 /turf/open/floor/tile/dark/purple2{
 	dir = 2
@@ -2402,7 +2504,7 @@
 	},
 /area/bigredv2/caves/lambda_lab)
 "ahM" = (
-/obj/machinery/door/airlock/mainship/medical/glass{
+/obj/machinery/door/airlock/mainship/medical/glass/free_access{
 	dir = 1;
 	name = "\improper Lambda Lab Cell"
 	},
@@ -2509,20 +2611,16 @@
 /area/bigredv2/outside/marshal_office)
 "aih" = (
 /obj/machinery/atmospherics/pipe/simple/green/hidden,
-/obj/machinery/door/airlock/mainship/security/glass{
+/obj/machinery/door/airlock/mainship/security/glass/free_access{
 	dir = 1;
-	icon_state = "door_locked";
-	locked = 1;
-	name = "\improper Marshal Office Armory";
-	req_access_txt = "0"
+	name = "\improper Marshal Office Armory"
 	},
 /turf/open/floor/tile/dark,
 /area/bigredv2/outside/marshal_office)
 "aii" = (
-/obj/machinery/door/airlock/mainship/security/glass{
+/obj/machinery/door/airlock/mainship/security/glass/free_access{
 	dir = 1;
-	name = "\improper Marshal Office Equipment";
-	req_access_txt = "0"
+	name = "\improper Marshal Office Equipment"
 	},
 /turf/open/floor,
 /area/bigredv2/outside/marshal_office)
@@ -2550,10 +2648,9 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/obj/machinery/door/airlock/mainship/maint{
+/obj/machinery/door/airlock/mainship/maint/free_access{
 	dir = 1;
-	name = "\improper Lambda Lab Maintenance";
-	req_one_access_txt = "0"
+	name = "\improper Lambda Lab Maintenance"
 	},
 /turf/open/floor/plating,
 /area/bigredv2/caves/lambda_lab)
@@ -2826,10 +2923,9 @@
 /turf/open/floor,
 /area/bigredv2/outside/marshal_office)
 "ajk" = (
-/obj/machinery/door/airlock/mainship/maint{
+/obj/machinery/door/airlock/mainship/maint/free_access{
 	dir = 1;
-	name = "\improper Lambda Lab Maintenance";
-	req_one_access_txt = "0"
+	name = "\improper Lambda Lab Maintenance"
 	},
 /turf/open/floor/plating,
 /area/bigredv2/caves/lambda_lab)
@@ -2898,8 +2994,7 @@
 "ajr" = (
 /obj/machinery/door/airlock/multi_tile/mainship/medidoor{
 	dir = 1;
-	name = "\improper Lambda Lab Prisoner Room";
-	req_one_access_txt = "0"
+	name = "\improper Lambda Lab Prisoner Room"
 	},
 /turf/open/floor/tile/dark,
 /area/bigredv2/caves/lambda_lab)
@@ -2996,12 +3091,9 @@
 /obj/machinery/atmospherics/pipe/simple/green/hidden{
 	dir = 4
 	},
-/obj/machinery/door/airlock/mainship/security/glass{
+/obj/machinery/door/airlock/mainship/security/glass/free_access{
 	dir = 4;
-	icon_state = "door_locked";
-	locked = 1;
-	name = "\improper Marshal Office Armory";
-	req_access_txt = "0"
+	name = "\improper Marshal Office Armory"
 	},
 /turf/open/floor/tile/dark,
 /area/bigredv2/outside/marshal_office)
@@ -3017,7 +3109,7 @@
 /area/bigredv2/outside/marshal_office)
 "ajN" = (
 /obj/structure/table,
-/obj/item/reagent_container/spray/cleaner,
+/obj/item/reagent_containers/spray/cleaner,
 /obj/machinery/atmospherics/pipe/simple/green/hidden{
 	dir = 4
 	},
@@ -3076,8 +3168,7 @@
 	icon_state = "1-2"
 	},
 /obj/machinery/door/airlock/multi_tile/mainship/medidoor{
-	name = "\improper Lambda Lab Break Room";
-	req_one_access_txt = "0"
+	name = "\improper Lambda Lab Break Room"
 	},
 /turf/open/floor/marking/delivery,
 /area/bigredv2/caves/lambda_lab)
@@ -3186,10 +3277,9 @@
 /turf/open/floor/tile/darkish,
 /area/bigredv2/outside/marshal_office)
 "akh" = (
-/obj/machinery/door/airlock/mainship/security/glass{
+/obj/machinery/door/airlock/mainship/security/glass/free_access{
 	dir = 4;
-	name = "\improper Marshal Office Interrogation";
-	req_access_txt = "0"
+	name = "\improper Marshal Office Interrogation"
 	},
 /turf/open/floor/tile/darkish,
 /area/bigredv2/outside/marshal_office)
@@ -3264,10 +3354,9 @@
 /turf/open/floor/plating,
 /area/bigredv2/outside/marshal_office)
 "akv" = (
-/obj/machinery/door/airlock/mainship/security/glass{
+/obj/machinery/door/airlock/mainship/security/glass/free_access{
 	dir = 1;
-	name = "\improper Marshal Office";
-	req_access_txt = "0"
+	name = "\improper Marshal Office"
 	},
 /obj/machinery/atmospherics/pipe/simple/green/hidden,
 /turf/open/floor,
@@ -3428,10 +3517,9 @@
 	},
 /area/bigredv2/outside/marshal_office)
 "akR" = (
-/obj/machinery/door/airlock/mainship/security/glass{
+/obj/machinery/door/airlock/mainship/security/glass/free_access{
 	dir = 1;
-	name = "\improper Marshal Office";
-	req_access_txt = "0"
+	name = "\improper Marshal Office"
 	},
 /turf/open/floor,
 /area/bigredv2/outside/marshal_office)
@@ -3501,7 +3589,7 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/obj/effect/landmark/start/xeno_spawn,
+/obj/effect/landmark/start/job/xenomorph,
 /obj/effect/alien/weeds/node,
 /turf/open/floor/tile/dark/purple2{
 	dir = 8
@@ -3521,7 +3609,7 @@
 /turf/open/floor/tile/green/whitegreenfull,
 /area/bigredv2/caves/lambda_lab)
 "ali" = (
-/obj/item/reagent_container/spray/plantbgone,
+/obj/item/reagent_containers/spray/plantbgone,
 /turf/open/floor/tile/green/whitegreenfull,
 /area/bigredv2/caves/lambda_lab)
 "alj" = (
@@ -3569,10 +3657,9 @@
 /turf/open/floor/plating,
 /area/bigredv2/outside/nanotrasen_lab/inside)
 "alp" = (
-/obj/machinery/door/airlock/mainship/security/glass{
+/obj/machinery/door/airlock/mainship/security/glass/free_access{
 	dir = 1;
-	name = "\improper Marshal Office Evidence Room";
-	req_access_txt = "0"
+	name = "\improper Marshal Office Evidence Room"
 	},
 /turf/open/floor/tile/dark,
 /area/bigredv2/outside/marshal_office)
@@ -3595,7 +3682,7 @@
 /turf/open/floor/plating,
 /area/bigredv2/outside/space_port)
 "alt" = (
-/obj/effect/landmark/start/surv_spawn,
+/obj/effect/landmark/start/job/survivor,
 /turf/open/floor/tile/red/redtaupecorner{
 	dir = 4
 	},
@@ -3976,9 +4063,8 @@
 /obj/machinery/atmospherics/pipe/simple/green/hidden{
 	dir = 4
 	},
-/obj/machinery/door/airlock/mainship/security/glass{
-	name = "\improper Marshal Office Courtroom";
-	req_access_txt = "0"
+/obj/machinery/door/airlock/mainship/security/glass/free_access{
+	name = "\improper Marshal Office Courtroom"
 	},
 /turf/open/floor,
 /area/bigredv2/outside/marshal_office)
@@ -4102,9 +4188,8 @@
 	},
 /area/bigredv2/caves/lambda_lab)
 "amP" = (
-/obj/machinery/door/airlock/mainship/research/glass{
-	name = "\improper Lambda Lab Xenobiology";
-	req_access_txt = "0"
+/obj/machinery/door/airlock/mainship/research/glass/free_access{
+	name = "\improper Lambda Lab Xenobiology"
 	},
 /turf/open/floor/marking/delivery,
 /area/bigredv2/caves/lambda_lab)
@@ -4120,9 +4205,8 @@
 	},
 /area/bigredv2/caves/lambda_lab)
 "amR" = (
-/obj/machinery/door/airlock/mainship/research/glass{
-	name = "\improper Lambda Lab Hydroponics";
-	req_access_txt = "0"
+/obj/machinery/door/airlock/mainship/research/glass/free_access{
+	name = "\improper Lambda Lab Hydroponics"
 	},
 /turf/open/floor/marking/delivery,
 /area/bigredv2/caves/lambda_lab)
@@ -4285,10 +4369,9 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/obj/machinery/door/airlock/mainship/maint{
+/obj/machinery/door/airlock/mainship/maint/free_access{
 	dir = 4;
-	name = "\improper Lambda Lab Maintenance Storage";
-	req_one_access_txt = "0"
+	name = "\improper Lambda Lab Maintenance Storage"
 	},
 /turf/open/floor/plating,
 /area/bigredv2/caves/lambda_lab)
@@ -4372,20 +4455,16 @@
 /turf/open/floor/asteroidfloor,
 /area/bigredv2/outside/nw)
 "anx" = (
-/obj/machinery/door/airlock/mainship/security/glass{
+/obj/machinery/door/airlock/mainship/security/glass/free_access{
 	dir = 1;
-	icon_state = "door_locked";
-	locked = 1;
-	name = "\improper Marshal Office Holding Cell";
-	req_access_txt = "0"
+	name = "\improper Marshal Office Holding Cell"
 	},
 /turf/open/floor/tile/dark,
 /area/bigredv2/outside/marshal_office)
 "any" = (
-/obj/machinery/door/airlock/mainship/security/glass{
+/obj/machinery/door/airlock/mainship/security/glass/free_access{
 	dir = 1;
-	name = "\improper Marshal Office Checkpoint";
-	req_access_txt = "0"
+	name = "\improper Marshal Office Checkpoint"
 	},
 /turf/open/floor/tile/red/full,
 /area/bigredv2/outside/marshal_office)
@@ -4404,12 +4483,8 @@
 /turf/open/floor,
 /area/bigredv2/outside/marshal_office)
 "anA" = (
-/obj/machinery/door/airlock/glass_security{
-	icon_state = "door_locked";
-	id_tag = "marshal_cell";
-	locked = 1;
-	name = "Cell";
-	req_access_txt = "101"
+/obj/machinery/door/airlock/glass_security/locked{
+	name = "Cell"
 	},
 /turf/open/floor/tile/dark,
 /area/bigredv2/outside/marshal_office)
@@ -4481,7 +4556,7 @@
 /turf/open/floor/plating,
 /area/bigredv2/caves/lambda_lab)
 "anN" = (
-/obj/effect/landmark/start/xeno_spawn,
+/obj/effect/landmark/start/job/xenomorph,
 /obj/effect/alien/weeds/node,
 /turf/open/floor/plating,
 /area/bigredv2/caves/lambda_lab)
@@ -4539,7 +4614,7 @@
 /turf/open/floor/tile/green/whitegreenfull,
 /area/bigredv2/outside/medical)
 "anV" = (
-/obj/item/reagent_container/spray/pepper,
+/obj/item/reagent_containers/spray/pepper,
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
@@ -4563,9 +4638,8 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/obj/machinery/door/airlock/mainship/research/glass{
-	name = "\improper Lambda Lab Xenobiology";
-	req_access_txt = "0"
+/obj/machinery/door/airlock/mainship/research/glass/free_access{
+	name = "\improper Lambda Lab Xenobiology"
 	},
 /turf/open/floor/marking/delivery,
 /area/bigredv2/caves/lambda_lab)
@@ -4611,9 +4685,8 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/obj/machinery/door/airlock/mainship/research/glass{
-	name = "\improper Lambda Lab Hydroponics";
-	req_access_txt = "0"
+/obj/machinery/door/airlock/mainship/research/glass/free_access{
+	name = "\improper Lambda Lab Hydroponics"
 	},
 /turf/open/floor/marking/delivery,
 /area/bigredv2/caves/lambda_lab)
@@ -4895,10 +4968,7 @@
 /obj/machinery/door_control{
 	id = "viro_q";
 	name = "Qurantine Lockdown";
-	normaldoorcontrol = 1;
-	pixel_x = -25;
-	req_access_txt = "7";
-	specialfunctions = 4
+	pixel_x = -25
 	},
 /obj/structure/sign/biohazard{
 	dir = 2
@@ -4929,7 +4999,7 @@
 /area/bigredv2/outside/marshal_office)
 "aoW" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/landmark/start/surv_spawn,
+/obj/effect/landmark/start/job/survivor,
 /turf/open/floor,
 /area/bigredv2/outside/marshal_office)
 "aoX" = (
@@ -4992,9 +5062,8 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/obj/machinery/door/airlock/mainship/maint{
-	name = "\improper Dormitories EVA Maintenance";
-	req_one_access_txt = "0"
+/obj/machinery/door/airlock/mainship/maint/free_access{
+	name = "\improper Dormitories EVA Maintenance"
 	},
 /obj/structure/cable{
 	d1 = 4;
@@ -5022,10 +5091,9 @@
 	},
 /area/bigredv2/caves/lambda_lab)
 "apm" = (
-/obj/machinery/door/airlock/mainship/engineering{
+/obj/machinery/door/airlock/mainship/engineering/free_access{
 	dir = 4;
-	name = "\improper Dormitories EVA";
-	req_one_access_txt = "0"
+	name = "\improper Dormitories EVA"
 	},
 /obj/machinery/atmospherics/pipe/simple/green/hidden{
 	dir = 4
@@ -5134,8 +5202,7 @@
 "apE" = (
 /obj/effect/decal/cleanable/blood/gibs,
 /obj/machinery/door/airlock/multi_tile/mainship/medidoor{
-	name = "\improper Medical Clinic";
-	req_one_access_txt = "0"
+	name = "\improper Medical Clinic"
 	},
 /turf/open/floor/tile/white/warningstripe{
 	dir = 1
@@ -5194,7 +5261,7 @@
 /turf/open/floor,
 /area/bigredv2/outside/general_offices)
 "apM" = (
-/obj/machinery/door/airlock/mainship/medical/glass{
+/obj/machinery/door/airlock/mainship/medical/glass/free_access{
 	dir = 4;
 	name = "\improper Dormitories Lavatory"
 	},
@@ -5851,8 +5918,7 @@
 /area/bigredv2/caves/lambda_lab)
 "arJ" = (
 /obj/machinery/door/airlock/multi_tile/mainship/medidoor{
-	name = "\improper Lambda Lab Biology Wing";
-	req_one_access_txt = "0"
+	name = "\improper Lambda Lab Biology Wing"
 	},
 /turf/open/floor/marking/delivery,
 /area/bigredv2/caves/lambda_lab)
@@ -6024,10 +6090,9 @@
 /turf/open/floor/plating/ground/mars/random/sand,
 /area/bigredv2/outside/n)
 "asi" = (
-/obj/machinery/door/airlock/mainship/maint{
+/obj/machinery/door/airlock/mainship/maint/free_access{
 	dir = 1;
-	name = "\improper Dormitories Tool Storage Maintenance";
-	req_one_access_txt = "0"
+	name = "\improper Dormitories Tool Storage Maintenance"
 	},
 /turf/open/floor/plating,
 /area/bigredv2/outside/general_offices)
@@ -6036,10 +6101,9 @@
 /turf/open/floor/plating,
 /area/bigredv2/outside/general_offices)
 "ask" = (
-/obj/machinery/door/airlock/mainship/engineering{
+/obj/machinery/door/airlock/mainship/engineering/free_access{
 	dir = 1;
-	name = "\improper Dormitories EVA";
-	req_one_access_txt = "0"
+	name = "\improper Dormitories EVA"
 	},
 /obj/machinery/atmospherics/pipe/simple/green/hidden,
 /obj/structure/cable{
@@ -6483,13 +6547,10 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/obj/machinery/door/airlock/mainship/secure{
+/obj/machinery/door/airlock/mainship/secure/locked/free_access{
 	dir = 1;
-	icon_state = "door_locked";
 	id = "safe_room";
-	locked = 1;
-	name = "\improper Lambda Lab Secure Storage";
-	req_access_txt = "0"
+	name = "\improper Lambda Lab Secure Storage"
 	},
 /turf/open/floor/elevatorshaft,
 /area/bigredv2/caves/lambda_lab)
@@ -6497,18 +6558,14 @@
 /obj/machinery/door_control{
 	id = "safe_room";
 	name = "Door Bolt Control";
-	normaldoorcontrol = 1;
-	pixel_y = -5;
-	req_access_txt = "7";
-	specialfunctions = 4
+	pixel_y = -5
 	},
 /turf/closed/wall/r_wall,
 /area/bigredv2/caves/lambda_lab)
 "atK" = (
-/obj/machinery/door/airlock/mainship/research/glass{
+/obj/machinery/door/airlock/mainship/research/glass/free_access{
 	dir = 1;
-	name = "\improper Lambda Lab Administration Office";
-	req_access_txt = "0"
+	name = "\improper Lambda Lab Administration Office"
 	},
 /turf/open/floor/wood,
 /area/bigredv2/caves/lambda_lab)
@@ -6594,28 +6651,25 @@
 	icon_state = "1-2"
 	},
 /obj/machinery/atmospherics/pipe/simple/green/hidden,
-/obj/machinery/door/airlock/mainship/medical/glass{
+/obj/machinery/door/airlock/mainship/medical/glass/free_access{
 	dir = 1;
-	name = "\improper Medical Clinic";
-	req_one_access_txt = "0"
+	name = "\improper Medical Clinic"
 	},
 /turf/open/floor/tile/white,
 /area/bigredv2/outside/medical)
 "atV" = (
 /obj/machinery/atmospherics/pipe/simple/green/hidden,
-/obj/machinery/door/airlock/mainship/medical/glass{
+/obj/machinery/door/airlock/mainship/medical/glass/free_access{
 	dir = 1;
-	name = "\improper Medical Clinic CMO's Office";
-	req_one_access_txt = "0"
+	name = "\improper Medical Clinic CMO's Office"
 	},
 /turf/open/floor/tile/white,
 /area/bigredv2/outside/medical)
 "atW" = (
 /obj/machinery/atmospherics/pipe/simple/green/hidden,
-/obj/machinery/door/airlock/mainship/medical{
+/obj/machinery/door/airlock/mainship/medical/free_access{
 	dir = 1;
-	name = "\improper Medical Clinic Morgue";
-	req_one_access_txt = "0"
+	name = "\improper Medical Clinic Morgue"
 	},
 /turf/open/floor/tile/dark,
 /area/bigredv2/outside/medical)
@@ -6683,9 +6737,8 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/obj/machinery/door/airlock/mainship/research/glass{
-	name = "\improper Lambda Lab Administration Office";
-	req_access_txt = "0"
+/obj/machinery/door/airlock/mainship/research/glass/free_access{
+	name = "\improper Lambda Lab Administration Office"
 	},
 /turf/open/floor/wood,
 /area/bigredv2/caves/lambda_lab)
@@ -6992,8 +7045,7 @@
 	},
 /obj/machinery/door/airlock/multi_tile/mainship/medidoor{
 	dir = 1;
-	name = "\improper Lambda Lab Administration Wing";
-	req_one_access_txt = "0"
+	name = "\improper Lambda Lab Administration Wing"
 	},
 /turf/open/floor/tile/dark,
 /area/bigredv2/caves/lambda_lab)
@@ -7071,8 +7123,7 @@
 "avl" = (
 /obj/machinery/door/airlock/multi_tile/mainship/medidoor{
 	dir = 1;
-	name = "\improper Lambda Lab Break Room";
-	req_one_access_txt = "0"
+	name = "\improper Lambda Lab Break Room"
 	},
 /turf/open/floor/marking/delivery,
 /area/bigredv2/caves/lambda_lab)
@@ -7096,6 +7147,7 @@
 /area/bigredv2/caves/lambda_lab)
 "avp" = (
 /obj/machinery/light,
+/obj/effect/landmark/nuke_spawn,
 /turf/open/floor/tile/dark/purple2/corner{
 	dir = 4
 	},
@@ -7126,10 +7178,9 @@
 	},
 /area/bigredv2/outside/nw)
 "avu" = (
-/obj/machinery/door/airlock/mainship/medical/glass{
+/obj/machinery/door/airlock/mainship/medical/glass/free_access{
 	dir = 1;
-	name = "\improper Medical Clinic Chemistry";
-	req_one_access_txt = "0"
+	name = "\improper Medical Clinic Chemistry"
 	},
 /turf/open/floor/tile/white,
 /area/bigredv2/outside/medical)
@@ -7222,8 +7273,7 @@
 /area/bigredv2/caves/lambda_lab)
 "avO" = (
 /obj/machinery/door/airlock/multi_tile/mainship/medidoor{
-	name = "\improper Lambda Lab Relaxation Room";
-	req_one_access_txt = "0"
+	name = "\improper Lambda Lab Relaxation Room"
 	},
 /turf/open/floor/wood,
 /area/bigredv2/caves/lambda_lab)
@@ -7435,9 +7485,8 @@
 /turf/open/floor/tile/white,
 /area/bigredv2/outside/medical)
 "awj" = (
-/obj/machinery/door/airlock/mainship/medical/glass{
-	name = "\improper Medical Clinic Scanner Room";
-	req_one_access_txt = "0"
+/obj/machinery/door/airlock/mainship/medical/glass/free_access{
+	name = "\improper Medical Clinic Scanner Room"
 	},
 /turf/open/floor/tile/white,
 /area/bigredv2/outside/medical)
@@ -7503,7 +7552,7 @@
 /area/bigredv2/caves/lambda_lab)
 "awB" = (
 /obj/structure/table/woodentable,
-/obj/item/reagent_container/food/drinks/coffee,
+/obj/item/reagent_containers/food/drinks/coffee,
 /obj/item/phone,
 /turf/open/floor/carpet,
 /area/bigredv2/caves/lambda_lab)
@@ -7775,8 +7824,7 @@
 "axy" = (
 /obj/machinery/atmospherics/pipe/simple/green/hidden,
 /obj/machinery/door/airlock/multi_tile/mainship/medidoor{
-	name = "\improper Medical Clinic Treatment";
-	req_one_access_txt = "0"
+	name = "\improper Medical Clinic Treatment"
 	},
 /turf/open/floor/tile/white,
 /area/bigredv2/outside/medical)
@@ -7815,7 +7863,7 @@
 /obj/structure/bed/chair{
 	dir = 4
 	},
-/obj/effect/landmark/start/surv_spawn,
+/obj/effect/landmark/start/job/survivor,
 /turf/open/floor,
 /area/bigredv2/outside/dorms)
 "axI" = (
@@ -7884,7 +7932,7 @@
 /turf/open/floor,
 /area/bigredv2/outside/general_offices)
 "axT" = (
-/obj/effect/landmark/start/xeno_spawn,
+/obj/effect/landmark/start/job/xenomorph,
 /obj/effect/alien/weeds/node,
 /turf/open/floor/wood,
 /area/bigredv2/caves/lambda_lab)
@@ -7976,8 +8024,7 @@
 	},
 /obj/machinery/door/airlock/multi_tile/mainship/medidoor{
 	dir = 1;
-	name = "\improper Medical Clinic";
-	req_one_access_txt = "0"
+	name = "\improper Medical Clinic"
 	},
 /turf/open/floor/tile/white,
 /area/bigredv2/outside/medical)
@@ -8173,7 +8220,6 @@
 /area/bigredv2/outside/medical)
 "ayT" = (
 /obj/structure/table,
-/obj/structure/table,
 /obj/item/bodybag/cryobag,
 /turf/open/floor/tile/green/whitegreen{
 	dir = 1
@@ -8186,7 +8232,7 @@
 	},
 /obj/item/bodybag/cryobag,
 /obj/item/storage/box/gloves,
-/obj/item/reagent_container/spray/cleaner,
+/obj/item/reagent_containers/spray/cleaner,
 /turf/open/floor/tile/green/whitegreen{
 	dir = 5
 	},
@@ -8329,6 +8375,7 @@
 /obj/machinery/atmospherics/pipe/simple/green/hidden{
 	dir = 4
 	},
+/obj/docking_port/stationary/crashmode,
 /turf/open/floor/tile/white/warningstripe{
 	dir = 8
 	},
@@ -8352,8 +8399,7 @@
 	},
 /obj/machinery/door/airlock/multi_tile/mainship/medidoor{
 	dir = 1;
-	name = "\improper Medical Clinic Treatment";
-	req_one_access_txt = "0"
+	name = "\improper Medical Clinic Treatment"
 	},
 /turf/open/floor/tile/white/warningstripe{
 	dir = 4
@@ -8441,9 +8487,8 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/obj/machinery/door/airlock/mainship/maint{
-	name = "\improper Medical Clinic Power Station";
-	req_one_access_txt = "0"
+/obj/machinery/door/airlock/mainship/maint/free_access{
+	name = "\improper Medical Clinic Power Station"
 	},
 /turf/open/floor/plating/warning{
 	dir = 8
@@ -8659,9 +8704,8 @@
 /obj/machinery/atmospherics/pipe/simple/green/hidden{
 	dir = 4
 	},
-/obj/machinery/door/airlock/mainship/maint{
-	name = "\improper Bar Maintenance";
-	req_one_access_txt = "0"
+/obj/machinery/door/airlock/mainship/maint/free_access{
+	name = "\improper Bar Maintenance"
 	},
 /turf/open/floor/plating,
 /area/bigredv2/outside/dorms)
@@ -8807,7 +8851,7 @@
 /turf/open/floor/freezer,
 /area/bigredv2/outside/dorms)
 "aAE" = (
-/obj/machinery/door/airlock/mainship/medical/glass{
+/obj/machinery/door/airlock/mainship/medical/glass/free_access{
 	dir = 1;
 	name = "\improper Recreation"
 	},
@@ -8852,9 +8896,8 @@
 /obj/machinery/atmospherics/pipe/simple/green/hidden{
 	dir = 4
 	},
-/obj/machinery/door/airlock/mainship/maint{
-	name = "\improper Bar Maintenance";
-	req_one_access_txt = "0"
+/obj/machinery/door/airlock/mainship/maint/free_access{
+	name = "\improper Bar Maintenance"
 	},
 /turf/open/floor/plating,
 /area/bigredv2/outside/bar)
@@ -8988,10 +9031,9 @@
 /area/bigredv2/outside/medical)
 "aBe" = (
 /obj/machinery/atmospherics/pipe/simple/green/hidden,
-/obj/machinery/door/airlock/mainship/medical/glass{
+/obj/machinery/door/airlock/mainship/medical/glass/free_access{
 	dir = 1;
-	name = "\improper Medical Clinic";
-	req_one_access_txt = "0"
+	name = "\improper Medical Clinic"
 	},
 /turf/open/floor/tile/white,
 /area/bigredv2/outside/medical)
@@ -9113,10 +9155,9 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/obj/machinery/door/airlock/mainship/medical/glass{
+/obj/machinery/door/airlock/mainship/medical/glass/free_access{
 	dir = 1;
-	name = "\improper Greenhouse";
-	req_one_access_txt = "0"
+	name = "\improper Greenhouse"
 	},
 /turf/open/floor,
 /area/bigredv2/outside/hydroponics)
@@ -9234,7 +9275,7 @@
 "aBN" = (
 /obj/structure/table,
 /obj/item/healthanalyzer,
-/obj/item/reagent_container/spray/cleaner,
+/obj/item/reagent_containers/spray/cleaner,
 /turf/open/floor/tile/white,
 /area/bigredv2/outside/medical)
 "aBO" = (
@@ -9420,8 +9461,7 @@
 "aCv" = (
 /obj/machinery/door/airlock/multi_tile/mainship/medidoor{
 	dir = 1;
-	name = "\improper Lambda Lab Technical Lab";
-	req_one_access_txt = "0"
+	name = "\improper Lambda Lab Technical Lab"
 	},
 /turf/open/floor/marking/delivery,
 /area/bigredv2/caves/lambda_lab)
@@ -9437,10 +9477,9 @@
 	},
 /area/bigredv2/caves/lambda_lab)
 "aCy" = (
-/obj/machinery/door/airlock/mainship/research/glass{
+/obj/machinery/door/airlock/mainship/research/glass/free_access{
 	dir = 1;
-	name = "\improper Lambda Lab Anomaly Chamber";
-	req_access_txt = "0"
+	name = "\improper Lambda Lab Anomaly Chamber"
 	},
 /turf/open/floor/podhatch/floor,
 /area/bigredv2/caves/lambda_lab)
@@ -9478,9 +9517,8 @@
 /obj/machinery/atmospherics/pipe/simple/green/hidden{
 	dir = 4
 	},
-/obj/machinery/door/airlock/mainship/medical/glass{
-	name = "\improper Medical Clinic Storage";
-	req_one_access_txt = "0"
+/obj/machinery/door/airlock/mainship/medical/glass/free_access{
+	name = "\improper Medical Clinic Storage"
 	},
 /turf/open/floor/tile/white,
 /area/bigredv2/outside/medical)
@@ -9502,9 +9540,8 @@
 	},
 /area/bigredv2/outside/medical)
 "aCG" = (
-/obj/machinery/door/airlock/mainship/medical/glass{
-	name = "\improper Medical Clinic Storage";
-	req_one_access_txt = "0"
+/obj/machinery/door/airlock/mainship/medical/glass/free_access{
+	name = "\improper Medical Clinic Storage"
 	},
 /turf/open/floor/tile/white,
 /area/bigredv2/outside/medical)
@@ -9575,10 +9612,9 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/obj/machinery/door/airlock/mainship/maint{
+/obj/machinery/door/airlock/mainship/maint/free_access{
 	dir = 1;
-	name = "\improper Bar Maintenance";
-	req_one_access_txt = "0"
+	name = "\improper Bar Maintenance"
 	},
 /turf/open/floor/plating,
 /area/bigredv2/outside/bar)
@@ -9810,20 +9846,6 @@
 	dir = 1
 	},
 /area/bigredv2/outside/nw)
-"aDz" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/machinery/atmospherics/pipe/simple/green/hidden{
-	dir = 4
-	},
-/obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/turf/open/floor/marking/asteroidwarning{
-	dir = 1
-	},
-/area/bigredv2/outside/nw)
 "aDA" = (
 /obj/machinery/atmospherics/pipe/simple/green/hidden{
 	dir = 10
@@ -9861,7 +9883,7 @@
 "aDF" = (
 /obj/structure/table,
 /obj/item/tool/surgery/cautery,
-/obj/item/reagent_container/spray/cleaner,
+/obj/item/reagent_containers/spray/cleaner,
 /turf/open/floor/tile/blue/whitebluefull,
 /area/bigredv2/outside/medical)
 "aDI" = (
@@ -10401,7 +10423,7 @@
 	},
 /area/bigredv2/caves/lambda_lab)
 "aFn" = (
-/obj/effect/landmark/start/xeno_spawn,
+/obj/effect/landmark/start/job/xenomorph,
 /turf/open/floor/tile/dark,
 /area/bigredv2/caves/lambda_lab)
 "aFo" = (
@@ -10455,9 +10477,8 @@
 /obj/machinery/atmospherics/pipe/simple/green/hidden{
 	dir = 4
 	},
-/obj/machinery/door/airlock/mainship/medical/glass{
-	name = "\improper Medical Clinic Operating Theatre";
-	req_one_access_txt = "0"
+/obj/machinery/door/airlock/mainship/medical/glass/free_access{
+	name = "\improper Medical Clinic Operating Theatre"
 	},
 /turf/open/floor/tile/white,
 /area/bigredv2/outside/medical)
@@ -10483,7 +10504,7 @@
 	},
 /area/bigredv2/outside/medical)
 "aFE" = (
-/obj/item/reagent_container/pill/happy,
+/obj/item/reagent_containers/pill/happy,
 /turf/open/floor/tile/white,
 /area/bigredv2/outside/medical)
 "aFF" = (
@@ -10523,9 +10544,7 @@
 "aFK" = (
 /obj/machinery/door/airlock/glass_medical{
 	id_tag = "mbayexit";
-	name = "Medbay Reception";
-	req_access_txt = "0";
-	req_one_access_txt = "2;8;19"
+	name = "Medbay Reception"
 	},
 /turf/open/floor/tile/white,
 /area/bigredv2/outside/medical)
@@ -10664,7 +10683,7 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/obj/machinery/door/airlock/mainship/medical/glass{
+/obj/machinery/door/airlock/mainship/medical/glass/free_access{
 	dir = 4;
 	name = "\improper Greenhouse Storage"
 	},
@@ -10777,7 +10796,7 @@
 	},
 /area/bigredv2/outside/virology)
 "aGt" = (
-/obj/item/reagent_container/spray/surgery,
+/obj/item/reagent_containers/spray/surgery,
 /turf/open/floor/tile/white,
 /area/bigredv2/outside/medical)
 "aGu" = (
@@ -10836,7 +10855,7 @@
 /area/bigredv2/outside/medical)
 "aGD" = (
 /obj/structure/table/reinforced,
-/obj/item/reagent_container/spray/cleaner,
+/obj/item/reagent_containers/spray/cleaner,
 /turf/open/floor/tile/white,
 /area/bigredv2/outside/medical)
 "aGE" = (
@@ -11197,8 +11216,7 @@
 	icon_state = "1-2"
 	},
 /obj/machinery/door/airlock/multi_tile/mainship/medidoor{
-	name = "\improper Lambda Lab Anomaly Lab";
-	req_one_access_txt = "0"
+	name = "\improper Lambda Lab Anomaly Lab"
 	},
 /turf/open/floor/marking/delivery,
 /area/bigredv2/caves/lambda_lab)
@@ -11404,7 +11422,7 @@
 /turf/open/floor/tile/green/whitegreenfull,
 /area/bigredv2/outside/medical)
 "aIl" = (
-/obj/item/reagent_container/glass/rag,
+/obj/item/reagent_containers/glass/rag,
 /turf/open/floor/tile/green/whitegreenfull,
 /area/bigredv2/outside/medical)
 "aIm" = (
@@ -11708,8 +11726,7 @@
 	icon_state = "1-2"
 	},
 /obj/machinery/door/airlock/multi_tile/mainship/medidoor{
-	name = "\improper Medical Clinic";
-	req_one_access_txt = "0"
+	name = "\improper Medical Clinic"
 	},
 /turf/open/floor/tile/white,
 /area/bigredv2/outside/medical)
@@ -11838,7 +11855,7 @@
 	},
 /area/bigredv2/caves/lambda_lab)
 "aJF" = (
-/obj/effect/landmark/start/xeno_spawn,
+/obj/effect/landmark/start/job/xenomorph,
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
@@ -12077,8 +12094,7 @@
 	},
 /obj/machinery/door/airlock/multi_tile/mainship/medidoor{
 	dir = 1;
-	name = "\improper Lambda Lab Virology Wing";
-	req_one_access_txt = "0"
+	name = "\improper Lambda Lab Virology Wing"
 	},
 /obj/structure/cable{
 	d1 = 4;
@@ -12142,8 +12158,7 @@
 	},
 /obj/machinery/door/airlock/multi_tile/mainship/medidoor{
 	dir = 1;
-	name = "\improper Lambda Lab Virology Wing";
-	req_one_access_txt = "0"
+	name = "\improper Lambda Lab Virology Wing"
 	},
 /turf/open/floor/marking/delivery,
 /area/bigredv2/caves/lambda_lab)
@@ -12505,7 +12520,7 @@
 	},
 /area/bigredv2/outside/c)
 "aLe" = (
-/obj/machinery/door/airlock/mainship/medical/glass{
+/obj/machinery/door/airlock/mainship/medical/glass/free_access{
 	name = "\improper Medical Command Complex"
 	},
 /turf/open/floor/tile/white,
@@ -12538,7 +12553,7 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/obj/machinery/door/airlock/mainship/medical/glass{
+/obj/machinery/door/airlock/mainship/medical/glass/free_access{
 	name = "\improper Medical Command Complex"
 	},
 /turf/open/floor/tile/white,
@@ -12722,8 +12737,7 @@
 	},
 /obj/machinery/door/window{
 	dir = 1;
-	icon_state = "left";
-	opacity = 1
+	icon_state = "left"
 	},
 /turf/open/floor/tile/white/warningstripe{
 	dir = 2
@@ -12867,7 +12881,7 @@
 /turf/open/floor/wood,
 /area/bigredv2/outside/bar)
 "aMj" = (
-/obj/effect/landmark/start/surv_spawn,
+/obj/effect/landmark/start/job/survivor,
 /turf/open/floor/wood,
 /area/bigredv2/outside/bar)
 "aMk" = (
@@ -12905,8 +12919,7 @@
 /area/bigredv2/outside/hydroponics)
 "aMq" = (
 /obj/machinery/door/airlock/multi_tile/mainship/medidoor{
-	name = "\improper Lambda Lab";
-	req_one_access_txt = "0"
+	name = "\improper Lambda Lab"
 	},
 /turf/open/floor/tile/dark/purple2{
 	dir = 8
@@ -12920,7 +12933,7 @@
 /turf/open/floor/bluegrid,
 /area/bigredv2/caves/lambda_lab)
 "aMt" = (
-/obj/effect/landmark/start/xeno_spawn,
+/obj/effect/landmark/start/job/xenomorph,
 /obj/effect/alien/weeds/node,
 /turf/open/floor/bluegrid,
 /area/bigredv2/caves/lambda_lab)
@@ -12964,10 +12977,9 @@
 	icon_state = "1-2"
 	},
 /obj/machinery/atmospherics/pipe/simple/green/hidden,
-/obj/machinery/door/airlock/mainship/research{
+/obj/machinery/door/airlock/mainship/research/free_access{
 	dir = 1;
-	name = "\improper Virology Lab Decontamination";
-	req_access_txt = "0"
+	name = "\improper Virology Lab Decontamination"
 	},
 /turf/open/floor/tile/white/warningstripe{
 	dir = 1
@@ -12981,7 +12993,7 @@
 /turf/open/floor/plating,
 /area/bigredv2/outside/general_store)
 "aME" = (
-/obj/machinery/door/airlock/mainship/medical/glass{
+/obj/machinery/door/airlock/mainship/medical/glass/free_access{
 	dir = 1;
 	name = "\improper General Store"
 	},
@@ -12994,9 +13006,8 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/obj/machinery/door/airlock/multi_tile/mainship/comdoor{
-	name = "\improper Operations";
-	req_access_txt = "0"
+/obj/machinery/door/airlock/multi_tile/mainship/comdoor/free_access{
+	name = "\improper Operations"
 	},
 /turf/open/floor/tile/white,
 /area/bigredv2/outside/admin_building)
@@ -13078,8 +13089,7 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/machinery/door/airlock/multi_tile/mainship/medidoor{
 	dir = 4;
-	name = "\improper Lambda Lab Virology Quarantine";
-	req_one_access_txt = "0"
+	name = "\improper Lambda Lab Virology Quarantine"
 	},
 /turf/open/floor/marking/delivery,
 /area/bigredv2/caves/lambda_lab)
@@ -13159,7 +13169,7 @@
 /turf/open/floor,
 /area/bigredv2/outside/general_store)
 "aNp" = (
-/obj/machinery/door/airlock/mainship/medical/glass{
+/obj/machinery/door/airlock/mainship/medical/glass/free_access{
 	dir = 4;
 	name = "\improper General Store"
 	},
@@ -13240,10 +13250,7 @@
 /area/bigredv2/outside/admin_building)
 "aND" = (
 /obj/structure/table,
-/obj/machinery/faxmachine{
-	density = 0;
-	req_one_access_txt = "200"
-	},
+/obj/machinery/faxmachine,
 /turf/open/floor/tile/white,
 /area/bigredv2/outside/admin_building)
 "aNE" = (
@@ -13560,7 +13567,7 @@
 /turf/open/floor/wood,
 /area/bigredv2/outside/bar)
 "aOU" = (
-/obj/machinery/door/airlock/mainship/medical/glass{
+/obj/machinery/door/airlock/mainship/medical/glass/free_access{
 	dir = 1;
 	name = "\improper Crew Habitation Complex"
 	},
@@ -13643,10 +13650,9 @@
 /turf/open/floor/carpet,
 /area/bigredv2/outside/library)
 "aPq" = (
-/obj/machinery/door/airlock/mainship/research/glass{
+/obj/machinery/door/airlock/mainship/research/glass/free_access{
 	dir = 1;
-	name = "\improper Lambda Lab Anomaly Chamber";
-	req_access_txt = "0"
+	name = "\improper Lambda Lab Anomaly Chamber"
 	},
 /turf/open/floor/marking/delivery,
 /area/bigredv2/caves/lambda_lab)
@@ -13661,7 +13667,7 @@
 /area/bigredv2/caves/lambda_lab)
 "aPs" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer1,
-/obj/effect/landmark/start/xeno_spawn,
+/obj/effect/landmark/start/job/xenomorph,
 /obj/effect/alien/weeds/node,
 /turf/open/floor/tile/green/whitegreenfull,
 /area/bigredv2/caves/lambda_lab)
@@ -13672,10 +13678,9 @@
 	icon_state = "1-2"
 	},
 /obj/machinery/atmospherics/pipe/simple/green/hidden,
-/obj/machinery/door/airlock/mainship/research{
+/obj/machinery/door/airlock/mainship/research/free_access{
 	dir = 1;
-	name = "\improper Virology Lab Decontamination";
-	req_access_txt = "0"
+	name = "\improper Virology Lab Decontamination"
 	},
 /turf/open/floor/tile/white/warningstripe{
 	dir = 2
@@ -13693,40 +13698,40 @@
 /area/bigredv2/outside/general_store)
 "aPw" = (
 /obj/structure/table,
-/obj/item/reagent_container/food/snacks/chips,
-/obj/item/reagent_container/food/snacks/donut,
+/obj/item/reagent_containers/food/snacks/chips,
+/obj/item/reagent_containers/food/snacks/donut,
 /turf/open/floor/tile/blue/whitebluefull,
 /area/bigredv2/outside/general_store)
 "aPx" = (
 /obj/structure/table,
-/obj/item/reagent_container/food/snacks/chips,
-/obj/item/reagent_container/food/snacks/cookie,
-/obj/item/reagent_container/food/snacks/donut,
+/obj/item/reagent_containers/food/snacks/chips,
+/obj/item/reagent_containers/food/snacks/cookie,
+/obj/item/reagent_containers/food/snacks/donut,
 /turf/open/floor/tile/blue/whitebluefull,
 /area/bigredv2/outside/general_store)
 "aPy" = (
 /obj/structure/table,
-/obj/item/reagent_container/food/snacks/candy,
+/obj/item/reagent_containers/food/snacks/candy,
 /turf/open/floor/tile/blue/whitebluefull,
 /area/bigredv2/outside/general_store)
 "aPz" = (
 /obj/structure/table,
-/obj/item/reagent_container/food/drinks/cans/waterbottle,
-/obj/item/reagent_container/food/drinks/cans/cola,
+/obj/item/reagent_containers/food/drinks/cans/waterbottle,
+/obj/item/reagent_containers/food/drinks/cans/cola,
 /turf/open/floor/tile/blue/whitebluefull,
 /area/bigredv2/outside/general_store)
 "aPA" = (
 /obj/structure/table,
-/obj/item/reagent_container/food/drinks/cans/waterbottle,
-/obj/item/reagent_container/food/drinks/cans/cola,
-/obj/item/reagent_container/food/drinks/cans/beer,
+/obj/item/reagent_containers/food/drinks/cans/waterbottle,
+/obj/item/reagent_containers/food/drinks/cans/cola,
+/obj/item/reagent_containers/food/drinks/cans/beer,
 /turf/open/floor/tile/blue/whitebluefull,
 /area/bigredv2/outside/general_store)
 "aPB" = (
 /obj/structure/table,
-/obj/item/reagent_container/food/drinks/flask,
-/obj/item/reagent_container/food/drinks/cans/waterbottle,
-/obj/item/reagent_container/food/drinks/cans/beer,
+/obj/item/reagent_containers/food/drinks/flask,
+/obj/item/reagent_containers/food/drinks/cans/waterbottle,
+/obj/item/reagent_containers/food/drinks/cans/beer,
 /turf/open/floor/tile/blue/whitebluefull,
 /area/bigredv2/outside/general_store)
 "aPD" = (
@@ -13765,7 +13770,7 @@
 /turf/open/floor/tile/white,
 /area/bigredv2/outside/admin_building)
 "aPM" = (
-/obj/effect/landmark/start/surv_spawn,
+/obj/effect/landmark/start/job/survivor,
 /turf/open/floor/tile/white,
 /area/bigredv2/outside/admin_building)
 "aPN" = (
@@ -13943,8 +13948,7 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/machinery/door/airlock/multi_tile/mainship/medidoor{
 	dir = 4;
-	name = "\improper Lambda Lab Virology Quarantine";
-	req_one_access_txt = "0"
+	name = "\improper Lambda Lab Virology Quarantine"
 	},
 /turf/open/floor/marking/delivery,
 /area/bigredv2/caves/lambda_lab)
@@ -13982,15 +13986,15 @@
 /area/bigredv2/outside/w)
 "aQH" = (
 /obj/structure/table,
-/obj/item/reagent_container/food/snacks/chips,
-/obj/item/reagent_container/food/snacks/cookie,
-/obj/item/reagent_container/food/snacks/donkpocket,
+/obj/item/reagent_containers/food/snacks/chips,
+/obj/item/reagent_containers/food/snacks/cookie,
+/obj/item/reagent_containers/food/snacks/donkpocket,
 /turf/open/floor/tile/blue/whitebluefull,
 /area/bigredv2/outside/general_store)
 "aQI" = (
 /obj/structure/table,
-/obj/item/reagent_container/food/drinks/cans/thirteenloko,
-/obj/item/reagent_container/food/drinks/cans/cola,
+/obj/item/reagent_containers/food/drinks/cans/thirteenloko,
+/obj/item/reagent_containers/food/drinks/cans/cola,
 /obj/machinery/light{
 	dir = 4
 	},
@@ -13998,8 +14002,8 @@
 /area/bigredv2/outside/general_store)
 "aQJ" = (
 /obj/structure/table,
-/obj/item/reagent_container/food/drinks/flask/vacuumflask,
-/obj/item/reagent_container/food/drinks/flask,
+/obj/item/reagent_containers/food/drinks/flask/vacuumflask,
+/obj/item/reagent_containers/food/drinks/flask,
 /obj/machinery/light{
 	dir = 8
 	},
@@ -14141,10 +14145,9 @@
 	},
 /area/bigredv2/outside/admin_building)
 "aRe" = (
-/obj/machinery/door/airlock/multi_tile/mainship/comdoor{
+/obj/machinery/door/airlock/multi_tile/mainship/comdoor/free_access{
 	dir = 1;
-	name = "\improper Operations";
-	req_access_txt = "0"
+	name = "\improper Operations"
 	},
 /turf/open/floor/tile/dark,
 /area/bigredv2/outside/admin_building)
@@ -14244,6 +14247,7 @@
 /area/bigredv2/outside/hydroponics)
 "aRs" = (
 /obj/machinery/light,
+/obj/docking_port/stationary/crashmode,
 /turf/open/floor/tile/yellow/full,
 /area/bigredv2/outside/hydroponics)
 "aRu" = (
@@ -14320,30 +14324,30 @@
 /area/bigredv2/outside/virology)
 "aRK" = (
 /obj/structure/table,
-/obj/item/reagent_container/food/snacks/cheesewedge,
-/obj/item/reagent_container/food/snacks/chips,
-/obj/item/reagent_container/food/snacks/cookie,
+/obj/item/reagent_containers/food/snacks/cheesewedge,
+/obj/item/reagent_containers/food/snacks/chips,
+/obj/item/reagent_containers/food/snacks/cookie,
 /turf/open/floor/tile/blue/whitebluefull,
 /area/bigredv2/outside/general_store)
 "aRL" = (
 /obj/structure/table,
-/obj/item/reagent_container/food/snacks/candy,
-/obj/item/reagent_container/food/snacks/candy,
-/obj/item/reagent_container/food/snacks/candy,
-/obj/item/reagent_container/food/snacks/candy,
-/obj/item/reagent_container/food/snacks/candy,
-/obj/item/reagent_container/food/snacks/donkpocket,
+/obj/item/reagent_containers/food/snacks/candy,
+/obj/item/reagent_containers/food/snacks/candy,
+/obj/item/reagent_containers/food/snacks/candy,
+/obj/item/reagent_containers/food/snacks/candy,
+/obj/item/reagent_containers/food/snacks/candy,
+/obj/item/reagent_containers/food/snacks/donkpocket,
 /turf/open/floor/tile/blue/whitebluefull,
 /area/bigredv2/outside/general_store)
 "aRN" = (
 /obj/structure/table,
-/obj/item/reagent_container/food/drinks/cans/thirteenloko,
-/obj/item/reagent_container/food/drinks/cans/cola,
+/obj/item/reagent_containers/food/drinks/cans/thirteenloko,
+/obj/item/reagent_containers/food/drinks/cans/cola,
 /turf/open/floor/tile/blue/whitebluefull,
 /area/bigredv2/outside/general_store)
 "aRO" = (
 /obj/structure/table,
-/obj/item/reagent_container/food/drinks/flask,
+/obj/item/reagent_containers/food/drinks/flask,
 /turf/open/floor/tile/blue/whitebluefull,
 /area/bigredv2/outside/general_store)
 "aRP" = (
@@ -14412,10 +14416,9 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/obj/machinery/door/airlock/mainship/command{
+/obj/machinery/door/airlock/mainship/command/free_access{
 	dir = 1;
-	name = "\improper Operations Maintenance";
-	req_access_txt = "0"
+	name = "\improper Operations Maintenance"
 	},
 /turf/open/floor/plating,
 /area/bigredv2/outside/admin_building)
@@ -14553,10 +14556,9 @@
 /turf/open/floor/plating,
 /area/bigredv2/outside/virology)
 "aSA" = (
-/obj/machinery/door/airlock/mainship/research/glass{
+/obj/machinery/door/airlock/mainship/research/glass/free_access{
 	dir = 1;
-	name = "\improper Virology Lab Cell";
-	req_access_txt = "0"
+	name = "\improper Virology Lab Cell"
 	},
 /turf/open/floor/freezer,
 /area/bigredv2/outside/virology)
@@ -14565,31 +14567,31 @@
 /area/bigredv2/outside/w)
 "aSD" = (
 /obj/structure/table,
-/obj/item/reagent_container/food/snacks/cheesewedge,
-/obj/item/reagent_container/food/snacks/chips,
-/obj/item/reagent_container/food/snacks/donkpocket,
-/obj/item/reagent_container/food/snacks/donut,
+/obj/item/reagent_containers/food/snacks/cheesewedge,
+/obj/item/reagent_containers/food/snacks/chips,
+/obj/item/reagent_containers/food/snacks/donkpocket,
+/obj/item/reagent_containers/food/snacks/donut,
 /turf/open/floor/tile/blue/whitebluefull,
 /area/bigredv2/outside/general_store)
 "aSE" = (
 /obj/structure/table,
-/obj/item/reagent_container/food/snacks/candy,
-/obj/item/reagent_container/food/snacks/candy,
-/obj/item/reagent_container/food/snacks/candy,
-/obj/item/reagent_container/food/snacks/chips,
+/obj/item/reagent_containers/food/snacks/candy,
+/obj/item/reagent_containers/food/snacks/candy,
+/obj/item/reagent_containers/food/snacks/candy,
+/obj/item/reagent_containers/food/snacks/chips,
 /turf/open/floor/tile/blue/whitebluefull,
 /area/bigredv2/outside/general_store)
 "aSF" = (
 /obj/structure/table,
-/obj/item/reagent_container/food/drinks/cans/tonic,
-/obj/item/reagent_container/food/drinks/cans/waterbottle,
-/obj/item/reagent_container/food/drinks/cans/aspen,
+/obj/item/reagent_containers/food/drinks/cans/tonic,
+/obj/item/reagent_containers/food/drinks/cans/waterbottle,
+/obj/item/reagent_containers/food/drinks/cans/aspen,
 /turf/open/floor/tile/blue/whitebluefull,
 /area/bigredv2/outside/general_store)
 "aSG" = (
 /obj/structure/table,
-/obj/item/reagent_container/food/drinks/flask/vacuumflask,
-/obj/item/reagent_container/food/drinks/flask,
+/obj/item/reagent_containers/food/drinks/flask/vacuumflask,
+/obj/item/reagent_containers/food/drinks/flask,
 /turf/open/floor/tile/blue/whitebluefull,
 /area/bigredv2/outside/general_store)
 "aSI" = (
@@ -14623,11 +14625,6 @@
 /area/bigredv2/outside/general_store)
 "aSP" = (
 /obj/machinery/atmospherics/pipe/simple/green/hidden,
-/obj/machinery/door/airlock/mainship/security/glass{
-	dir = 1;
-	name = "\improper General Store Security";
-	req_access_txt = "0"
-	},
 /turf/open/floor/tile/yellow/full,
 /area/bigredv2/outside/general_store)
 "aSQ" = (
@@ -14636,10 +14633,9 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/obj/machinery/door/airlock/mainship/command{
+/obj/machinery/door/airlock/mainship/command/free_access{
 	dir = 1;
-	name = "\improper Operations";
-	req_access_txt = "0"
+	name = "\improper Operations"
 	},
 /turf/open/floor/tile/dark,
 /area/bigredv2/outside/admin_building)
@@ -14941,7 +14937,7 @@
 /area/bigredv2/outside/virology)
 "aTM" = (
 /obj/structure/table,
-/obj/item/reagent_container/food/snacks/bun,
+/obj/item/reagent_containers/food/snacks/bun,
 /obj/machinery/light{
 	dir = 4
 	},
@@ -14949,9 +14945,9 @@
 /area/bigredv2/outside/general_store)
 "aTN" = (
 /obj/structure/table,
-/obj/item/reagent_container/food/snacks/candy,
-/obj/item/reagent_container/food/snacks/bun,
-/obj/item/reagent_container/food/snacks/donkpocket,
+/obj/item/reagent_containers/food/snacks/candy,
+/obj/item/reagent_containers/food/snacks/bun,
+/obj/item/reagent_containers/food/snacks/donkpocket,
 /obj/machinery/light{
 	dir = 8
 	},
@@ -14959,13 +14955,13 @@
 /area/bigredv2/outside/general_store)
 "aTO" = (
 /obj/structure/table,
-/obj/item/reagent_container/food/drinks/cans/waterbottle,
-/obj/item/reagent_container/food/drinks/cans/aspen,
+/obj/item/reagent_containers/food/drinks/cans/waterbottle,
+/obj/item/reagent_containers/food/drinks/cans/aspen,
 /turf/open/floor/tile/blue/whitebluefull,
 /area/bigredv2/outside/general_store)
 "aTP" = (
 /obj/structure/table,
-/obj/item/reagent_container/food/drinks/flask/vacuumflask,
+/obj/item/reagent_containers/food/drinks/flask/vacuumflask,
 /turf/open/floor/tile/blue/whitebluefull,
 /area/bigredv2/outside/general_store)
 "aTQ" = (
@@ -14990,7 +14986,7 @@
 /area/bigredv2/outside/general_store)
 "aTT" = (
 /obj/structure/table,
-/obj/item/reagent_container/spray/cleaner,
+/obj/item/reagent_containers/spray/cleaner,
 /obj/machinery/atmospherics/components/unary/vent_pump{
 	dir = 4;
 	on = 1
@@ -15289,10 +15285,6 @@
 /obj/item/tool/weedkiller/D24,
 /turf/open/floor/tile/white,
 /area/bigredv2/outside/virology)
-"aUM" = (
-/obj/machinery/computer/nuke_disk_generator/red,
-/turf/open/floor/tile/white,
-/area/bigredv2/outside/virology)
 "aUN" = (
 /obj/structure/table,
 /obj/item/storage/pill_bottle/spaceacillin,
@@ -15320,23 +15312,23 @@
 /area/bigredv2/outside/general_store)
 "aUS" = (
 /obj/structure/table,
-/obj/item/reagent_container/food/snacks/bun,
-/obj/item/reagent_container/food/snacks/bun,
-/obj/item/reagent_container/food/snacks/cheesewedge,
-/obj/item/reagent_container/food/snacks/donut,
+/obj/item/reagent_containers/food/snacks/bun,
+/obj/item/reagent_containers/food/snacks/bun,
+/obj/item/reagent_containers/food/snacks/cheesewedge,
+/obj/item/reagent_containers/food/snacks/donut,
 /turf/open/floor/tile/blue/whitebluefull,
 /area/bigredv2/outside/general_store)
 "aUT" = (
 /obj/structure/table,
-/obj/item/reagent_container/food/snacks/bun,
-/obj/item/reagent_container/food/snacks/bun,
-/obj/item/reagent_container/food/snacks/cheesewedge,
+/obj/item/reagent_containers/food/snacks/bun,
+/obj/item/reagent_containers/food/snacks/bun,
+/obj/item/reagent_containers/food/snacks/cheesewedge,
 /turf/open/floor/tile/blue/whitebluefull,
 /area/bigredv2/outside/general_store)
 "aUU" = (
 /obj/structure/table,
-/obj/item/reagent_container/food/snacks/candy,
-/obj/item/reagent_container/food/snacks/bun,
+/obj/item/reagent_containers/food/snacks/candy,
+/obj/item/reagent_containers/food/snacks/bun,
 /turf/open/floor/tile/blue/whitebluefull,
 /area/bigredv2/outside/general_store)
 "aUV" = (
@@ -15347,13 +15339,13 @@
 /area/bigredv2/outside/general_store)
 "aUY" = (
 /obj/structure/table,
-/obj/item/reagent_container/food/drinks/coffee,
+/obj/item/reagent_containers/food/drinks/coffee,
 /turf/open/floor/tile/blue/whitebluefull,
 /area/bigredv2/outside/general_store)
 "aUZ" = (
 /obj/structure/table,
-/obj/item/reagent_container/food/drinks/flask/vacuumflask,
-/obj/item/reagent_container/food/drinks/cans/aspen,
+/obj/item/reagent_containers/food/drinks/flask/vacuumflask,
+/obj/item/reagent_containers/food/drinks/cans/aspen,
 /turf/open/floor/tile/blue/whitebluefull,
 /area/bigredv2/outside/general_store)
 "aVa" = (
@@ -15547,7 +15539,7 @@
 	},
 /area/bigredv2/outside/w)
 "aVJ" = (
-/obj/machinery/door/airlock/mainship/medical/glass{
+/obj/machinery/door/airlock/mainship/medical/glass/free_access{
 	dir = 4;
 	name = "\improper General Store"
 	},
@@ -15705,7 +15697,7 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/obj/machinery/door/airlock/mainship/medical/glass{
+/obj/machinery/door/airlock/mainship/medical/glass/free_access{
 	dir = 4;
 	name = "\improper General Store"
 	},
@@ -15787,10 +15779,9 @@
 /area/bigredv2/outside/general_store)
 "aWC" = (
 /obj/machinery/atmospherics/pipe/simple/green/hidden,
-/obj/machinery/door/airlock/mainship/security/glass{
+/obj/machinery/door/airlock/mainship/security/glass/free_access{
 	dir = 1;
-	name = "\improper Operations Armory";
-	req_access_txt = "0"
+	name = "\improper Operations Armory"
 	},
 /turf/open/floor,
 /area/bigredv2/outside/admin_building)
@@ -15848,10 +15839,9 @@
 /obj/machinery/atmospherics/pipe/simple/green/hidden{
 	dir = 4
 	},
-/obj/machinery/door/airlock/mainship/research/glass{
+/obj/machinery/door/airlock/mainship/research/glass/free_access{
 	dir = 4;
-	name = "\improper Virology Lab Chemistry";
-	req_access_txt = "0"
+	name = "\improper Virology Lab Chemistry"
 	},
 /turf/open/floor/tile/white,
 /area/bigredv2/outside/virology)
@@ -15874,7 +15864,7 @@
 /area/bigredv2/outside/virology)
 "aWS" = (
 /obj/structure/table,
-/obj/item/reagent_container/glass/bottle/toxin,
+/obj/item/reagent_containers/glass/bottle/toxin,
 /turf/open/floor/freezer,
 /area/bigredv2/outside/virology)
 "aWT" = (
@@ -16004,7 +15994,7 @@
 /area/bigredv2/outside/admin_building)
 "aXn" = (
 /obj/structure/table/woodentable,
-/obj/item/reagent_container/spray/cleaner,
+/obj/item/reagent_containers/spray/cleaner,
 /turf/open/floor/wood,
 /area/bigredv2/outside/admin_building)
 "aXp" = (
@@ -16041,10 +16031,9 @@
 	},
 /area/bigredv2/outside/virology)
 "aXx" = (
-/obj/machinery/door/airlock/mainship/research/glass{
+/obj/machinery/door/airlock/mainship/research/glass/free_access{
 	dir = 4;
-	name = "\improper Virology Lab Cell";
-	req_access_txt = "0"
+	name = "\improper Virology Lab Cell"
 	},
 /turf/open/floor/freezer,
 /area/bigredv2/outside/virology)
@@ -16123,10 +16112,9 @@
 /turf/open/floor/plating,
 /area/bigredv2/outside/cargo)
 "aXJ" = (
-/obj/machinery/door/airlock/mainship/maint{
+/obj/machinery/door/airlock/mainship/maint/free_access{
 	dir = 4;
-	name = "\improper General Store Storage";
-	req_one_access_txt = "0"
+	name = "\improper General Store Storage"
 	},
 /turf/open/floor/plating,
 /area/bigredv2/outside/cargo)
@@ -16151,10 +16139,7 @@
 /area/bigredv2/outside/admin_building)
 "aXN" = (
 /obj/structure/table,
-/obj/machinery/faxmachine{
-	density = 0;
-	req_one_access_txt = "200"
-	},
+/obj/machinery/faxmachine,
 /turf/open/floor/tile/dark/blue2{
 	dir = 10
 	},
@@ -16228,10 +16213,9 @@
 	icon_state = "1-2"
 	},
 /obj/machinery/atmospherics/pipe/simple/green/hidden,
-/obj/machinery/door/airlock/mainship/maint{
+/obj/machinery/door/airlock/mainship/maint/free_access{
 	dir = 1;
-	name = "\improper General Store Maintenance";
-	req_one_access_txt = "0"
+	name = "\improper General Store Maintenance"
 	},
 /turf/open/floor,
 /area/bigredv2/outside/general_store)
@@ -16304,7 +16288,7 @@
 /turf/open/floor/tile/dark,
 /area/bigredv2/outside/admin_building)
 "aYk" = (
-/obj/effect/landmark/start/surv_spawn,
+/obj/effect/landmark/start/job/survivor,
 /turf/open/floor/tile/dark,
 /area/bigredv2/outside/admin_building)
 "aYl" = (
@@ -16314,10 +16298,9 @@
 	},
 /area/bigredv2/outside/admin_building)
 "aYm" = (
-/obj/machinery/door/airlock/mainship/command{
+/obj/machinery/door/airlock/mainship/command/free_access{
 	dir = 1;
-	name = "\improper Operations Office";
-	req_access_txt = "0"
+	name = "\improper Operations Office"
 	},
 /turf/open/floor/tile/dark,
 /area/bigredv2/outside/admin_building)
@@ -16591,9 +16574,8 @@
 /obj/machinery/atmospherics/pipe/simple/green/hidden{
 	dir = 4
 	},
-/obj/machinery/door/airlock/mainship/research{
-	name = "\improper Virology Lab Decontamination";
-	req_access_txt = "0"
+/obj/machinery/door/airlock/mainship/research/free_access{
+	name = "\improper Virology Lab Decontamination"
 	},
 /turf/open/floor/tile/white,
 /area/bigredv2/outside/virology)
@@ -16719,10 +16701,9 @@
 /area/bigredv2/outside/chapel)
 "aZL" = (
 /obj/machinery/atmospherics/pipe/simple/green/hidden,
-/obj/machinery/door/airlock/mainship/maint{
+/obj/machinery/door/airlock/mainship/maint/free_access{
 	dir = 1;
-	name = "\improper General Store Maintenance";
-	req_one_access_txt = "0"
+	name = "\improper General Store Maintenance"
 	},
 /turf/open/floor/plating,
 /area/bigredv2/outside/cargo)
@@ -16850,7 +16831,7 @@
 /area/bigredv2/outside/office_complex)
 "bag" = (
 /obj/structure/table,
-/obj/item/reagent_container/glass/beaker/sulphuric,
+/obj/item/reagent_containers/glass/beaker/sulphuric,
 /turf/open/floor/tile/white,
 /area/bigredv2/outside/office_complex)
 "bah" = (
@@ -16975,9 +16956,8 @@
 /turf/open/floor/carpet,
 /area/bigredv2/outside/admin_building)
 "baI" = (
-/obj/machinery/door/airlock/multi_tile/mainship/comdoor{
-	name = "\improper Operations";
-	req_access_txt = "0"
+/obj/machinery/door/airlock/multi_tile/mainship/comdoor/free_access{
+	name = "\improper Operations"
 	},
 /turf/open/floor,
 /area/bigredv2/outside/admin_building)
@@ -17085,7 +17065,7 @@
 /turf/open/floor,
 /area/bigredv2/outside/cargo)
 "bbh" = (
-/obj/effect/landmark/start/surv_spawn,
+/obj/effect/landmark/start/job/survivor,
 /turf/open/floor,
 /area/bigredv2/outside/cargo)
 "bbi" = (
@@ -17269,7 +17249,7 @@
 /obj/structure/window/reinforced{
 	dir = 4
 	},
-/obj/item/reagent_container/food/drinks/bottle/sake,
+/obj/item/reagent_containers/food/drinks/bottle/sake,
 /turf/open/floor,
 /area/bigredv2/outside/cargo)
 "bbX" = (
@@ -17301,7 +17281,7 @@
 /turf/open/floor/grimy,
 /area/bigredv2/outside/admin_building)
 "bcd" = (
-/obj/effect/landmark/start/surv_spawn,
+/obj/effect/landmark/start/job/survivor,
 /turf/open/floor/plating,
 /area/bigredv2/outside/admin_building)
 "bce" = (
@@ -17352,7 +17332,7 @@
 /obj/structure/bed/chair/wood/normal{
 	dir = 8
 	},
-/obj/effect/landmark/start/surv_spawn,
+/obj/effect/landmark/start/job/survivor,
 /turf/open/floor/tile/chapel{
 	dir = 4
 	},
@@ -17464,9 +17444,8 @@
 /obj/machinery/atmospherics/pipe/simple/green/hidden{
 	dir = 4
 	},
-/obj/machinery/door/airlock/mainship/command{
-	name = "\improper Operations Office";
-	req_access_txt = "0"
+/obj/machinery/door/airlock/mainship/command/free_access{
+	name = "\improper Operations Office"
 	},
 /turf/open/floor/wood,
 /area/bigredv2/outside/admin_building)
@@ -17494,10 +17473,7 @@
 /area/bigredv2/outside/admin_building)
 "bcP" = (
 /obj/structure/table,
-/obj/machinery/faxmachine{
-	density = 0;
-	req_one_access_txt = "200"
-	},
+/obj/machinery/faxmachine,
 /turf/open/floor/wood,
 /area/bigredv2/outside/admin_building)
 "bcQ" = (
@@ -17592,10 +17568,9 @@
 /turf/open/floor,
 /area/bigredv2/outside/cargo)
 "bdj" = (
-/obj/machinery/door/airlock/mainship/engineering{
+/obj/machinery/door/airlock/mainship/engineering/free_access{
 	dir = 1;
-	name = "\improper Cargo Bay Offices";
-	req_one_access_txt = "0"
+	name = "\improper Cargo Bay Offices"
 	},
 /turf/open/floor,
 /area/bigredv2/outside/cargo)
@@ -17609,9 +17584,8 @@
 /obj/machinery/atmospherics/pipe/simple/green/hidden{
 	dir = 4
 	},
-/obj/machinery/door/airlock/mainship/command{
-	name = "\improper Operations Meeting Room";
-	req_access_txt = "0"
+/obj/machinery/door/airlock/mainship/command/free_access{
+	name = "\improper Operations Meeting Room"
 	},
 /turf/open/floor,
 /area/bigredv2/outside/admin_building)
@@ -17869,9 +17843,8 @@
 	icon_state = "1-2"
 	},
 /obj/machinery/atmospherics/pipe/simple/green/hidden,
-/obj/machinery/door/airlock/multi_tile/mainship/comdoor{
-	name = "\improper Operations";
-	req_access_txt = "0"
+/obj/machinery/door/airlock/multi_tile/mainship/comdoor/free_access{
+	name = "\improper Operations"
 	},
 /turf/open/floor,
 /area/bigredv2/outside/admin_building)
@@ -17923,7 +17896,7 @@
 /turf/open/floor/plating/ground/mars/random/sand,
 /area/bigredv2/outside/se)
 "bet" = (
-/obj/effect/landmark/start/xeno_spawn,
+/obj/effect/landmark/start/job/xenomorph,
 /obj/effect/alien/weeds/node,
 /turf/open/floor/plating/ground/mars/random/cave,
 /area/bigredv2/caves)
@@ -18029,7 +18002,7 @@
 /area/bigredv2/outside/office_complex)
 "beM" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/landmark/start/surv_spawn,
+/obj/effect/landmark/start/job/survivor,
 /turf/open/floor,
 /area/bigredv2/outside/office_complex)
 "beO" = (
@@ -18114,7 +18087,7 @@
 /area/bigredv2/outside/c)
 "bfd" = (
 /obj/structure/table,
-/obj/item/reagent_container/food/drinks/flask,
+/obj/item/reagent_containers/food/drinks/flask,
 /turf/open/floor/tile/dark,
 /area/bigredv2/outside/office_complex)
 "bfe" = (
@@ -18411,9 +18384,8 @@
 /obj/machinery/atmospherics/pipe/simple/green/hidden{
 	dir = 4
 	},
-/obj/machinery/door/airlock/mainship/security/glass{
-	name = "\improper Cargo Bay Security";
-	req_access_txt = "0"
+/obj/machinery/door/airlock/mainship/security/glass/free_access{
+	name = "\improper Cargo Bay Security"
 	},
 /turf/open/floor,
 /area/bigredv2/outside/cargo)
@@ -18676,7 +18648,7 @@
 /turf/open/floor/plating,
 /area/bigredv2/outside/office_complex)
 "bhk" = (
-/obj/effect/landmark/start/surv_spawn,
+/obj/effect/landmark/start/job/survivor,
 /turf/open/floor/tile/red/redtaupecorner{
 	dir = 8
 	},
@@ -18754,8 +18726,8 @@
 "bhA" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/landinglight/ds2/delaytwo,
-/turf/open/floor/marking/asteroidwarning,
-/area/bigredv2/outside/w)
+/turf/open/floor/plating,
+/area/shuttle/drop2/lz2)
 "bhD" = (
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/tile/lightred/full,
@@ -18777,7 +18749,7 @@
 /area/bigredv2/outside/cargo)
 "bhH" = (
 /obj/item/flashlight,
-/obj/item/reagent_container/spray/cleaner,
+/obj/item/reagent_containers/spray/cleaner,
 /turf/open/floor,
 /area/bigredv2/outside/cargo)
 "bhI" = (
@@ -18830,11 +18802,8 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/obj/machinery/door/airlock/mainship/secure{
-	icon_state = "door_locked";
-	locked = 1;
-	name = "\improper Emergency Vault";
-	req_access_txt = "0"
+/obj/machinery/door/airlock/mainship/secure/locked/free_access{
+	name = "\improper Emergency Vault"
 	},
 /turf/open/floor,
 /area/bigredv2/outside/storage)
@@ -19307,12 +19276,12 @@
 /turf/open/floor,
 /area/bigredv2/outside/cargo)
 "bjh" = (
-/obj/item/reagent_container/spray/cleaner,
+/obj/item/reagent_containers/spray/cleaner,
 /obj/machinery/atmospherics/pipe/simple/green/hidden,
 /turf/open/floor,
 /area/bigredv2/outside/cargo)
 "bji" = (
-/obj/item/reagent_container/glass/bottle/tramadol,
+/obj/item/reagent_containers/glass/bottle/tramadol,
 /turf/open/floor,
 /area/bigredv2/outside/cargo)
 "bjj" = (
@@ -19352,10 +19321,9 @@
 /turf/open/floor,
 /area/bigredv2/outside/cargo)
 "bju" = (
-/obj/machinery/door/airlock/mainship/engineering{
+/obj/machinery/door/airlock/mainship/engineering/free_access{
 	dir = 4;
-	name = "\improper Cargo Bay Storage";
-	req_one_access_txt = "0"
+	name = "\improper Cargo Bay Storage"
 	},
 /turf/open/floor,
 /area/bigredv2/outside/cargo)
@@ -19514,10 +19482,9 @@
 /area/bigredv2/outside/cargo)
 "bjR" = (
 /obj/machinery/atmospherics/pipe/simple/green/hidden,
-/obj/machinery/door/airlock/mainship/engineering{
+/obj/machinery/door/airlock/mainship/engineering/free_access{
 	dir = 1;
-	name = "\improper Cargo Bay Quartermaster";
-	req_one_access_txt = "0"
+	name = "\improper Cargo Bay Quartermaster"
 	},
 /turf/open/floor,
 /area/bigredv2/outside/cargo)
@@ -19600,10 +19567,9 @@
 /turf/open/floor,
 /area/bigredv2/outside/cargo)
 "bko" = (
-/obj/machinery/door/airlock/mainship/engineering{
+/obj/machinery/door/airlock/mainship/engineering/free_access{
 	dir = 1;
-	name = "\improper Cargo Bay Storage";
-	req_one_access_txt = "0"
+	name = "\improper Cargo Bay Storage"
 	},
 /turf/open/floor,
 /area/bigredv2/outside/cargo)
@@ -19627,10 +19593,9 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/obj/machinery/door/airlock/mainship/engineering{
+/obj/machinery/door/airlock/mainship/engineering/free_access{
 	dir = 1;
-	name = "\improper Atmospherics Condenser";
-	req_one_access_txt = "0"
+	name = "\improper Atmospherics Condenser"
 	},
 /turf/open/floor,
 /area/bigredv2/outside/filtration_plant)
@@ -19638,10 +19603,9 @@
 /turf/closed/wall/r_wall/unmeltable,
 /area/bigredv2/outside/filtration_plant)
 "bkw" = (
-/obj/machinery/door/airlock/mainship/engineering{
+/obj/machinery/door/airlock/mainship/engineering/free_access{
 	dir = 1;
-	name = "\improper Atmospherics Condenser";
-	req_one_access_txt = "0"
+	name = "\improper Atmospherics Condenser"
 	},
 /turf/open/floor/plating,
 /area/bigredv2/outside/filtration_plant)
@@ -19652,10 +19616,9 @@
 	icon_state = "1-2"
 	},
 /obj/machinery/atmospherics/pipe/simple/green/hidden,
-/obj/machinery/door/airlock/mainship/engineering{
+/obj/machinery/door/airlock/mainship/engineering/free_access{
 	dir = 1;
-	name = "\improper Atmospherics Condenser";
-	req_one_access_txt = "0"
+	name = "\improper Atmospherics Condenser"
 	},
 /turf/open/floor/plating,
 /area/bigredv2/outside/filtration_plant)
@@ -19665,10 +19628,9 @@
 	},
 /area/bigredv2/outside/se)
 "bkz" = (
-/obj/machinery/door/airlock/mainship/engineering{
+/obj/machinery/door/airlock/mainship/engineering/free_access{
 	dir = 4;
-	name = "\improper Cargo Bay Quartermaster";
-	req_one_access_txt = "0"
+	name = "\improper Cargo Bay Quartermaster"
 	},
 /turf/open/floor,
 /area/bigredv2/outside/cargo)
@@ -19753,10 +19715,9 @@
 /turf/open/floor,
 /area/bigredv2/outside/filtration_plant)
 "bkP" = (
-/obj/machinery/door/airlock/mainship/engineering{
+/obj/machinery/door/airlock/mainship/engineering/free_access{
 	dir = 4;
-	name = "\improper Atmospherics Condenser Storage";
-	req_one_access_txt = "0"
+	name = "\improper Atmospherics Condenser Storage"
 	},
 /turf/open/floor,
 /area/bigredv2/outside/filtration_plant)
@@ -19928,7 +19889,7 @@
 /turf/open/floor,
 /area/bigredv2/outside/filtration_plant)
 "blB" = (
-/obj/effect/landmark/start/surv_spawn,
+/obj/effect/landmark/start/job/survivor,
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/alarm{
 	dir = 4
@@ -19946,10 +19907,9 @@
 /turf/open/floor,
 /area/bigredv2/outside/filtration_plant)
 "blF" = (
-/obj/machinery/door/airlock/mainship/engineering{
+/obj/machinery/door/airlock/mainship/engineering/free_access{
 	dir = 4;
-	name = "\improper Atmospherics Condenser Air Filtration";
-	req_one_access_txt = "0"
+	name = "\improper Atmospherics Condenser Air Filtration"
 	},
 /turf/open/floor/plating,
 /area/bigredv2/outside/filtration_plant)
@@ -20031,7 +19991,7 @@
 /turf/open/floor,
 /area/bigredv2/outside/filtration_plant)
 "bma" = (
-/obj/effect/landmark/start/surv_spawn,
+/obj/effect/landmark/start/job/survivor,
 /turf/open/floor,
 /area/bigredv2/outside/filtration_plant)
 "bmb" = (
@@ -20306,10 +20266,9 @@
 /obj/machinery/atmospherics/pipe/simple/green/hidden{
 	dir = 4
 	},
-/obj/machinery/door/airlock/mainship/engineering{
+/obj/machinery/door/airlock/mainship/engineering/free_access{
 	dir = 4;
-	name = "\improper Atmospherics Condenser Storage";
-	req_one_access_txt = "0"
+	name = "\improper Atmospherics Condenser Storage"
 	},
 /turf/open/floor,
 /area/bigredv2/outside/filtration_plant)
@@ -20428,10 +20387,9 @@
 /turf/open/floor,
 /area/bigredv2/outside/engineering)
 "bnA" = (
-/obj/machinery/door/airlock/mainship/engineering{
+/obj/machinery/door/airlock/mainship/engineering/free_access{
 	dir = 4;
-	name = "\improper Atmospherics Condenser";
-	req_one_access_txt = "0"
+	name = "\improper Atmospherics Condenser"
 	},
 /turf/open/floor,
 /area/bigredv2/outside/filtration_plant)
@@ -20595,10 +20553,9 @@
 /turf/open/floor,
 /area/bigredv2/outside/engineering)
 "bol" = (
-/obj/machinery/door/airlock/mainship/engineering{
+/obj/machinery/door/airlock/mainship/engineering/free_access{
 	dir = 1;
-	name = "\improper Engineering SMES";
-	req_one_access_txt = "0"
+	name = "\improper Engineering SMES"
 	},
 /obj/structure/cable{
 	d1 = 1;
@@ -20642,10 +20599,9 @@
 	icon_state = "1-2"
 	},
 /obj/machinery/atmospherics/pipe/simple/green/hidden,
-/obj/machinery/door/airlock/mainship/engineering{
+/obj/machinery/door/airlock/mainship/engineering/free_access{
 	dir = 1;
-	name = "\improper Atmospherics Condenser";
-	req_one_access_txt = "0"
+	name = "\improper Atmospherics Condenser"
 	},
 /turf/open/floor,
 /area/bigredv2/outside/filtration_plant)
@@ -20776,9 +20732,8 @@
 /area/bigredv2/outside/engineering)
 "boM" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/door/airlock/mainship/secure{
-	name = "\improper Engineering Secure Storage";
-	req_access_txt = "0"
+/obj/machinery/door/airlock/mainship/secure/free_access{
+	name = "\improper Engineering Secure Storage"
 	},
 /obj/structure/cable{
 	d1 = 4;
@@ -20816,10 +20771,9 @@
 /area/bigredv2/outside/engineering)
 "boU" = (
 /obj/machinery/atmospherics/pipe/simple/green/hidden,
-/obj/machinery/door/airlock/mainship/engineering{
+/obj/machinery/door/airlock/mainship/engineering/free_access{
 	dir = 1;
-	name = "\improper Chief Engineer's Office";
-	req_one_access_txt = "0"
+	name = "\improper Chief Engineer's Office"
 	},
 /obj/structure/cable{
 	d1 = 1;
@@ -20867,7 +20821,7 @@
 /turf/open/floor/plating,
 /area/bigredv2/outside/s)
 "bpe" = (
-/obj/effect/landmark/start/surv_spawn,
+/obj/effect/landmark/start/job/survivor,
 /turf/open/floor,
 /area/bigredv2/outside/engineering)
 "bpf" = (
@@ -20907,10 +20861,9 @@
 /area/bigredv2/outside/engineering)
 "bpk" = (
 /obj/machinery/atmospherics/pipe/simple/green/hidden,
-/obj/machinery/door/airlock/mainship/engineering{
+/obj/machinery/door/airlock/mainship/engineering/free_access{
 	dir = 1;
-	name = "\improper Engineering Tool Storage";
-	req_one_access_txt = "0"
+	name = "\improper Engineering Tool Storage"
 	},
 /obj/structure/cable{
 	d1 = 1;
@@ -21010,19 +20963,17 @@
 	},
 /area/bigredv2/outside/sw)
 "bpz" = (
-/obj/machinery/door/airlock/mainship/engineering{
+/obj/machinery/door/airlock/mainship/engineering/free_access{
 	dir = 1;
-	name = "\improper Engineering Lockers";
-	req_one_access_txt = "0"
+	name = "\improper Engineering Lockers"
 	},
 /turf/open/floor,
 /area/bigredv2/outside/engineering)
 "bpA" = (
 /obj/machinery/atmospherics/pipe/simple/green/hidden,
-/obj/machinery/door/airlock/mainship/engineering{
+/obj/machinery/door/airlock/mainship/engineering/free_access{
 	dir = 1;
-	name = "\improper Engineering Lockers";
-	req_one_access_txt = "0"
+	name = "\improper Engineering Lockers"
 	},
 /turf/open/floor,
 /area/bigredv2/outside/engineering)
@@ -21134,10 +21085,9 @@
 /obj/machinery/atmospherics/pipe/simple/green/hidden{
 	dir = 4
 	},
-/obj/machinery/door/airlock/mainship/engineering{
+/obj/machinery/door/airlock/mainship/engineering/free_access{
 	dir = 4;
-	name = "\improper Atmospherics Condenser Water Filtration";
-	req_one_access_txt = "0"
+	name = "\improper Atmospherics Condenser Water Filtration"
 	},
 /turf/open/floor,
 /area/bigredv2/outside/filtration_plant)
@@ -21188,10 +21138,9 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/obj/machinery/door/airlock/mainship/engineering{
+/obj/machinery/door/airlock/mainship/engineering/free_access{
 	dir = 1;
-	name = "\improper Engineering Break Room";
-	req_one_access_txt = "0"
+	name = "\improper Engineering Break Room"
 	},
 /turf/open/floor,
 /area/bigredv2/outside/engineering)
@@ -21286,10 +21235,9 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/obj/machinery/door/airlock/mainship/engineering{
+/obj/machinery/door/airlock/mainship/engineering/free_access{
 	dir = 4;
-	name = "\improper Atmospherics Condenser Water Filtration";
-	req_one_access_txt = "0"
+	name = "\improper Atmospherics Condenser Water Filtration"
 	},
 /turf/open/floor,
 /area/bigredv2/outside/filtration_plant)
@@ -21424,10 +21372,9 @@
 /obj/machinery/atmospherics/pipe/simple/green/hidden{
 	dir = 4
 	},
-/obj/machinery/door/airlock/mainship/engineering{
+/obj/machinery/door/airlock/mainship/engineering/free_access{
 	dir = 4;
-	name = "\improper Engineering Workshop";
-	req_one_access_txt = "0"
+	name = "\improper Engineering Workshop"
 	},
 /obj/structure/cable{
 	d1 = 4;
@@ -21458,10 +21405,9 @@
 /turf/open/floor,
 /area/bigredv2/outside/engineering)
 "bqP" = (
-/obj/machinery/door/airlock/mainship/engineering{
+/obj/machinery/door/airlock/mainship/engineering/free_access{
 	dir = 1;
-	name = "\improper Engine Reactor Control";
-	req_one_access_txt = "0"
+	name = "\improper Engine Reactor Control"
 	},
 /obj/structure/cable{
 	d1 = 1;
@@ -21488,7 +21434,7 @@
 /area/bigredv2/outside/engineering)
 "bqT" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/landmark/start/surv_spawn,
+/obj/effect/landmark/start/job/survivor,
 /turf/open/floor,
 /area/bigredv2/outside/filtration_plant)
 "bqU" = (
@@ -21553,10 +21499,9 @@
 /turf/open/floor,
 /area/bigredv2/outside/engineering)
 "brf" = (
-/obj/machinery/door/airlock/mainship/engineering{
+/obj/machinery/door/airlock/mainship/engineering/free_access{
 	dir = 4;
-	name = "\improper Engineering Workshop";
-	req_one_access_txt = "0"
+	name = "\improper Engineering Workshop"
 	},
 /turf/open/floor,
 /area/bigredv2/outside/engineering)
@@ -21837,8 +21782,7 @@
 	desc = "A remote control-switch for opening the engines blast doors.";
 	id = "rad_door";
 	name = "Reactor Radiation Shielding control";
-	pixel_x = 30;
-	req_access_txt = "7"
+	pixel_x = 30
 	},
 /turf/open/floor,
 /area/bigredv2/outside/engineering)
@@ -21930,10 +21874,9 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/obj/machinery/door/airlock/mainship/secure{
+/obj/machinery/door/airlock/mainship/secure/free_access{
 	dir = 1;
-	name = "\improper Engine Reactor";
-	req_access_txt = "0"
+	name = "\improper Engine Reactor"
 	},
 /turf/open/floor,
 /area/bigredv2/outside/engineering)
@@ -21958,10 +21901,9 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/obj/machinery/door/airlock/mainship/engineering{
+/obj/machinery/door/airlock/mainship/engineering/free_access{
 	dir = 4;
-	name = "\improper Engine Reactor Control";
-	req_one_access_txt = "0"
+	name = "\improper Engine Reactor Control"
 	},
 /turf/open/floor,
 /area/bigredv2/outside/engineering)
@@ -22459,10 +22401,9 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/obj/machinery/door/airlock/mainship/engineering{
+/obj/machinery/door/airlock/mainship/engineering/free_access{
 	dir = 1;
-	name = "\improper Power Substation";
-	req_one_access_txt = "0"
+	name = "\improper Power Substation"
 	},
 /turf/open/floor,
 /area/bigredv2/outside/engineering)
@@ -22542,10 +22483,9 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/obj/machinery/door/airlock/mainship/engineering{
+/obj/machinery/door/airlock/mainship/engineering/free_access{
 	dir = 1;
-	name = "\improper Power Substation";
-	req_one_access_txt = "0"
+	name = "\improper Power Substation"
 	},
 /turf/open/floor/plating,
 /area/bigredv2/outside/engineering)
@@ -22600,32 +22540,8 @@
 /obj/effect/alien/weeds/node,
 /turf/open/floor/asteroidfloor,
 /area/bigredv2/outside/s)
-"bwd" = (
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 4;
-	icon_state = "1-4"
-	},
-/turf/open/floor/asteroidfloor,
-/area/bigredv2/outside/s)
-"bwg" = (
-/obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/turf/open/floor/asteroidfloor,
-/area/bigredv2/outside/s)
-"bwh" = (
-/obj/structure/cable{
-	d1 = 2;
-	d2 = 8;
-	icon_state = "2-8"
-	},
-/turf/open/floor/asteroidfloor,
-/area/bigredv2/outside/s)
 "bwj" = (
-/obj/effect/landmark/start/xeno_spawn,
+/obj/effect/landmark/start/job/xenomorph,
 /turf/open/floor/plating/ground/mars/random/sand,
 /area/bigredv2/outside/nanotrasen_lab/inside)
 "bwo" = (
@@ -22651,8 +22567,7 @@
 "bwG" = (
 /obj/machinery/atmospherics/pipe/simple/green/hidden,
 /obj/machinery/door/airlock/multi_tile/mainship/medidoor{
-	name = "\improper Eta Lab Storage Bay";
-	req_one_access_txt = "0"
+	name = "\improper Eta Lab Storage Bay"
 	},
 /turf/open/floor/marking/loadingarea{
 	dir = 2
@@ -22669,10 +22584,9 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/obj/machinery/door/airlock/mainship/research{
+/obj/machinery/door/airlock/mainship/research/free_access{
 	dir = 1;
-	name = "\improper Eta Lab Decontamination";
-	req_access_txt = "0"
+	name = "\improper Eta Lab Decontamination"
 	},
 /turf/open/floor/freezer,
 /area/bigredv2/outside/nanotrasen_lab/inside)
@@ -22799,25 +22713,6 @@
 	dir = 9
 	},
 /area/bigredv2/outside/nanotrasen_lab/inside)
-"bxi" = (
-/turf/open/floor/tile/dark/blue2{
-	dir = 5
-	},
-/area/bigredv2/outside/nanotrasen_lab/inside)
-"bxj" = (
-/obj/structure/table,
-/obj/effect/spawner/random/technology_scanner,
-/turf/open/floor/tile/dark,
-/area/bigredv2/outside/nanotrasen_lab/inside)
-"bxk" = (
-/obj/structure/table,
-/obj/machinery/light{
-	dir = 4
-	},
-/obj/effect/spawner/random/powercell,
-/obj/effect/spawner/random/powercell,
-/turf/open/floor/tile/dark,
-/area/bigredv2/outside/nanotrasen_lab/inside)
 "bxm" = (
 /obj/machinery/light{
 	dir = 8
@@ -22852,10 +22747,9 @@
 /obj/machinery/atmospherics/pipe/simple/green/hidden{
 	dir = 4
 	},
-/obj/machinery/door/airlock/mainship/research/glass{
+/obj/machinery/door/airlock/mainship/research/glass/free_access{
 	dir = 4;
-	name = "\improper Eta Lab Robotics";
-	req_access_txt = "0"
+	name = "\improper Eta Lab Robotics"
 	},
 /turf/open/floor,
 /area/bigredv2/outside/nanotrasen_lab/inside)
@@ -22910,11 +22804,6 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/alien/weeds/node,
 /turf/open/floor/tile/dark,
-/area/bigredv2/outside/nanotrasen_lab/inside)
-"bxB" = (
-/obj/structure/largecrate/guns,
-/obj/effect/decal/cleanable/dirt,
-/turf/open/floor/marking/bot,
 /area/bigredv2/outside/nanotrasen_lab/inside)
 "bxC" = (
 /obj/structure/largecrate/guns,
@@ -22977,7 +22866,7 @@
 /area/bigredv2/outside/nanotrasen_lab/inside)
 "bxP" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/landmark/start/xeno_spawn,
+/obj/effect/landmark/start/job/xenomorph,
 /obj/effect/alien/weeds/node,
 /turf/open/floor/tile/dark,
 /area/bigredv2/outside/nanotrasen_lab/inside)
@@ -23159,10 +23048,9 @@
 /area/bigredv2/outside/nanotrasen_lab/inside)
 "byE" = (
 /obj/machinery/atmospherics/pipe/simple/green/hidden,
-/obj/machinery/door/airlock/mainship/research/glass{
+/obj/machinery/door/airlock/mainship/research/glass/free_access{
 	dir = 1;
-	name = "\improper Eta Lab Technical Storage";
-	req_access_txt = "0"
+	name = "\improper Eta Lab Technical Storage"
 	},
 /turf/open/floor/tile/dark,
 /area/bigredv2/outside/nanotrasen_lab/inside)
@@ -23250,10 +23138,9 @@
 /area/bigredv2/outside/nanotrasen_lab/inside)
 "byZ" = (
 /obj/machinery/atmospherics/pipe/simple/green/hidden,
-/obj/machinery/door/airlock/mainship/research/glass{
+/obj/machinery/door/airlock/mainship/research/glass/free_access{
 	dir = 1;
-	name = "\improper Eta Lab Robotics";
-	req_access_txt = "0"
+	name = "\improper Eta Lab Robotics"
 	},
 /turf/open/floor/tile/dark,
 /area/bigredv2/outside/nanotrasen_lab/inside)
@@ -23357,10 +23244,9 @@
 /area/bigredv2/outside/nanotrasen_lab/inside)
 "bzs" = (
 /obj/machinery/atmospherics/pipe/simple/green/hidden,
-/obj/machinery/door/airlock/mainship/security/glass{
+/obj/machinery/door/airlock/mainship/research/glass/free_access{
 	dir = 1;
-	name = "\improper Eta Lab Armory";
-	req_access_txt = "0"
+	name = "\improper Eta Lab Armory"
 	},
 /turf/open/floor/tile/dark,
 /area/bigredv2/outside/nanotrasen_lab/inside)
@@ -23449,12 +23335,6 @@
 	dir = 1
 	},
 /area/bigredv2/outside/nanotrasen_lab/inside)
-"bzG" = (
-/obj/machinery/computer/nuke_disk_generator/green,
-/turf/open/floor/tile/dark/blue2{
-	dir = 1
-	},
-/area/bigredv2/outside/nanotrasen_lab/inside)
 "bzH" = (
 /obj/structure/closet/secure_closet/RD,
 /turf/open/floor/tile/dark/blue2{
@@ -23468,8 +23348,7 @@
 	},
 /area/bigredv2/outside/nanotrasen_lab/inside)
 "bzJ" = (
-/obj/structure/closet/secure_closet/guncabinet,
-/obj/item/weapon/gun/smg/m39/elite,
+/obj/structure/closet/secure_closet/guncabinet/nt_lab,
 /turf/open/floor/tile/red/full,
 /area/bigredv2/outside/nanotrasen_lab/inside)
 "bzL" = (
@@ -23498,19 +23377,17 @@
 /turf/open/floor/plating/ground/mars/random/cave/rock,
 /area/bigredv2/outside/nanotrasen_lab/inside)
 "bzQ" = (
-/obj/machinery/door/airlock/mainship/research/glass{
+/obj/machinery/door/airlock/mainship/research/glass/free_access{
 	dir = 1;
-	name = "\improper Eta Lab Server";
-	req_access_txt = "0"
+	name = "\improper Eta Lab Server"
 	},
 /turf/open/floor/tile/darkish,
 /area/bigredv2/outside/nanotrasen_lab/inside)
 "bzR" = (
 /obj/machinery/atmospherics/pipe/simple/green/hidden,
-/obj/machinery/door/airlock/mainship/security/glass{
+/obj/machinery/door/airlock/mainship/security/glass/free_access{
 	dir = 1;
-	name = "\improper Eta Lab Security Office";
-	req_access_txt = "0"
+	name = "\improper Eta Lab Security Office"
 	},
 /turf/open/floor/tile/dark,
 /area/bigredv2/outside/nanotrasen_lab/inside)
@@ -23641,10 +23518,9 @@
 /turf/open/floor/tile/darkish,
 /area/bigredv2/outside/nanotrasen_lab/inside)
 "bAw" = (
-/obj/machinery/door/airlock/mainship/research/glass{
+/obj/machinery/door/airlock/mainship/research/glass/free_access{
 	dir = 4;
-	name = "\improper Eta Lab Server";
-	req_access_txt = "0"
+	name = "\improper Eta Lab Server"
 	},
 /turf/open/floor/tile/darkish,
 /area/bigredv2/outside/nanotrasen_lab/inside)
@@ -23692,10 +23568,9 @@
 /obj/machinery/atmospherics/pipe/simple/green/hidden{
 	dir = 4
 	},
-/obj/machinery/door/airlock/mainship/research/glass{
+/obj/machinery/door/airlock/mainship/research/glass/free_access{
 	dir = 4;
-	name = "\improper Eta Lab Director's Office";
-	req_access_txt = "0"
+	name = "\improper Eta Lab Director's Office"
 	},
 /turf/open/floor/tile/dark,
 /area/bigredv2/outside/nanotrasen_lab/inside)
@@ -23909,7 +23784,7 @@
 /turf/open/floor/tile/dark,
 /area/bigredv2/outside/nanotrasen_lab/inside)
 "bBs" = (
-/obj/effect/landmark/start/xeno_spawn,
+/obj/effect/landmark/start/job/xenomorph,
 /turf/open/floor/tile/dark,
 /area/bigredv2/outside/nanotrasen_lab/inside)
 "bBt" = (
@@ -23939,9 +23814,8 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/obj/machinery/door/airlock/mainship/maint{
-	name = "\improper Eta Lab Maintenance Storage";
-	req_one_access_txt = "0"
+/obj/machinery/door/airlock/mainship/maint/free_access{
+	name = "\improper Eta Lab Maintenance Storage"
 	},
 /turf/open/floor/tile/dark,
 /area/bigredv2/outside/nanotrasen_lab/inside)
@@ -23985,18 +23859,16 @@
 /obj/machinery/atmospherics/pipe/simple/green/hidden{
 	dir = 4
 	},
-/obj/machinery/door/airlock/mainship/research/glass{
+/obj/machinery/door/airlock/mainship/research/glass/free_access{
 	dir = 4;
-	name = "\improper Eta Lab Biology Laboratory";
-	req_access_txt = "0"
+	name = "\improper Eta Lab Biology Laboratory"
 	},
 /turf/open/floor/tile/dark,
 /area/bigredv2/outside/nanotrasen_lab/inside)
 "bBH" = (
-/obj/machinery/door/airlock/mainship/research/glass{
+/obj/machinery/door/airlock/mainship/research/glass/free_access{
 	dir = 4;
-	name = "\improper Eta Lab Cell";
-	req_access_txt = "0"
+	name = "\improper Eta Lab Cell"
 	},
 /turf/open/floor/tile/dark,
 /area/bigredv2/outside/nanotrasen_lab/inside)
@@ -24042,10 +23914,9 @@
 	},
 /area/bigredv2/outside/nanotrasen_lab/inside)
 "bBS" = (
-/obj/machinery/door/airlock/mainship/research/glass{
+/obj/machinery/door/airlock/mainship/research/glass/free_access{
 	dir = 1;
-	name = "\improper Eta Lab Cell";
-	req_access_txt = "0"
+	name = "\improper Eta Lab Cell"
 	},
 /turf/open/floor/tile/dark,
 /area/bigredv2/outside/nanotrasen_lab/inside)
@@ -24090,7 +23961,7 @@
 	},
 /area/bigredv2/outside/nanotrasen_lab/inside)
 "bBZ" = (
-/obj/effect/landmark/start/xeno_spawn,
+/obj/effect/landmark/start/job/xenomorph,
 /obj/effect/alien/weeds/node,
 /turf/open/floor/tile/dark,
 /area/bigredv2/outside/nanotrasen_lab/inside)
@@ -24234,10 +24105,9 @@
 /obj/machinery/atmospherics/pipe/simple/green/hidden{
 	dir = 4
 	},
-/obj/machinery/door/airlock/mainship/research/glass{
+/obj/machinery/door/airlock/mainship/research/glass/free_access{
 	dir = 4;
-	name = "\improper Eta Lab Xenobiology Lab";
-	req_access_txt = "0"
+	name = "\improper Eta Lab Xenobiology Lab"
 	},
 /turf/open/floor/tile/dark,
 /area/bigredv2/outside/nanotrasen_lab/inside)
@@ -24340,8 +24210,7 @@
 "bCR" = (
 /obj/machinery/atmospherics/pipe/simple/green/hidden,
 /obj/machinery/door/airlock/multi_tile/mainship/medidoor{
-	name = "\improper Eta Lab";
-	req_one_access_txt = "0"
+	name = "\improper Eta Lab"
 	},
 /turf/open/floor/tile/dark,
 /area/bigredv2/outside/nanotrasen_lab/inside)
@@ -24578,18 +24447,16 @@
 /area/bigredv2/outside/nanotrasen_lab/inside)
 "bDO" = (
 /obj/machinery/atmospherics/pipe/simple/green/hidden,
-/obj/machinery/door/airlock/mainship/research/glass{
+/obj/machinery/door/airlock/mainship/research/glass/free_access{
 	dir = 1;
-	name = "\improper Eta Lab Research Office";
-	req_access_txt = "0"
+	name = "\improper Eta Lab Research Office"
 	},
 /turf/open/floor/wood,
 /area/bigredv2/outside/nanotrasen_lab/inside)
 "bDP" = (
-/obj/machinery/door/airlock/mainship/research/glass{
+/obj/machinery/door/airlock/mainship/research/glass/free_access{
 	dir = 1;
-	name = "\improper Eta Lab Canteen";
-	req_access_txt = "0"
+	name = "\improper Eta Lab Canteen"
 	},
 /turf/open/floor,
 /area/bigredv2/outside/nanotrasen_lab/inside)
@@ -24793,10 +24660,9 @@
 /obj/machinery/atmospherics/pipe/simple/green/hidden{
 	dir = 4
 	},
-/obj/machinery/door/airlock/mainship/research/glass{
+/obj/machinery/door/airlock/mainship/research/glass/free_access{
 	dir = 4;
-	name = "\improper Eta Lab Relaxation";
-	req_access_txt = "0"
+	name = "\improper Eta Lab Relaxation"
 	},
 /turf/open/floor,
 /area/bigredv2/outside/nanotrasen_lab/inside)
@@ -24873,10 +24739,18 @@
 	dir = 1
 	},
 /area/bigredv2/outside/nw)
+"bZF" = (
+/obj/docking_port/stationary/crashmode,
+/turf/open/floor/plating/ground/mars/random/cave,
+/area/bigredv2/caves)
 "cca" = (
 /obj/effect/landmark/monkey_spawn,
 /turf/open/floor/tile/dark,
 /area/bigredv2/caves/lambda_lab)
+"ccP" = (
+/obj/docking_port/stationary/crashmode,
+/turf/closed/wall,
+/area/bigredv2/outside/office_complex)
 "chz" = (
 /obj/effect/decal/cleanable/blood/gibs/body,
 /turf/open/floor/wood,
@@ -24916,6 +24790,10 @@
 /obj/docking_port/stationary/crashmode,
 /turf/open/floor,
 /area/bigredv2/outside/hydroponics)
+"cTr" = (
+/obj/docking_port/stationary/crashmode,
+/turf/closed/wall/r_wall,
+/area/bigredv2/outside/se)
 "cWF" = (
 /obj/effect/landmark/lv624/fog_blocker,
 /turf/closed/mineral/bigred,
@@ -24932,9 +24810,8 @@
 /turf/closed/wall/r_wall/unmeltable,
 /area/bigredv2/outside/se)
 "dcO" = (
-/obj/machinery/door/airlock/mainship/research{
-	name = "\improper Virology Lab Administration";
-	req_access_txt = "0"
+/obj/machinery/door/airlock/mainship/research/free_access{
+	name = "\improper Virology Lab Administration"
 	},
 /turf/open/floor/tile/white,
 /area/bigredv2/outside/virology)
@@ -24945,6 +24822,14 @@
 	},
 /turf/open/floor/tile/dark,
 /area/bigredv2/outside/nanotrasen_lab/inside)
+"dlo" = (
+/obj/machinery/door/airlock/mainship/medical/glass/free_access{
+	dir = 1;
+	name = "\improper General Store"
+	},
+/obj/docking_port/stationary/crashmode,
+/turf/open/floor,
+/area/bigredv2/outside/general_store)
 "dmd" = (
 /obj/machinery/atmospherics/pipe/manifold/green/hidden,
 /turf/open/floor,
@@ -24988,7 +24873,7 @@
 /turf/closed/wall/r_wall,
 /area/bigredv2/outside/e)
 "dSQ" = (
-/obj/effect/landmark/start/surv_spawn,
+/obj/effect/landmark/start/job/survivor,
 /turf/open/floor/grimy,
 /area/bigredv2/outside/marshal_office)
 "dWa" = (
@@ -25053,6 +24938,14 @@
 	dir = 4
 	},
 /area/bigredv2/caves/lambda_lab)
+"eIX" = (
+/obj/machinery/computer/nuke_disk_generator/blue,
+/turf/open/floor/tile/dark,
+/area/bigredv2/outside/nanotrasen_lab/inside)
+"eIZ" = (
+/obj/machinery/miner/damaged,
+/turf/open/floor/plating/ground/mars/random/sand,
+/area/bigredv2/outside/nw)
 "eQO" = (
 /obj/machinery/atmospherics/pipe/simple/green/hidden,
 /turf/open/floor,
@@ -25110,7 +25003,7 @@
 /turf/open/floor/tile/white,
 /area/bigredv2/outside/virology)
 "fra" = (
-/obj/effect/landmark/start/xeno_spawn,
+/obj/effect/landmark/start/job/xenomorph,
 /turf/open/floor/tile/white,
 /area/bigredv2/outside/virology)
 "fus" = (
@@ -25140,8 +25033,12 @@
 /obj/item/tool/warning_cone,
 /turf/open/floor/asteroidfloor,
 /area/bigredv2/outside/se)
+"fLz" = (
+/obj/docking_port/stationary/crashmode,
+/turf/open/floor/plating,
+/area/bigredv2/outside/nw)
 "fMu" = (
-/obj/effect/landmark/start/xeno_spawn,
+/obj/effect/landmark/start/job/xenomorph,
 /turf/open/floor/tile/dark/purple2{
 	dir = 8
 	},
@@ -25193,10 +25090,9 @@
 /turf/open/floor/plating,
 /area/bigredv2/outside/space_port)
 "ggV" = (
-/obj/machinery/door/airlock/mainship/engineering{
+/obj/machinery/door/airlock/mainship/engineering/free_access{
 	dir = 4;
-	name = "\improper Chief Engineer's Office";
-	req_one_access_txt = "0"
+	name = "\improper Chief Engineer's Office"
 	},
 /obj/structure/cable{
 	d1 = 4;
@@ -25253,10 +25149,9 @@
 /turf/closed/mineral/bigred,
 /area/bigredv2/outside/nw)
 "gQc" = (
-/obj/machinery/door/airlock/mainship/engineering{
+/obj/machinery/door/airlock/mainship/engineering/free_access{
 	dir = 4;
-	name = "\improper Engineering Workshop";
-	req_one_access_txt = "0"
+	name = "\improper Engineering Workshop"
 	},
 /obj/structure/cable{
 	d1 = 4;
@@ -25277,10 +25172,9 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/obj/machinery/door/airlock/mainship/engineering{
+/obj/machinery/door/airlock/mainship/engineering/free_access{
 	dir = 4;
-	name = "\improper Engineering SMES";
-	req_one_access_txt = "0"
+	name = "\improper Engineering SMES"
 	},
 /turf/open/floor/plating,
 /area/bigredv2/outside/engineering)
@@ -25335,24 +25229,37 @@
 	},
 /turf/open/floor,
 /area/bigredv2/outside/engineering)
-"hsA" = (
-/obj/machinery/atmospherics/pipe/manifold/green/hidden{
-	dir = 4
-	},
-/turf/open/floor/tile/dark/blue2{
-	dir = 4
-	},
-/area/bigredv2/outside/nanotrasen_lab/inside)
+"hvV" = (
+/obj/docking_port/stationary/crashmode,
+/turf/closed/wall,
+/area/bigredv2/outside/cargo)
 "hzx" = (
 /obj/effect/landmark/lv624/fog_blocker,
 /turf/closed/mineral/bigred,
 /area/bigredv2/caves)
+"hEq" = (
+/obj/docking_port/stationary/crashmode,
+/turf/closed/wall/r_wall,
+/area/bigredv2/outside/engineering)
 "hHN" = (
 /obj/effect/decal/cleanable/blood/xeno,
 /turf/open/floor/tile/dark/yellow2/corner{
 	dir = 8
 	},
 /area/bigredv2/outside/nanotrasen_lab/inside)
+"hIr" = (
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 8;
+	icon_state = "1-8"
+	},
+/obj/docking_port/stationary/crashmode,
+/turf/open/floor/plating,
+/area/bigredv2/outside/cargo)
+"hKr" = (
+/obj/effect/landmark/lv624/fog_blocker/xeno_spawn,
+/turf/open/floor/plating/ground/mars/random/cave/rock,
+/area/bigredv2/caves)
 "hMv" = (
 /obj/machinery/atmospherics/components/unary/vent_pump{
 	on = 1
@@ -25374,13 +25281,10 @@
 	},
 /turf/open/floor,
 /area/bigredv2/outside/general_offices)
-"idM" = (
-/obj/machinery/light{
-	dir = 1
-	},
-/obj/machinery/computer/nuke_disk_generator/blue,
-/turf/open/floor/elevatorshaft,
-/area/bigredv2/caves/lambda_lab)
+"hVF" = (
+/obj/docking_port/stationary/crashmode,
+/turf/closed/wall,
+/area/bigredv2/outside/admin_building)
 "iiY" = (
 /obj/machinery/atmospherics/components/unary/vent_pump{
 	dir = 1;
@@ -25401,10 +25305,11 @@
 	},
 /turf/closed/mineral/bigred,
 /area/bigredv2/outside/virology)
-"iCv" = (
-/obj/effect/landmark/nuke_spawn,
-/turf/open/floor/plating/ground/mars/random/cave,
-/area/bigredv2/caves)
+"iCt" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/docking_port/stationary/crashmode,
+/turf/open/floor,
+/area/bigredv2/outside/office_complex)
 "iKn" = (
 /obj/structure/cable{
 	d1 = 1;
@@ -25443,12 +25348,6 @@
 	dir = 8
 	},
 /area/bigredv2/outside/chapel)
-"jrq" = (
-/obj/machinery/atmospherics/components/unary/vent_pump,
-/turf/open/floor/tile/dark/blue2{
-	dir = 5
-	},
-/area/bigredv2/outside/nanotrasen_lab/inside)
 "jHL" = (
 /obj/machinery/door/poddoor/timed_late/containment/landing_zone,
 /turf/closed/mineral/bigred,
@@ -25459,6 +25358,11 @@
 	dir = 4
 	},
 /area/bigredv2/caves/lambda_lab)
+"jQL" = (
+/obj/effect/alien/weeds/node,
+/obj/effect/landmark/lv624/fog_blocker/xeno_spawn,
+/turf/open/floor/plating/ground/mars/random/cave,
+/area/bigredv2/caves)
 "jSv" = (
 /obj/machinery/atmospherics/components/unary/vent_pump{
 	dir = 4;
@@ -25506,6 +25410,10 @@
 /obj/item/tool/pen/red,
 /turf/open/floor/tile/white,
 /area/bigredv2/outside/virology)
+"khG" = (
+/obj/docking_port/stationary/crashmode,
+/turf/open/floor,
+/area/bigredv2/outside/general_offices)
 "knF" = (
 /turf/open/floor/plating/ground/mars/random/cave,
 /area/bigredv2/outside/engineering)
@@ -25532,6 +25440,10 @@
 	dir = 4
 	},
 /area/bigredv2/outside/virology)
+"kEl" = (
+/obj/structure/largecrate/random,
+/turf/open/floor/marking/bot,
+/area/bigredv2/outside/nanotrasen_lab/inside)
 "kEZ" = (
 /turf/open/floor/plating,
 /area/bigredv2/outside/engineering)
@@ -25569,6 +25481,16 @@
 	},
 /turf/closed/wall,
 /area/bigredv2/outside/cargo)
+"lji" = (
+/obj/docking_port/stationary/crashmode,
+/turf/open/floor/plating/ground/mars/random/cave,
+/area/bigredv2/outside/se)
+"loj" = (
+/obj/docking_port/stationary/crashmode,
+/turf/open/floor/engine/cult{
+	dir = 2
+	},
+/area/bigredv2/outside/chapel)
 "loF" = (
 /obj/machinery/door/poddoor/timed_late/containment/landing_zone{
 	dir = 2
@@ -25830,13 +25752,9 @@
 	},
 /turf/open/floor,
 /area/bigredv2/outside/engineering)
-"owL" = (
-/obj/machinery/door/poddoor/timed_late/containment/landing_zone/lz2{
-	dir = 1
-	},
-/turf/open/floor/marking/asteroidwarning{
-	dir = 8
-	},
+"owM" = (
+/obj/machinery/miner/damaged,
+/turf/open/floor/plating/ground/mars/random/sand,
 /area/bigredv2/outside/w)
 "oEN" = (
 /obj/machinery/vending/coffee,
@@ -25886,6 +25804,16 @@
 "oWn" = (
 /turf/open/floor/tile/green/whitegreenfull,
 /area/bigredv2/caves/lambda_lab)
+"pbv" = (
+/obj/structure/window/framed/colony/reinforced,
+/obj/machinery/door/poddoor/shutters/mainship{
+	dir = 2;
+	id = "Engineering";
+	name = "\improper Engineering Shutters"
+	},
+/obj/docking_port/stationary/crashmode,
+/turf/open/floor/plating,
+/area/bigredv2/outside/engineering)
 "pbI" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 4
@@ -25913,6 +25841,10 @@
 	},
 /turf/closed/wall/r_wall,
 /area/bigredv2/outside/space_port)
+"ptp" = (
+/obj/effect/landmark/lv624/fog_blocker/xeno_spawn,
+/turf/closed/mineral/bigred,
+/area/bigredv2/caves)
 "pvw" = (
 /obj/machinery/door/poddoor/timed_late/containment/landing_zone/lz2{
 	dir = 2
@@ -25942,6 +25874,10 @@
 /obj/effect/landmark/lv624/fog_blocker,
 /turf/closed/wall/r_wall,
 /area/bigredv2/outside/marshal_office)
+"pRv" = (
+/obj/docking_port/stationary/crashmode,
+/turf/open/floor/plating/ground/mars/random/sand,
+/area/bigredv2/outside/c)
 "pRU" = (
 /obj/structure/window/framed/colony/reinforced,
 /obj/machinery/door/poddoor/shutters/mainship{
@@ -25995,6 +25931,10 @@
 	},
 /turf/open/floor,
 /area/bigredv2/outside/general_offices)
+"qlr" = (
+/obj/machinery/miner/damaged/platinum,
+/turf/open/floor/plating/ground/mars/random/sand,
+/area/bigredv2/outside/c)
 "qnu" = (
 /obj/effect/decal/cleanable/blood,
 /turf/open/floor/tile/darkgreen/darkgreen2/corner{
@@ -26008,6 +25948,12 @@
 	},
 /turf/open/floor,
 /area/bigredv2/outside/cargo)
+"qpW" = (
+/obj/machinery/landinglight/ds2{
+	dir = 1
+	},
+/turf/open/floor/asteroidfloor,
+/area/bigredv2/outside/sw)
 "qtI" = (
 /obj/machinery/atmospherics/components/unary/vent_pump{
 	on = 1
@@ -26064,6 +26010,10 @@
 /obj/effect/landmark/monkey_spawn,
 /turf/open/floor/tile/darkish,
 /area/bigredv2/caves/lambda_lab)
+"qKE" = (
+/obj/docking_port/stationary/crashmode,
+/turf/open/floor/plating/ground/mars/random/sand,
+/area/bigredv2/outside/se)
 "qNm" = (
 /obj/machinery/door/poddoor/timed_late/containment/landing_zone/lz2{
 	dir = 1
@@ -26195,14 +26145,6 @@
 	dir = 2
 	},
 /area/bigredv2/outside/admin_building)
-"szw" = (
-/obj/machinery/atmospherics/pipe/simple/green/hidden{
-	dir = 4
-	},
-/turf/open/floor/tile/dark/blue2{
-	dir = 4
-	},
-/area/bigredv2/outside/nanotrasen_lab/inside)
 "sBV" = (
 /turf/open/floor/plating/ground/mars/dirttosand{
 	dir = 1
@@ -26232,12 +26174,26 @@
 	},
 /turf/open/floor,
 /area/bigredv2/outside/cargo)
+"sWt" = (
+/obj/machinery/door/poddoor/timed_late/containment/landing_zone/lz2{
+	dir = 2
+	},
+/turf/open/floor/asteroidfloor,
+/area/bigredv2/outside/sw)
+"sZi" = (
+/obj/docking_port/stationary/crashmode,
+/turf/open/floor,
+/area/bigredv2/outside/dorms)
 "tco" = (
 /turf/closed/wall/r_wall,
 /area/bigredv2/outside/s)
 "tku" = (
 /turf/closed/wall/indestructible/mineral,
 /area/storage/testroom)
+"tnm" = (
+/obj/effect/landmark/lv624/fog_blocker/xeno_spawn,
+/turf/open/floor/plating/ground/mars/random/cave,
+/area/bigredv2/caves)
 "tnE" = (
 /obj/machinery/door/poddoor/timed_late/containment/landing_zone/lz2,
 /turf/closed/wall/r_wall,
@@ -26265,7 +26221,7 @@
 /area/bigredv2/outside/dorms)
 "txM" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/landmark/start/surv_spawn,
+/obj/effect/landmark/start/job/survivor,
 /turf/open/floor/grimy,
 /area/bigredv2/outside/dorms)
 "tDX" = (
@@ -26349,6 +26305,11 @@
 	},
 /turf/open/floor,
 /area/bigredv2/outside/cargo)
+"uja" = (
+/obj/structure/window/framed/colony/reinforced/hull,
+/obj/docking_port/stationary/crashmode,
+/turf/open/floor/plating,
+/area/bigredv2/outside/se)
 "ujn" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/door/poddoor/timed_late/containment/landing_zone,
@@ -26403,6 +26364,10 @@
 	},
 /turf/open/floor,
 /area/bigredv2/outside/cargo)
+"uUn" = (
+/obj/docking_port/stationary/crashmode,
+/turf/open/floor/plating/ground/mars/random/sand,
+/area/bigredv2/outside/nw)
 "uWN" = (
 /obj/effect/landmark/lv624/fog_blocker,
 /turf/open/floor/plating/ground/mars/random/cave,
@@ -26422,6 +26387,10 @@
 /obj/docking_port/stationary/crashmode,
 /turf/open/floor/marking/asteroidwarning,
 /area/bigredv2/outside/c)
+"vAP" = (
+/obj/docking_port/stationary/crashmode,
+/turf/open/floor/asteroidfloor,
+/area/bigredv2/outside/nw)
 "vDI" = (
 /turf/closed/mineral/bigred,
 /area/bigredv2/outside/w)
@@ -26495,6 +26464,15 @@
 	dir = 1
 	},
 /area/bigredv2/outside/c)
+"wVm" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/door/poddoor/timed_late/containment/landing_zone/lz2{
+	dir = 1
+	},
+/turf/open/floor/marking/asteroidwarning{
+	dir = 8
+	},
+/area/bigredv2/outside/w)
 "wZg" = (
 /turf/open/floor/plating/ground/mars/random/dirt,
 /area/bigredv2/outside/sw)
@@ -26521,7 +26499,7 @@
 /turf/open/floor/freezer,
 /area/bigredv2/outside/nanotrasen_lab/inside)
 "xiT" = (
-/obj/effect/landmark/start/surv_spawn,
+/obj/effect/landmark/start/job/survivor,
 /turf/open/floor,
 /area/bigredv2/outside/general_store)
 "xjd" = (
@@ -26538,6 +26516,10 @@
 /obj/effect/spawner/random/tool,
 /turf/open/floor,
 /area/bigredv2/outside/cargo)
+"xnD" = (
+/obj/docking_port/stationary/crashmode,
+/turf/closed/wall,
+/area/bigredv2/outside/dorms)
 "xqo" = (
 /obj/machinery/door_control{
 	id = "Kitchen";
@@ -26588,6 +26570,10 @@
 /obj/machinery/door/poddoor/timed_late/containment/landing_zone/lz2,
 /turf/open/floor/plating/ground/mars/random/sand,
 /area/bigredv2/outside/sw)
+"xHV" = (
+/obj/docking_port/stationary/crashmode,
+/turf/closed/mineral/bigred,
+/area/bigredv2/caves)
 "xRR" = (
 /obj/machinery/light{
 	dir = 1
@@ -27658,7 +27644,7 @@ aac
 aac
 aac
 aac
-aac
+ptp
 aac
 aac
 aac
@@ -27875,7 +27861,7 @@ aac
 aac
 aac
 aac
-aac
+ptp
 aac
 aac
 aac
@@ -28092,7 +28078,7 @@ aac
 aac
 aac
 aac
-aac
+ptp
 aac
 aac
 aac
@@ -28309,7 +28295,7 @@ aac
 aac
 aac
 aac
-aac
+ptp
 aac
 aac
 aac
@@ -28526,7 +28512,7 @@ aac
 aac
 aac
 aac
-aac
+ptp
 aac
 aac
 aac
@@ -28743,7 +28729,7 @@ aad
 aac
 aac
 aac
-aac
+ptp
 aac
 aac
 abq
@@ -28960,7 +28946,7 @@ aad
 aad
 aad
 aac
-aac
+ptp
 aac
 abq
 aad
@@ -29177,7 +29163,7 @@ aad
 aad
 aad
 aad
-aad
+tnm
 aad
 aad
 aad
@@ -29394,7 +29380,7 @@ aad
 aad
 aad
 aad
-aad
+tnm
 aad
 aad
 aad
@@ -29611,7 +29597,7 @@ aad
 aad
 aad
 aad
-aad
+tnm
 aad
 aad
 aad
@@ -29828,7 +29814,7 @@ aad
 aad
 aac
 aac
-aac
+ptp
 aad
 aad
 aad
@@ -30045,7 +30031,7 @@ aac
 aac
 aac
 aac
-aac
+ptp
 aad
 aad
 aad
@@ -30262,7 +30248,7 @@ aac
 aac
 aac
 aac
-aac
+ptp
 aad
 aad
 aad
@@ -30479,7 +30465,7 @@ aac
 aac
 aac
 aac
-aac
+ptp
 abq
 aad
 aad
@@ -30696,7 +30682,7 @@ aac
 aac
 aac
 aac
-aac
+ptp
 aac
 aad
 aad
@@ -30913,7 +30899,7 @@ aac
 aac
 aac
 aac
-aac
+ptp
 aac
 aad
 aad
@@ -31130,7 +31116,7 @@ aac
 aac
 aac
 aac
-aac
+ptp
 aac
 aad
 aad
@@ -31292,7 +31278,7 @@ aMz
 aYA
 aWe
 aMz
-aUM
+adK
 fmM
 aNc
 aNc
@@ -31347,12 +31333,12 @@ aac
 aac
 aac
 aac
-aac
-aac
-aad
-aad
-aad
-aad
+ptp
+ptp
+tnm
+tnm
+tnm
+tnm
 aad
 aad
 aad
@@ -31569,7 +31555,7 @@ abq
 aad
 aad
 aad
-aad
+tnm
 aad
 aad
 aad
@@ -31786,7 +31772,7 @@ aad
 aad
 aad
 aad
-aad
+tnm
 aad
 aad
 aad
@@ -32003,7 +31989,7 @@ aad
 aad
 aad
 abq
-aac
+ptp
 abq
 aad
 aad
@@ -32220,24 +32206,24 @@ aad
 aad
 abq
 aac
-aac
-aac
-aac
-aac
-aac
-aac
-aac
-aac
-aad
-aad
-aad
-aac
-aac
-aac
-aac
-aac
-aac
-aac
+ptp
+ptp
+ptp
+ptp
+ptp
+ptp
+ptp
+ptp
+tnm
+tnm
+tnm
+ptp
+ptp
+ptp
+ptp
+ptp
+ptp
+ptp
 aab
 aaa
 aaa
@@ -33255,7 +33241,7 @@ aFv
 aFv
 aFv
 aQF
-aQF
+owM
 sBV
 aSB
 aVG
@@ -33411,7 +33397,7 @@ aac
 aac
 aac
 aac
-aac
+xHV
 aac
 aac
 aac
@@ -34496,7 +34482,7 @@ aeI
 aeI
 aeI
 aeI
-aeI
+eIZ
 aeI
 aeI
 aeI
@@ -34512,55 +34498,56 @@ ahP
 ahP
 ahP
 ajy
-ajx
+aoN
 axX
-ajx
+aoN
 ahR
 ahP
 ahP
 ahP
 ahP
-aDz
-ahR
+qUm
+akK
 ahP
 ahP
 ajy
 cuW
 ahP
 ama
-aHn
 aeI
+aHn
 gON
 gON
 gON
 gON
-aQF
+vDI
 aQF
 aQF
 aQF
 sBV
-aVF
+aUQ
 aWk
 aWk
+aWk
+aWk
+aWk
+aWk
+wVm
 aWk
 aWk
 aWk
 aVI
-owL
 aWk
-aWk
-aVI
-aWk
-aWk
-aVH
+aVG
+bev
 bdZ
 bdZ
 bev
 bev
-bdZ
 bdZ
 bdZ
 aVG
+beQ
 bhA
 bie
 bie
@@ -34582,14 +34569,14 @@ bie
 bie
 bie
 bie
-bie
-bsb
+buP
+qpW
 bpv
 bpv
-bpv
-dXK
+sWt
 aac
 hzx
+aac
 aac
 aac
 aac
@@ -34617,11 +34604,10 @@ aac
 aac
 aac
 aac
-aac
 aad
 aad
 aad
-aac
+aad
 aac
 aac
 aac
@@ -35173,8 +35159,8 @@ avr
 ahP
 aDy
 ajx
-aiw
-aiw
+aqp
+aqp
 ajx
 cuW
 ahP
@@ -36664,7 +36650,7 @@ ahX
 aiA
 ajy
 mLR
-ajx
+vAP
 ajx
 ajx
 ajx
@@ -37119,7 +37105,7 @@ avT
 avT
 ayc
 avT
-avT
+fLz
 avT
 avT
 avr
@@ -37168,7 +37154,7 @@ aXK
 aXK
 bil
 bbg
-aXK
+hvV
 aXK
 aXK
 aXK
@@ -37582,7 +37568,7 @@ aNm
 aMB
 aXH
 aYa
-aYd
+hIr
 aXH
 aXK
 baz
@@ -37997,7 +37983,7 @@ aeI
 aeI
 aeI
 aHn
-aeI
+uUn
 aeI
 aeI
 aeI
@@ -38414,7 +38400,7 @@ aeI
 aeI
 aeI
 aeI
-aeI
+uUn
 aeI
 aeI
 apC
@@ -38491,7 +38477,7 @@ gQc
 fOE
 brf
 blJ
-blJ
+hEq
 bme
 bme
 bmd
@@ -38821,7 +38807,7 @@ aac
 aac
 aac
 aad
-aad
+bZF
 aad
 aac
 hzx
@@ -39794,7 +39780,7 @@ bop
 gBV
 feK
 bta
-asT
+pbv
 bme
 bme
 bme
@@ -40172,7 +40158,7 @@ aHD
 aBR
 aBR
 aMc
-aME
+dlo
 aNq
 aNo
 aPH
@@ -41262,7 +41248,7 @@ aNt
 aOB
 aNo
 aNo
-aRR
+aQS
 aMB
 aPH
 aPH
@@ -41479,8 +41465,8 @@ aNu
 aNo
 aNo
 aNo
-aRR
-aPH
+aQS
+aXc
 aTT
 aVh
 aQS
@@ -42165,7 +42151,7 @@ aHD
 aWJ
 aBR
 aBR
-blJ
+hEq
 bmo
 boE
 bmg
@@ -42873,19 +42859,19 @@ aad
 aac
 aac
 aac
-aac
-aac
-aac
-aac
-aac
-aac
-aac
-aac
-aac
-aac
-aac
-aac
-aac
+ptp
+ptp
+ptp
+ptp
+ptp
+ptp
+ptp
+ptp
+ptp
+ptp
+ptp
+ptp
+ptp
 aac
 aac
 aac
@@ -43090,7 +43076,7 @@ aad
 aac
 aac
 aac
-aac
+ptp
 aac
 aac
 aac
@@ -43102,7 +43088,7 @@ abq
 aac
 aac
 aac
-aac
+ptp
 aac
 aac
 aac
@@ -43307,7 +43293,7 @@ aad
 aad
 aac
 aac
-aac
+ptp
 aac
 aac
 aac
@@ -43319,7 +43305,7 @@ aad
 abq
 aac
 aac
-aac
+ptp
 aac
 aac
 aac
@@ -43524,7 +43510,7 @@ aad
 aad
 aac
 aac
-aac
+ptp
 aac
 aac
 aac
@@ -43536,7 +43522,7 @@ aad
 aad
 abq
 abq
-aac
+ptp
 aac
 aac
 aac
@@ -43741,7 +43727,7 @@ aad
 aad
 aac
 aac
-aac
+ptp
 aac
 aac
 aac
@@ -43753,7 +43739,7 @@ aad
 aad
 aad
 abq
-aac
+ptp
 aac
 aac
 aac
@@ -43958,7 +43944,7 @@ abq
 aad
 aac
 aac
-aac
+ptp
 aac
 aac
 aac
@@ -43970,7 +43956,7 @@ aad
 aad
 aad
 abq
-aac
+ptp
 aac
 aac
 aac
@@ -44175,7 +44161,7 @@ aad
 aad
 aac
 aac
-aac
+ptp
 aac
 aad
 aad
@@ -44187,7 +44173,7 @@ aad
 aad
 aad
 aad
-aac
+ptp
 aac
 aac
 aac
@@ -44392,7 +44378,7 @@ aad
 aad
 aac
 aac
-aac
+ptp
 aad
 aad
 aad
@@ -44404,7 +44390,7 @@ aad
 aad
 aad
 aad
-aad
+tnm
 aad
 aac
 aac
@@ -44609,6 +44595,7 @@ aad
 aad
 aad
 aad
+tnm
 aad
 aad
 aad
@@ -44620,8 +44607,7 @@ aad
 aad
 aad
 aad
-aad
-aad
+tnm
 aad
 aad
 aad
@@ -44826,7 +44812,7 @@ aad
 aad
 aad
 abq
-aad
+tnm
 aad
 afZ
 abq
@@ -44838,7 +44824,7 @@ ahw
 abq
 aad
 aad
-aad
+tnm
 aad
 aad
 aad
@@ -45043,7 +45029,7 @@ ahw
 aad
 aad
 aad
-aad
+tnm
 aad
 aad
 aad
@@ -45055,7 +45041,7 @@ aad
 aad
 abq
 abq
-abq
+hKr
 abq
 abq
 abq
@@ -45118,7 +45104,7 @@ acP
 acP
 acP
 acp
-afn
+adP
 afT
 agE
 afS
@@ -45260,6 +45246,7 @@ aad
 aad
 aad
 aad
+tnm
 aad
 aad
 aad
@@ -45271,8 +45258,7 @@ aad
 aad
 aad
 aad
-aad
-aad
+tnm
 aad
 aad
 aad
@@ -45477,7 +45463,7 @@ aad
 aad
 aad
 aac
-aac
+ptp
 aac
 aac
 aac
@@ -45489,7 +45475,7 @@ aad
 aad
 aad
 aad
-ahw
+jQL
 aad
 aad
 aad
@@ -45694,19 +45680,19 @@ aac
 aac
 aac
 aac
-aac
-aac
-aac
-aac
-aac
-aac
-aac
-aac
-aac
-aac
-aac
-aac
-aac
+ptp
+ptp
+ptp
+ptp
+ptp
+ptp
+ptp
+ptp
+ptp
+ptp
+ptp
+ptp
+ptp
 aac
 aac
 aad
@@ -46454,7 +46440,7 @@ acP
 azK
 acP
 aBR
-aBR
+pRv
 aBR
 aBR
 aBR
@@ -46763,7 +46749,7 @@ bwG
 bwL
 bxc
 bxd
-bxB
+kEl
 bxc
 bxU
 bxc
@@ -46970,12 +46956,12 @@ bvA
 bvD
 btv
 btv
-bvp
-bvA
-bvA
-bvA
-bvA
-bwd
+aaZ
+bjw
+bjw
+bjw
+bjw
+bjw
 bwH
 bwM
 bxd
@@ -47187,17 +47173,17 @@ bjx
 bjZ
 bjy
 bjy
-blq
+abi
 bjw
 bjw
 bjw
 bjw
-bwg
+bwb
 bwF
 bwN
 byh
 bxd
-bxB
+kEl
 bww
 bxV
 bxc
@@ -47404,12 +47390,12 @@ bkp
 bjy
 bjy
 bjy
-blq
+abi
 bwb
 bjw
 bjw
 bjw
-bwg
+bjw
 bwF
 bwO
 bxf
@@ -47621,12 +47607,12 @@ bjA
 bur
 bjy
 bjy
-blq
+abi
 bjw
-bjw
-bjw
-bjw
-bwg
+bwF
+bwF
+aaY
+bwF
 bwF
 bwF
 bwF
@@ -47838,15 +47824,15 @@ bjA
 bjA
 blv
 bjy
-blq
+abi
 bjw
-bjw
-bwb
-bjw
-bwg
+bwF
+kEl
+bxc
+bxc
+bAg
 bwF
 bwP
-bxg
 bxs
 bxo
 bxg
@@ -48055,16 +48041,16 @@ bjA
 bjA
 bur
 bjy
-blq
+abi
 bjw
-bjw
-bjw
-bjw
-bwg
+bwF
+kEl
+bxc
+bwK
+abX
 bwF
 bwP
-bxh
-bxt
+acd
 bxF
 bxF
 bxF
@@ -48272,16 +48258,16 @@ bjA
 bjA
 bjA
 blv
-blq
+abi
 bwb
-bjw
-bjw
-bjw
-bwg
+bwF
+kEl
+bxc
+bxc
+bAg
 bwF
 bwP
-bxi
-szw
+acq
 bxu
 bxu
 bxX
@@ -48435,7 +48421,7 @@ aYp
 aKn
 aNL
 aUb
-aKn
+hVF
 bbq
 bcd
 bcU
@@ -48448,7 +48434,7 @@ aKl
 aKl
 aIm
 aBR
-aBR
+qlr
 hlD
 aIn
 aIn
@@ -48489,15 +48475,15 @@ bjA
 bjH
 bkr
 bjy
-blq
+abi
 bjw
-bjw
-bjw
-bjw
-bwg
+bwF
+kEl
+bwK
+bxc
+bAg
 bwF
 bwQ
-bxj
 byM
 bxg
 bxL
@@ -48706,19 +48692,19 @@ bjH
 bjy
 bjy
 bjy
-blq
+abi
 bjw
-bjw
-bjw
-bjw
-bwg
+bwF
+abN
+add
+acB
+bAg
 bwF
 bwR
-bxh
-bxt
+acd
 bxG
 bxF
-bxF
+acv
 bxv
 byB
 bxg
@@ -48728,7 +48714,7 @@ bzA
 bxN
 bxg
 bxA
-bxo
+eIX
 bxN
 bBg
 bBu
@@ -48838,7 +48824,7 @@ axI
 ayp
 asJ
 azS
-asH
+xnD
 asH
 asH
 aCQ
@@ -48923,19 +48909,19 @@ bjy
 bjy
 bjy
 bjy
-blq
+abi
 bjw
-bjw
-bwb
-bjw
-bwg
+bwF
+abW
+bxc
+acL
+bAg
 bwF
 bwS
-jrq
-hsA
+acu
 vpT
 vpT
-vpT
+acx
 vpT
 byC
 bxE
@@ -49140,15 +49126,15 @@ bkb
 bun
 bjy
 bjy
-blq
+abi
 bjw
-bjw
-bjw
-bjw
-bwg
+bwF
+bxc
+bwK
+bxc
+bAg
 bwF
 bwT
-bxk
 bxw
 bxH
 bwT
@@ -49322,7 +49308,7 @@ aBR
 aBR
 aBR
 aBR
-aBR
+pRv
 bkv
 bkv
 bkv
@@ -49357,12 +49343,12 @@ bjw
 bjY
 bkb
 bkb
-blq
+abi
 bwb
-bjw
-bjw
-bjw
-bwg
+bwF
+bwF
+bwF
+bwF
 bwF
 bwF
 bwF
@@ -49574,12 +49560,12 @@ bjw
 bjY
 bjx
 bjx
-blq
+abi
 bjw
 bjw
 bjw
 bjw
-bwg
+bjw
 bwF
 bwU
 bwU
@@ -49720,7 +49706,7 @@ aBR
 aBR
 aBR
 aBR
-aBR
+pRv
 aBR
 aBR
 aBR
@@ -49791,12 +49777,12 @@ bjx
 bjZ
 bjy
 bjy
-blq
-bjw
-bjw
-bwb
-bjw
-bwh
+abL
+bvA
+bvA
+bvA
+bvA
+bvA
 bwI
 bwV
 bwV
@@ -50012,7 +49998,7 @@ blq
 bjw
 bjw
 bjw
-bjw
+bwb
 bjw
 bwF
 bwW
@@ -50355,7 +50341,7 @@ asJ
 asJ
 asJ
 asJ
-asJ
+sZi
 azY
 aAD
 aBp
@@ -50381,7 +50367,7 @@ aBR
 aBR
 aBR
 aMc
-aHD
+vsq
 aIn
 aIn
 aIn
@@ -51111,7 +51097,7 @@ byE
 byU
 bze
 bwF
-bzG
+adx
 bzW
 bAp
 bAG
@@ -52574,7 +52560,7 @@ aXp
 aXp
 bhV
 aXp
-aXp
+ccP
 aXp
 bjL
 bgx
@@ -52918,18 +52904,18 @@ aac
 aac
 aac
 aac
-aac
-aac
-aac
-aad
-abq
-aad
-aad
-aad
-aad
-abq
-aac
-aac
+ptp
+ptp
+ptp
+tnm
+hKr
+tnm
+tnm
+tnm
+tnm
+hKr
+ptp
+ptp
 aac
 aac
 aac
@@ -53135,7 +53121,7 @@ aac
 aac
 aac
 aac
-aac
+ptp
 aac
 aac
 aad
@@ -53146,7 +53132,7 @@ aad
 aad
 aad
 abq
-aac
+ptp
 aac
 aac
 aac
@@ -53352,7 +53338,7 @@ aac
 aac
 aac
 aac
-aac
+ptp
 aac
 aac
 aad
@@ -53363,7 +53349,7 @@ aad
 aad
 aad
 abq
-aac
+ptp
 aac
 aac
 aac
@@ -53569,7 +53555,7 @@ aac
 aac
 aac
 aac
-aac
+ptp
 aac
 aac
 aad
@@ -53580,7 +53566,7 @@ aad
 aad
 aad
 abq
-aac
+ptp
 aac
 aac
 aac
@@ -53786,7 +53772,7 @@ aac
 aac
 aac
 aac
-aac
+ptp
 aac
 aac
 aac
@@ -53797,7 +53783,7 @@ aad
 aad
 aad
 abq
-aac
+ptp
 aac
 aac
 aac
@@ -54003,8 +53989,8 @@ aac
 aac
 aac
 aac
+ptp
 aac
-aac
 abq
 abq
 abq
@@ -54014,7 +54000,7 @@ aad
 aad
 aad
 abq
-aac
+ptp
 aac
 aac
 aac
@@ -54039,7 +54025,7 @@ asP
 apc
 apc
 auV
-apc
+khG
 aop
 apc
 axR
@@ -54110,7 +54096,7 @@ bqa
 cXu
 oGC
 oGC
-oGC
+uja
 oGC
 cXu
 bqa
@@ -54220,7 +54206,7 @@ aac
 aac
 aac
 aac
-aac
+ptp
 abq
 aad
 aad
@@ -54231,7 +54217,7 @@ aad
 aad
 aad
 abq
-aac
+ptp
 aac
 aac
 aac
@@ -54437,7 +54423,7 @@ aac
 aac
 aac
 aac
-aac
+ptp
 aad
 aad
 aad
@@ -54448,7 +54434,7 @@ aad
 aad
 aad
 abq
-aac
+ptp
 aac
 aac
 aac
@@ -54654,7 +54640,7 @@ aac
 aac
 aac
 aac
-aac
+ptp
 aad
 aad
 aad
@@ -54665,7 +54651,7 @@ aad
 aad
 aad
 abq
-aac
+ptp
 aac
 aac
 aac
@@ -54871,7 +54857,7 @@ aac
 aac
 aac
 aac
-aac
+ptp
 aad
 aad
 aad
@@ -54882,7 +54868,7 @@ aad
 aad
 abq
 aac
-aac
+ptp
 aac
 aac
 aac
@@ -54944,7 +54930,7 @@ aTr
 aTq
 aTq
 aXp
-aXp
+ccP
 aXp
 aXp
 aXp
@@ -55088,7 +55074,7 @@ aac
 aac
 aac
 aac
-aac
+ptp
 aad
 aad
 aad
@@ -55099,7 +55085,7 @@ aad
 aad
 abq
 aac
-aac
+ptp
 aac
 aac
 aac
@@ -55305,7 +55291,7 @@ aac
 aac
 aac
 aac
-aac
+ptp
 abq
 aad
 aad
@@ -55316,7 +55302,7 @@ aad
 aad
 abq
 aac
-aac
+ptp
 aac
 aac
 aac
@@ -55522,7 +55508,7 @@ aac
 aac
 aac
 aac
-aac
+ptp
 aac
 aac
 aad
@@ -55533,7 +55519,7 @@ aad
 abq
 aac
 aac
-aac
+ptp
 aac
 aac
 aac
@@ -55600,7 +55586,7 @@ aXp
 aXp
 aXp
 aXr
-aXU
+iCt
 bdW
 aXp
 beI
@@ -55615,7 +55601,7 @@ aXp
 bjb
 mpz
 bes
-bes
+qKE
 bes
 bes
 bes
@@ -55739,18 +55725,18 @@ aac
 aac
 aac
 aac
-aac
-aac
-aac
-aac
-aad
-aad
-aad
-aad
-abq
-aac
-aac
-aac
+ptp
+ptp
+ptp
+ptp
+tnm
+tnm
+tnm
+tnm
+hKr
+ptp
+ptp
+ptp
 aac
 aac
 aac
@@ -55864,7 +55850,7 @@ bux
 bux
 bux
 bux
-bux
+lji
 buM
 aac
 aac
@@ -56934,7 +56920,7 @@ bqa
 bqZ
 bqZ
 bqZ
-bqZ
+cTr
 brD
 bqZ
 bqZ
@@ -57407,7 +57393,7 @@ aad
 aad
 aad
 aad
-aad
+bZF
 aad
 aad
 aac
@@ -58670,7 +58656,7 @@ aad
 aad
 aad
 abq
-aac
+xHV
 aac
 aac
 aac
@@ -59284,7 +59270,7 @@ aKP
 aTr
 aZf
 aZH
-bal
+loj
 bal
 bal
 bal
@@ -61110,7 +61096,7 @@ aad
 aad
 aac
 aac
-aac
+xHV
 aac
 aac
 aac
@@ -62374,7 +62360,7 @@ aad
 aad
 abq
 aac
-aac
+xHV
 aac
 aac
 aac
@@ -63363,7 +63349,7 @@ adZ
 afv
 adZ
 adZ
-idM
+aqY
 arF
 arF
 ate
@@ -63441,7 +63427,7 @@ aac
 aac
 aac
 aac
-aac
+xHV
 aac
 aac
 aac
@@ -67113,7 +67099,7 @@ aad
 afZ
 aad
 aad
-aad
+bZF
 abq
 aad
 aad
@@ -68905,15 +68891,15 @@ aad
 aad
 aad
 aad
-iCv
-aac
 aad
-aad
-aad
-aad
-aad
-aad
-aac
+ptp
+tnm
+tnm
+tnm
+tnm
+tnm
+tnm
+ptp
 aac
 aac
 aac
@@ -69123,14 +69109,14 @@ aad
 aad
 aad
 aad
+tnm
 aad
 aad
 aad
 aad
 aad
 aad
-aad
-aac
+ptp
 aac
 aac
 aac
@@ -69340,14 +69326,14 @@ aad
 aad
 aad
 aad
+tnm
 aad
 aad
 aad
 aad
 aad
 aad
-aad
-aac
+ptp
 aac
 aac
 aac
@@ -69557,14 +69543,14 @@ aad
 aad
 aad
 aad
-aad
+tnm
 aad
 qvY
 aad
 aad
 aad
 aad
-aac
+ptp
 aac
 aac
 aac
@@ -69774,14 +69760,14 @@ aad
 aad
 aad
 aad
+tnm
 aad
 aad
 aad
 aad
 aad
 aad
-aad
-aac
+ptp
 aac
 aac
 aac
@@ -69991,14 +69977,14 @@ aad
 aad
 aad
 aad
-aad
+tnm
 aad
 aad
 aad
 aad
 aad
 aac
-aac
+ptp
 aac
 aac
 aac
@@ -70208,14 +70194,14 @@ aad
 aad
 aad
 aad
-aad
+tnm
 aad
 aad
 aad
 aad
 aac
 aac
-aac
+ptp
 aac
 aac
 aac
@@ -70425,14 +70411,14 @@ aad
 aad
 aad
 aad
+tnm
 aad
 aad
-aad
 aac
 aac
 aac
 aac
-aac
+ptp
 aac
 aac
 aac
@@ -70494,27 +70480,27 @@ aaa
 aaa
 aaa
 aab
-aac
-aac
-aac
-aac
-aac
-aac
-aac
-aac
-aac
-aad
-aad
-aad
-aad
-aad
-aad
-abq
-aad
-aad
-aad
-aad
-aad
+ptp
+ptp
+ptp
+ptp
+ptp
+ptp
+ptp
+ptp
+ptp
+tnm
+tnm
+tnm
+tnm
+tnm
+tnm
+hKr
+tnm
+tnm
+tnm
+tnm
+tnm
 aad
 aad
 aad
@@ -70642,14 +70628,14 @@ aac
 aad
 aad
 aad
-aad
+tnm
 aac
 aac
 aac
 aac
 aac
 aac
-aac
+ptp
 aac
 aac
 aac
@@ -70731,7 +70717,7 @@ aad
 aad
 aad
 aad
-aad
+tnm
 aad
 aad
 aad
@@ -70859,14 +70845,14 @@ aac
 aac
 aac
 aac
-aac
-aac
-aac
-aac
-aac
-aac
-aac
-aac
+ptp
+ptp
+ptp
+ptp
+ptp
+ptp
+ptp
+ptp
 aac
 aac
 aac
@@ -70948,7 +70934,7 @@ aad
 aad
 aad
 aad
-aad
+tnm
 aad
 aad
 aad
@@ -71165,7 +71151,7 @@ aad
 aad
 aad
 aad
-aad
+tnm
 aad
 aad
 aad
@@ -71382,7 +71368,7 @@ aad
 aad
 aad
 aad
-aac
+ptp
 aac
 aac
 aac
@@ -71599,7 +71585,7 @@ aad
 aad
 aad
 aac
-aac
+ptp
 aac
 aac
 aac
@@ -71816,7 +71802,7 @@ aad
 aad
 aad
 aac
-aac
+ptp
 aac
 aac
 aac
@@ -72033,7 +72019,7 @@ aad
 aad
 aac
 aac
-aac
+ptp
 aac
 aac
 aac
@@ -72250,7 +72236,7 @@ aad
 aad
 aac
 aac
-aac
+ptp
 aac
 aac
 aac
@@ -72467,7 +72453,7 @@ aad
 aad
 aac
 aac
-aac
+ptp
 aac
 aac
 aac
@@ -72684,7 +72670,7 @@ aad
 aac
 aac
 aac
-aac
+ptp
 aac
 aac
 aac
@@ -72901,7 +72887,7 @@ aad
 aac
 aac
 aac
-aac
+ptp
 aac
 aac
 aac
@@ -73118,7 +73104,7 @@ aad
 aac
 aac
 aac
-aac
+ptp
 aac
 aac
 aac
@@ -73335,7 +73321,7 @@ aac
 aac
 aac
 aac
-aac
+ptp
 aac
 aac
 aac
@@ -73552,7 +73538,7 @@ aac
 aac
 aac
 aac
-aac
+ptp
 aac
 aac
 aac
@@ -73769,7 +73755,7 @@ aac
 aac
 aac
 aac
-aac
+ptp
 aac
 aac
 aac
@@ -73986,7 +73972,7 @@ aac
 aac
 aac
 aac
-aac
+ptp
 aac
 aac
 aac
@@ -74203,7 +74189,7 @@ aac
 aac
 aac
 aac
-aac
+ptp
 aac
 aac
 aac
@@ -74420,7 +74406,7 @@ aac
 aac
 aac
 aac
-aac
+ptp
 aac
 aac
 aac
@@ -74637,7 +74623,7 @@ aac
 aac
 aac
 aac
-aac
+ptp
 aac
 aac
 aac
@@ -74854,7 +74840,7 @@ aac
 aac
 aac
 aac
-aac
+ptp
 aac
 aac
 aac

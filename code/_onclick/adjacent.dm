@@ -10,8 +10,13 @@
 	Note that in all cases the neighbor is handled simply; this is usually the user's mob, in which case it is up to you
 	to check that the mob is not inside of something
 */
-/atom/proc/Adjacent(atom/neighbor) // basic inheritance, unused
+/datum/proc/Adjacent(atom/neighbor) // basic inheritance, unused
 	return FALSE
+
+
+/datum/wires/Adjacent(atom/neighbor)
+	return holder.Adjacent(neighbor)
+
 
 // Not a sane use of the function and (for now) indicative of an error elsewhere
 /area/Adjacent(atom/neighbor)
@@ -27,10 +32,10 @@
 */
 /turf/Adjacent(atom/neighbor, atom/target, atom/movable/mover)
 	var/turf/T0 = get_turf(neighbor)
-	
+
 	if(T0 == src) //same turf
 		return TRUE
-	
+
 	if(get_dist(src, T0) > 1 || z != T0.z) //too far
 		return FALSE
 
@@ -144,14 +149,14 @@
 	return FALSE
 
 
-/obj/item/projectile/Adjacent(atom/neighbor) //Projectiles don't behave like regular items.
+/obj/projectile/Adjacent(atom/neighbor) //Projectiles don't behave like regular items.
 	var/turf/T = get_turf(loc)
 	if(!T)
 		return FALSE
 	return T.Adjacent(neighbor, target = neighbor, mover = src)
 
 
-/obj/item/radio/detpack/Adjacent(neighbor) //Snowflake detpacks.
+/obj/item/detpack/Adjacent(neighbor) //Snowflake detpacks.
 	if(neighbor == loc)
 		return TRUE
 	var/turf/T = get_turf(loc)

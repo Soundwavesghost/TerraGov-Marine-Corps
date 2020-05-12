@@ -1,26 +1,26 @@
 /obj/proc/take_damage(damage_amount, damage_type = BRUTE, damage_flag = "", sound_effect = TRUE, attack_dir, armour_penetration = 0)
 	if(QDELETED(src))
 		CRASH("[src] taking damage after deletion")
-	
+
 	if(sound_effect)
 		play_attack_sound(damage_amount, damage_type, damage_flag)
-	
+
 	if((resistance_flags & INDESTRUCTIBLE) || obj_integrity <= 0)
 		return
 	damage_amount = run_obj_armor(damage_amount, damage_type, damage_flag, attack_dir, armour_penetration)
-	
+
 	if(damage_amount < DAMAGE_PRECISION)
 		return
 	. = damage_amount
-	
+
 	obj_integrity = max(obj_integrity - damage_amount, 0)
 
 	update_icon()
-	
+
 	//BREAKING FIRST
 	if(integrity_failure && obj_integrity <= integrity_failure)
 		obj_break(damage_flag)
-	
+
 	//DESTROYING SECOND
 	if(obj_integrity <= 0)
 		obj_destruction(damage_flag)
@@ -58,19 +58,18 @@
 			playsound(loc, 'sound/items/welder.ogg', 50, 1)
 
 
-/obj/ex_act(severity, target)
+/obj/ex_act(severity)
 	if(resistance_flags & INDESTRUCTIBLE)
 		return
 	. = ..() //contents explosion
-	if(target == src)
-		take_damage(INFINITY, BRUTE, "bomb", 0)
+	if(QDELETED(src))
 		return
 	switch(severity)
-		if(1)
+		if(EXPLODE_DEVASTATE)
 			take_damage(INFINITY, BRUTE, "bomb", 0)
-		if(2)
+		if(EXPLODE_HEAVY)
 			take_damage(rand(100, 250), BRUTE, "bomb", 0)
-		if(3)
+		if(EXPLODE_LIGHT)
 			take_damage(rand(10, 90), BRUTE, "bomb", 0)
 
 
@@ -86,7 +85,7 @@
 	take_damage(tforce, BRUTE, "melee", 1, get_dir(src, AM))
 
 
-/obj/bullet_act(obj/item/projectile/P)
+/obj/bullet_act(obj/projectile/P)
 	if(istype(P.ammo, /datum/ammo/xeno) && !(resistance_flags & XENO_DAMAGEABLE))
 		return
 	. = ..()
@@ -97,13 +96,13 @@
 
 
 /obj/proc/attack_generic(mob/user, damage_amount = 0, damage_type = BRUTE, damage_flag = 0, sound_effect = 1, armor_penetration = 0) //used by attack_alien, attack_animal, and attack_slime
-	user.do_attack_animation(src)
+	user.do_attack_animation(src, ATTACK_EFFECT_SMASH)
 	user.changeNext_move(CLICK_CD_MELEE)
 	return take_damage(damage_amount, damage_type, damage_flag, sound_effect, get_dir(src, user), armor_penetration)
 
 
 /obj/attack_animal(mob/living/simple_animal/M)
-	if(!M.melee_damage_upper && !M.obj_damage)
+	if(!M.melee_damage && !M.obj_damage)
 		M.emote("custom", message = "[M.friendly] [src].")
 		return 0
 	else
@@ -111,7 +110,7 @@
 		if(M.obj_damage)
 			. = attack_generic(M, M.obj_damage, M.melee_damage_type, "melee", play_soundeffect, M.armour_penetration)
 		else
-			. = attack_generic(M, rand(M.melee_damage_lower,M.melee_damage_upper), M.melee_damage_type, "melee", play_soundeffect, M.armour_penetration)
+			. = attack_generic(M, M.melee_damage, M.melee_damage_type, "melee", play_soundeffect, M.armour_penetration)
 		if(. && !play_soundeffect)
 			playsound(loc, 'sound/effects/meteorimpact.ogg', 100, 1)
 
@@ -122,9 +121,9 @@
 		return
 	X.visible_message("<span class='danger'>[X] has slashed [src]!</span>",
 	"<span class='danger'>We slash [src]!</span>")
-	X.flick_attack_overlay(src, "slash")
+	X.do_attack_animation(src, ATTACK_EFFECT_CLAW)
 	playsound(loc, "alien_claw_metal", 25)
-	attack_generic(X, rand(X.xeno_caste.melee_damage_lower, X.xeno_caste.melee_damage_upper), BRUTE, "melee", FALSE)
+	attack_generic(X, X.xeno_caste.melee_damage, BRUTE, "melee", FALSE)
 
 
 /obj/attack_larva(mob/living/carbon/xenomorph/larva/L)
@@ -134,6 +133,7 @@
 
 ///the obj is deconstructed into pieces, whether through careful disassembly or when destroyed.
 /obj/proc/deconstruct(disassembled = TRUE)
+	SHOULD_CALL_PARENT(TRUE)
 	SEND_SIGNAL(src, COMSIG_OBJ_DECONSTRUCT, disassembled)
 	qdel(src)
 
@@ -169,3 +169,7 @@
 		obj_break(damage_type)
 		return TRUE
 	return FALSE
+
+///returns how much the object blocks an explosion. Used by subtypes.
+/obj/proc/GetExplosionBlock(explosion_dir)
+	CRASH("Unimplemented GetExplosionBlock()")

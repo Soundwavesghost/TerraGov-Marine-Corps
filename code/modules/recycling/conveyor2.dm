@@ -8,6 +8,8 @@
 	desc = "A conveyor belt."
 	layer = CONVEYOR_LAYER // so they appear under stuff
 	anchored = TRUE
+	use_power = IDLE_POWER_USE
+	idle_power_usage = 100
 	var/operating = 0	// 1 if running forward, -1 if backwards, 0 if off
 	var/operable = 1	// true if can operate (no broken segments in this belt run)
 	var/forwards		// this is the default (forward) direction, set by the map dir
@@ -21,8 +23,8 @@
 	id = "round_end_belt"
 
 	// create a conveyor
-/obj/machinery/conveyor/New(loc, newdir, on = 0)
-	..(loc)
+/obj/machinery/conveyor/Initialize(mapload, newdir, on)
+	. = ..()
 	if(newdir)
 		setDir(newdir)
 	switch(dir)
@@ -51,7 +53,7 @@
 			forwards = WEST
 			backwards = NORTH
 	if(on)
-		operating = 1
+		operating = TRUE
 		setmove()
 
 /obj/machinery/conveyor/proc/setmove()
@@ -87,7 +89,6 @@
 		return
 	if(!operating)
 		return
-	use_power(100)
 
 	affecting = loc.contents - src		// moved items will be all in loc
 	INVOKE_NEXT_TICK(src, .proc/propogate)	// slight delay to prevent infinite propagation due to map order
@@ -105,14 +106,14 @@
 // attack with item, place item on conveyor
 /obj/machinery/conveyor/attackby(obj/item/I, mob/user, params)
 	. = ..()
-	
+
 	if(istype(I, /obj/item/grab))
 		var/obj/item/grab/G = I
-		
+
 		if(ismob(G.grabbed_thing))
 			var/mob/GM = G.grabbed_thing
 			step(GM, get_dir(GM, src))
-			
+
 	else
 		user.transferItemToLoc(I, loc)
 
@@ -198,16 +199,20 @@
 
 
 
-/obj/machinery/conveyor_switch/New()
-	..()
-	update()
+/obj/machinery/conveyor_switch/Initialize()
+	. = ..()
 
-	spawn(5)		// allow map load
-		conveyors = list()
-		for(var/obj/machinery/conveyor/C in GLOB.machines)
-			if(C.id == id)
-				conveyors += C
+	update()
 	start_processing()
+
+	return INITIALIZE_HINT_LATELOAD
+
+
+/obj/machinery/conveyor_switch/LateInitialize(mapload)
+	conveyors = list()
+	for(var/obj/machinery/conveyor/C in GLOB.machines)
+		if(C.id == id)
+			conveyors += C
 
 // update the icon depending on the position
 
@@ -233,7 +238,7 @@
 		C.setmove()
 
 // attack with hand, switch position
-/obj/machinery/conveyor_switch/attack_hand(mob/living/user)
+/obj/machinery/conveyor_switch/interact(mob/user)
 	. = ..()
 	if(.)
 		return
@@ -266,7 +271,7 @@
 	desc = "A conveyor control switch. It appears to only go in one direction."
 
 // attack with hand, switch position
-/obj/machinery/conveyor_switch/oneway/attack_hand(mob/living/user)
+/obj/machinery/conveyor_switch/oneway/interact(mob/user)
 	. = ..()
 	if(.)
 		return
@@ -275,7 +280,7 @@
 	else
 		position = 0
 
-	operated = 1
+	operated = TRUE
 	update()
 
 	// find any switches with same id as this one, and set their positions to match us

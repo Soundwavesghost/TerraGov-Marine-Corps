@@ -1,8 +1,7 @@
 GLOBAL_LIST_INIT(blacklisted_cargo_types, typecacheof(list(
 		/mob/living,
 		/obj/item/disk/nuclear,
-		/obj/item/radio/beacon,
-		/obj/item/stack/sheet/mineral/phoron
+		/obj/item/radio/beacon
 	)))
 
 GLOBAL_LIST_EMPTY(exports_types)
@@ -51,7 +50,16 @@ GLOBAL_LIST_EMPTY(exports_types)
 	movement_force = list("KNOCKDOWN" = 0, "THROW" = 0)
 	use_ripples = FALSE
 	var/list/gears = list()
-	var/list/railings = list()
+	var/list/obj/machinery/door/poddoor/railing/railings = list()
+
+
+/obj/docking_port/mobile/supply/Destroy(force)
+	for(var/i in railings)
+		var/obj/machinery/door/poddoor/railing/railing = i
+		railing.linked_pad = null
+	railings.Cut()
+	return ..()
+
 
 	//Export categories for this run, this is set by console sending the shuttle.
 //	var/export_categories = EXPORT_CARGO
@@ -91,6 +99,7 @@ GLOBAL_LIST_EMPTY(exports_types)
 	for(var/obj/machinery/door/poddoor/railing/R in GLOB.machines)
 		if(R.id == "supply_elevator_railing")
 			railings += R
+			R.linked_pad = src
 			R.open()
 
 /obj/docking_port/mobile/supply/canMove()
@@ -175,14 +184,14 @@ GLOBAL_LIST_EMPTY(exports_types)
 		for(var/typepath in contains)
 			if(!typepath)	continue
 			var/atom/B2 = new typepath(A)
-			//if(SP.amount && B2:amount) 
+			//if(SP.amount && B2:amount)
 			//	B2:amount = SP.amount
 			slip.info += "<li>[B2.name]</li>" //add the item to the manifest
 
 		//manifest finalisation
 		slip.info += "</ul><br>"
 		slip.info += "CHECK CONTENTS AND STAMP BELOW THE LINE TO CONFIRM RECEIPT OF GOODS<hr>"
-		if (SP.contraband) 
+		if (SP.contraband)
 			slip.loc = null	//we are out of blanks for Form #44-D Ordering Illicit Drugs.
 
 		SSshuttle.shoppinglist -= SO
@@ -191,7 +200,6 @@ GLOBAL_LIST_EMPTY(exports_types)
 	if(!GLOB.exports_types.len) // No exports list? Generate it!
 		setupExports()
 
-	var/plat_count = 0
 
 	for(var/place in shuttle_areas)
 		var/area/shuttle/shuttle_area = place
@@ -215,11 +223,6 @@ GLOBAL_LIST_EMPTY(exports_types)
 							find_slip = 0
 						continue
 
-					// Sell platinum
-					if(istype(A, /obj/item/stack/sheet/mineral/platinum))
-						var/obj/item/stack/sheet/mineral/platinum/P = A
-						plat_count += P.get_amount()
-
 			//Sell Xeno Corpses
 			if (isxeno(AM))
 				var/cost = 0
@@ -228,12 +231,16 @@ GLOBAL_LIST_EMPTY(exports_types)
 					if(AM.type == E.export_obj)
 						cost = E.cost
 				SSpoints.supply_points += cost
+			// Sell ore boxes
+			if(istype(AM, /obj/structure/ore_box/platinum))
 
+				SSpoints.supply_points += POINTS_PER_PLATINUM
+
+			if(istype(AM, /obj/structure/ore_box/phoron))
+
+				SSpoints.supply_points += POINTS_PER_PHORON
 
 			qdel(AM)
-
-	if(plat_count)
-		SSpoints.supply_points += plat_count * POINTS_PER_PLATINUM
 
 /obj/machinery/computer/supplycomp
 	name = "ASRS console"
@@ -257,23 +264,10 @@ GLOBAL_LIST_EMPTY(exports_types)
 	var/reqtime = 0 //Cooldown for requisitions - Quarxink
 	var/last_viewed_group = "categories"
 
-/obj/machinery/computer/ordercomp/attack_ai(mob/user as mob)
-	return attack_hand(user)
-
-/obj/machinery/computer/ordercomp/attack_paw(mob/living/carbon/monkey/user)
-	return attack_hand(user)
-
-/obj/machinery/computer/supplycomp/attack_ai(mob/user as mob)
-	return attack_hand(user)
-
-/obj/machinery/computer/supplycomp/attack_paw(mob/living/carbon/monkey/user)
-	return attack_hand(user)
-
-/obj/machinery/computer/ordercomp/attack_hand(mob/living/user)
+/obj/machinery/computer/ordercomp/interact(mob/user)
 	. = ..()
 	if(.)
 		return
-	user.set_interaction(src)
 	var/dat
 	if(temp)
 		dat = temp
@@ -291,8 +285,7 @@ GLOBAL_LIST_EMPTY(exports_types)
 			dat += "<BR><HR>Supply points: [round(SSpoints.supply_points)]<BR>"
 		dat += {"<BR>\n<A href='?src=\ref[src];order=categories'>Request items</A><BR><BR>
 		<A href='?src=\ref[src];vieworders=1'>View approved orders</A><BR><BR>
-		<A href='?src=\ref[src];viewrequests=1'>View requests</A><BR><BR>
-		<A href='?src=\ref[user];mach_close=computer'>Close</A>"}
+		<A href='?src=\ref[src];viewrequests=1'>View requests</A>"}
 
 	var/datum/browser/popup = new(user, "computer", "<div align='center'>Ordering Console</div>", 575, 450)
 	popup.set_content(dat)
@@ -304,9 +297,6 @@ GLOBAL_LIST_EMPTY(exports_types)
 	. = ..()
 	if(.)
 		return
-
-	if( isturf(loc) && (in_range(src, usr) || issilicon(usr)) )
-		usr.set_interaction(src)
 
 	if(href_list["order"])
 		if(href_list["order"] == "categories")
@@ -338,7 +328,7 @@ GLOBAL_LIST_EMPTY(exports_types)
 		if(!istype(P))	return
 
 		var/timeout = world.time + 600
-		var/reason = copytext(sanitize(input(usr,"Reason:","Why do you require this item?","") as null|text),1,MAX_MESSAGE_LEN)
+		var/reason = stripped_input(usr, "Reason:","Why do you require this item?")
 		if(world.time > timeout)	return
 		if(!reason)	return
 
@@ -360,7 +350,7 @@ GLOBAL_LIST_EMPTY(exports_types)
 		reqform.info += "RANK: [idrank]<br>"
 		reqform.info += "REASON: [reason]<br>"
 		reqform.info += "SUPPLY CRATE TYPE: [P.name]<br>"
-		reqform.info += "ACCESS RESTRICTION: [oldreplacetext(get_access_desc(P.access))]<br>"
+		reqform.info += "ACCESS RESTRICTION: [get_access_desc(P.access)]<br>"
 		reqform.info += "CONTENTS:<br>"
 		reqform.info += P.manifest
 		reqform.info += "<hr>"
@@ -397,19 +387,12 @@ GLOBAL_LIST_EMPTY(exports_types)
 		temp = null
 
 	updateUsrDialog()
-	return
 
-/obj/machinery/computer/supplycomp/attack_hand(mob/living/user)
+
+/obj/machinery/computer/supplycomp/interact(mob/user)
 	. = ..()
 	if(.)
 		return
-	if(!allowed(user))
-		to_chat(user, "<span class='warning'>Access Denied.</span>")
-		return
-
-	if(..())
-		return
-	user.set_interaction(src)
 	var/dat
 	if (temp)
 		dat = temp
@@ -443,8 +426,7 @@ GLOBAL_LIST_EMPTY(exports_types)
 		dat += {"<HR>\nSupply points: [round(SSpoints.supply_points)]<BR>\n<BR>
 		\n<A href='?src=\ref[src];order=categories'>Order items</A><BR>\n<BR>
 		\n<A href='?src=\ref[src];viewrequests=1'>View requests</A><BR>\n<BR>
-		\n<A href='?src=\ref[src];vieworders=1'>View orders</A><BR>\n<BR>
-		\n<A href='?src=\ref[user];mach_close=computer'>Close</A>"}
+		\n<A href='?src=\ref[src];vieworders=1'>View orders</A><BR>\n<BR>"}
 
 
 	var/datum/browser/popup = new(user, "computer", "<div align='center'>Automated Storage and Retrieval System</div>", 575, 450)
@@ -457,9 +439,6 @@ GLOBAL_LIST_EMPTY(exports_types)
 	. = ..()
 	if(.)
 		return
-
-	if(isturf(loc) && ( in_range(src, usr) || issilicon(usr) ) )
-		usr.set_interaction(src)
 
 	//Calling the shuttle
 	if(href_list["send"])
@@ -477,17 +456,9 @@ GLOBAL_LIST_EMPTY(exports_types)
 			SSshuttle.moveShuttle("supply", "supply_home", TRUE)
 			temp = "Raising platform.<BR><BR><A href='?src=\ref[src];mainmenu=1'>OK</A>"
 
-	//if (href_list["force_send"])
-		//shuttle.force_launch(src)
-
-	//if (href_list["cancel_send"])
-		//shuttle.cancel_launch(src)
 
 	else if (href_list["order"])
-		//if(!shuttle.idle()) return	//this shouldn't be necessary it seems
 		if(href_list["order"] == "categories")
-			//all_supply_groups
-			//Request what?
 			last_viewed_group = "categories"
 			temp = "<b>Supply points: [round(SSpoints.supply_points)]</b><BR>"
 			temp += "<A href='?src=\ref[src];mainmenu=1'>Main Menu</A><HR><BR><BR>"
@@ -504,14 +475,6 @@ GLOBAL_LIST_EMPTY(exports_types)
 				if((N.hidden && !hacked) || (N.contraband && !can_order_contraband) || N.group != last_viewed_group) continue								//Have to send the type instead of a reference to
 				temp += "<A href='?src=\ref[src];doorder=[N.name]'>[N.name]</A> Cost: [round(N.cost)]<BR>"		//the obj because it would get caught by the garbage
 
-		/*temp = "Supply points: [round(SSpoints.supply_points)]<BR><HR><BR>Request what?<BR><BR>"
-		for(var/supply_name in supply_controller.supply_packs )
-			var/datum/supply_packs/N = supply_controller.supply_packs[supply_name]
-			if(N.hidden && !hacked) continue
-			if(N.contraband && !can_order_contraband) continue
-			temp += "<A href='?src=\ref[src];doorder=[supply_name]'>[supply_name]</A> Cost: [N.cost]<BR>"    //the obj because it would get caught by the garbage
-		temp += "<BR><A href='?src=\ref[src];mainmenu=1'>OK</A>"*/
-
 	else if (href_list["doorder"])
 		if(world.time < reqtime)
 			visible_message("<b>[src]</b>'s monitor flashes, \"[world.time - reqtime] seconds remaining until another requisition form may be printed.\"")
@@ -522,7 +485,7 @@ GLOBAL_LIST_EMPTY(exports_types)
 		if(!istype(P))	return
 
 		var/timeout = world.time + 600
-		//var/reason = copytext(sanitize(input(usr,"Reason:","Why do you require this item?","") as null|text),1,MAX_MESSAGE_LEN)
+		//var/reason = stripped_input(usr,"Reason:","Why do you require this item?","") as null|text), MAX_MESSAGE_LEN)
 		var/reason = "*None Provided*"
 		if(world.time > timeout)	return
 		if(!reason)	return
@@ -545,7 +508,7 @@ GLOBAL_LIST_EMPTY(exports_types)
 		reqform.info += "RANK: [idrank]<br>"
 		reqform.info += "REASON: [reason]<br>"
 		reqform.info += "SUPPLY CRATE TYPE: [P.name]<br>"
-		reqform.info += "ACCESS RESTRICTION: [oldreplacetext(get_access_desc(P.access))]<br>"
+		reqform.info += "ACCESS RESTRICTION: [get_access_desc(P.access)]<br>"
 		reqform.info += "CONTENTS:<br>"
 		reqform.info += P.manifest
 		reqform.info += "<hr>"
@@ -600,17 +563,7 @@ GLOBAL_LIST_EMPTY(exports_types)
 			var/datum/supply_order/SO = S
 			temp += "#[SO.id] - [SO.pack.name] approved by [SO.orderer][SO.reason ? " ([SO.reason])":""]<BR>"// <A href='?src=\ref[src];cancelorder=[S]'>(Cancel)</A><BR>"
 		temp += "<BR><A href='?src=\ref[src];mainmenu=1'>OK</A>"
-/*
-	else if (href_list["cancelorder"])
-		var/datum/supply_order/remove_supply = href_list["cancelorder"]
-		supply_shuttle_shoppinglist -= remove_supply
-		supply_shuttle_points += remove_supply.object.cost
-		temp += "Canceled: [remove_supply.object.name]<BR><BR><BR>"
-		for(var/S in supply_shuttle_shoppinglist)
-			var/datum/supply_order/SO = S
-			temp += "[SO.object.name] approved by [SO.orderedby][SO.comment ? " ([SO.comment])":""] <A href='?src=\ref[src];cancelorder=[S]'>(Cancel)</A><BR>"
-		temp += "<BR><A href='?src=\ref[src];mainmenu=1'>OK</A>"
-*/
+
 	else if (href_list["viewrequests"])
 		temp = "Current requests: <BR><BR>"
 		for(var/S in SSshuttle.requestlist)
@@ -640,4 +593,3 @@ GLOBAL_LIST_EMPTY(exports_types)
 		temp = null
 
 	updateUsrDialog()
-	return

@@ -7,20 +7,19 @@
 	var/datum/radio_frequency/radio_connection
 	circuit = /obj/item/circuitboard/computer/air_management
 
-/obj/machinery/computer/general_air_control/attack_hand(mob/living/user)
+
+/obj/machinery/computer/general_air_control/interact(mob/user)
 	. = ..()
 	if(.)
 		return
-	user << browse(return_text(),"window=computer")
-	user.set_interaction(src)
-	onclose(user, "computer")
 
-/obj/machinery/computer/general_air_control/process()
-	..()
-	src.updateUsrDialog()
+	var/datum/browser/popup = new(user, "computer")
+	popup.set_content(return_text())
+	popup.open()
+
 
 /obj/machinery/computer/general_air_control/receive_signal(datum/signal/signal)
-	if(!signal) 
+	if(!signal)
 		return
 
 	var/id_tag = signal.data["tag"]
@@ -126,7 +125,7 @@ Max Output Pressure: [output_pressure] kPa<BR>"}
 	return output
 
 /obj/machinery/computer/general_air_control/large_tank_control/receive_signal(datum/signal/signal)
-	if(!signal) 
+	if(!signal)
 		return
 
 	var/id_tag = signal.data["tag"]
@@ -239,7 +238,7 @@ Min Core Pressure: [pressure_limit] kPa<BR>"}
 	return output
 
 /obj/machinery/computer/general_air_control/supermatter_core/receive_signal(datum/signal/signal)
-	if(!signal) 
+	if(!signal)
 		return
 
 	var/id_tag = signal.data["tag"]
@@ -367,7 +366,7 @@ Rate: [volume_rate] L/sec<BR>"}
 	return output
 
 /obj/machinery/computer/general_air_control/fuel_injection/receive_signal(datum/signal/signal)
-	if(!signal) 
+	if(!signal)
 		return
 
 	var/id_tag = signal.data["tag"]

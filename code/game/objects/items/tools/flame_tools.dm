@@ -96,7 +96,6 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	var/burnt = 0
 	var/smoketime = 5
 	w_class = WEIGHT_CLASS_TINY
-	origin_tech = "materials=1"
 	attack_verb = list("burnt", "singed")
 
 /obj/item/tool/match/process()
@@ -244,7 +243,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 		return ..()
 
 
-/obj/item/clothing/mask/cigarette/afterattack(obj/item/reagent_container/glass/glass, mob/living/user, proximity)
+/obj/item/clothing/mask/cigarette/afterattack(obj/item/reagent_containers/glass/glass, mob/living/user, proximity)
 	. = ..()
 	if(!proximity || lit) //can't dip if cigarette is lit
 		return
@@ -268,13 +267,13 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	damtype = "fire"
 	if(reagents.get_reagent_amount(/datum/reagent/toxin/phoron)) // the phoron explodes when exposed to fire
 		var/datum/effect_system/reagents_explosion/e = new()
-		e.set_up(round(reagents.get_reagent_amount(/datum/reagent/toxin/phoron) / 2.5, 1), get_turf(src), 0, 0)
+		e.set_up(round(reagents.get_reagent_amount(/datum/reagent/toxin/phoron) * 0.4, 1), get_turf(src))
 		e.start()
 		qdel(src)
 		return
 	if(reagents.get_reagent_amount(/datum/reagent/fuel)) // the fuel explodes, too, but much less violently
 		var/datum/effect_system/reagents_explosion/e = new()
-		e.set_up(round(reagents.get_reagent_amount(/datum/reagent/fuel) / 5, 1), get_turf(src), 0, 0)
+		e.set_up(round(reagents.get_reagent_amount(/datum/reagent/fuel) * 0.2, 1), get_turf(src))
 		e.start()
 		qdel(src)
 		return
@@ -476,12 +475,12 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	icon_on = "zippoon"
 	icon_off = "zippo"
 
-/obj/item/tool/lighter/random
-	New()
-		clr = pick("r","c","y","g")
-		icon_on = "lighter-[clr]-on"
-		icon_off = "lighter-[clr]"
-		icon_state = icon_off
+/obj/item/tool/lighter/random/Initialize()
+	. = ..()
+	clr = pick("r","c","y","g")
+	icon_on = "lighter-[clr]-on"
+	icon_off = "lighter-[clr]"
+	icon_state = icon_off
 
 /obj/item/tool/lighter/attack_self(mob/living/user)
 	if(user.r_hand == src || user.l_hand == src)

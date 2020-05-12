@@ -8,8 +8,7 @@
 	upgrade = XENO_UPGRADE_BASETYPE
 	wound_type = "hivelord" //used to match appropriate wound overlays
 	// *** Melee Attacks *** //
-	melee_damage_lower = 15
-	melee_damage_upper = 20
+	melee_damage = 20
 
 	// *** Tackle *** //
 	tackle_damage = 30
@@ -25,8 +24,8 @@
 	max_health = 250
 
 	// *** Evolution *** //
-	evolution_threshold = 200
-	upgrade_threshold = 200
+	evolution_threshold = 180
+	upgrade_threshold = 120
 
 	deevolves_to = /mob/living/carbon/xenomorph/drone
 
@@ -38,7 +37,7 @@
 	can_hold_eggs = CAN_HOLD_TWO_HANDS
 
 	// *** Defense *** //
-	armor = list("melee" = 10, "bullet" = 10, "laser" = 10, "energy" = 10, "bomb" = XENO_BOMB_RESIST_0, "bio" = 10, "rad" = 10, "fire" = 10, "acid" = 10)
+	soft_armor = list("melee" = 15, "bullet" = 15, "laser" = 15, "energy" = 15, "bomb" = XENO_BOMB_RESIST_0, "bio" = 10, "rad" = 10, "fire" = 10, "acid" = 10)
 
 	// *** Ranged Attack *** //
 	spit_delay = 1.3 SECONDS
@@ -47,6 +46,21 @@
 	// *** Pheromones *** //
 	aura_strength = 2 //Hivelord's aura is not extremely strong, but better than Drones.
 	aura_allowed = list("frenzy", "warding", "recovery")
+
+	// *** Abilities *** //
+	actions = list(
+		/datum/action/xeno_action/xeno_resting,
+		/datum/action/xeno_action/regurgitate,
+		/datum/action/xeno_action/plant_weeds,
+		/datum/action/xeno_action/choose_resin/hivelord,
+		/datum/action/xeno_action/activable/secrete_resin/hivelord, // TODO: (psykzz) Disabled until this is fixed.
+		/datum/action/xeno_action/activable/transfer_plasma/improved,
+		/datum/action/xeno_action/activable/corrosive_acid,
+		/datum/action/xeno_action/build_tunnel,
+		/datum/action/xeno_action/toggle_speed,
+		/datum/action/xeno_action/toggle_pheromones,
+		/datum/action/xeno_action/activable/xeno_spit
+		)
 
 /datum/xeno_caste/hivelord/young
 	upgrade_name = "Young"
@@ -59,8 +73,7 @@
 	upgrade = XENO_UPGRADE_ONE
 
 	// *** Melee Attacks *** //
-	melee_damage_lower = 15
-	melee_damage_upper = 20
+	melee_damage = 23
 
 	// *** Tackle *** //
 	tackle_damage = 35
@@ -76,10 +89,10 @@
 	max_health = 275
 
 	// *** Evolution *** //
-	upgrade_threshold = 400
+	upgrade_threshold = 240
 
 	// *** Defense *** //
-	armor = list("melee" = 15, "bullet" = 15, "laser" = 15, "energy" = 15, "bomb" = XENO_BOMB_RESIST_0, "bio" = 15, "rad" = 15, "fire" = 15, "acid" = 15)
+	soft_armor = list("melee" = 20, "bullet" = 20, "laser" = 20, "energy" = 20, "bomb" = XENO_BOMB_RESIST_0, "bio" = 15, "rad" = 15, "fire" = 15, "acid" = 15)
 
 	// *** Ranged Attack *** //
 	spit_delay = 1.3 SECONDS
@@ -94,8 +107,7 @@
 	upgrade = XENO_UPGRADE_TWO
 
 	// *** Melee Attacks *** //
-	melee_damage_lower = 15
-	melee_damage_upper = 20
+	melee_damage = 25
 
 	// *** Tackle *** //
 	tackle_damage = 40
@@ -111,10 +123,10 @@
 	max_health = 290
 
 	// *** Evolution *** //
-	upgrade_threshold = 800
+	upgrade_threshold = 480
 
 	// *** Defense *** //
-	armor = list("melee" = 18, "bullet" = 18, "laser" = 18, "energy" = 18, "bomb" = XENO_BOMB_RESIST_0, "bio" = 18, "rad" = 18, "fire" = 18, "acid" = 18)
+	soft_armor = list("melee" = 25, "bullet" = 25, "laser" = 25, "energy" = 25, "bomb" = XENO_BOMB_RESIST_0, "bio" = 18, "rad" = 18, "fire" = 18, "acid" = 18)
 
 	// *** Ranged Attack *** //
 	spit_delay = 1.3 SECONDS
@@ -130,8 +142,7 @@
 	upgrade = XENO_UPGRADE_THREE
 
 	// *** Melee Attacks *** //
-	melee_damage_lower = 20
-	melee_damage_upper = 30
+	melee_damage = 27
 
 	// *** Tackle *** //
 	tackle_damage = 45
@@ -147,10 +158,10 @@
 	max_health = 300
 
 	// *** Evolution *** //
-	upgrade_threshold = 800
+	upgrade_threshold = 480
 
 	// *** Defense *** //
-	armor = list("melee" = 20, "bullet" = 20, "laser" = 20, "energy" = 20, "bomb" = XENO_BOMB_RESIST_0, "bio" = 20, "rad" = 20, "fire" = 20, "acid" = 20)
+	soft_armor = list("melee" = 30, "bullet" = 30, "laser" = 30, "energy" = 30, "bomb" = XENO_BOMB_RESIST_0, "bio" = 20, "rad" = 20, "fire" = 20, "acid" = 20)
 
 	// *** Ranged Attack *** //
 	spit_delay = 1.3 SECONDS
@@ -158,4 +169,4 @@
 
 	// *** Pheromones *** //
 	aura_strength = 3
-	
+

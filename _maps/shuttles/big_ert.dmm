@@ -170,10 +170,7 @@
 	},
 /area/shuttle/big_ert)
 "az" = (
-/obj/machinery/door/airlock/mainship/medical{
-	name = "Operating Theatre";
-	req_one_access_txt = "0"
-	},
+/obj/machinery/door/airlock/mainship/medical/or/free_access,
 /turf/open/floor/mainship{
 	icon_state = "plate"
 	},
@@ -237,8 +234,8 @@
 /obj/structure/mirror{
 	pixel_y = -28
 	},
-/obj/item/reagent_container/blood/OMinus,
-/obj/item/reagent_container/blood/OMinus,
+/obj/item/reagent_containers/blood/OMinus,
+/obj/item/reagent_containers/blood/OMinus,
 /turf/open/floor/mainship{
 	icon_state = "plate"
 	},
@@ -251,7 +248,7 @@
 /obj/item/storage/pouch/medical,
 /obj/item/storage/belt/combatLifesaver,
 /obj/item/storage/belt/combatLifesaver,
-/obj/item/reagent_container/spray/surgery,
+/obj/item/reagent_containers/spray/surgery,
 /turf/open/floor/mainship{
 	icon_state = "plate"
 	},
@@ -306,10 +303,8 @@
 	},
 /area/shuttle/big_ert)
 "aQ" = (
-/obj/machinery/door/airlock/mainship/medical{
-	dir = 2;
-	name = "Operating Theatre";
-	req_one_access_txt = "0"
+/obj/machinery/door/airlock/mainship/medical/or/free_access{
+	dir = 2
 	},
 /turf/open/floor/mainship{
 	icon_state = "plate"
@@ -538,7 +533,7 @@
 "bs" = (
 /obj/machinery/door/airlock/mainship/command{
 	dir = 1;
-	name = "Captain's Quarters"
+	name = "\improper Captain's Quarters"
 	},
 /turf/open/floor/plating/mainship,
 /area/shuttle/big_ert)
@@ -613,7 +608,7 @@
 "bC" = (
 /obj/machinery/door/airlock/mainship/command{
 	dir = 4;
-	name = "Bridge"
+	name = "\improper Bridge"
 	},
 /turf/open/floor/plating/mainship,
 /area/shuttle/big_ert)
@@ -783,7 +778,7 @@
 "bQ" = (
 /obj/machinery/door/airlock/mainship/command{
 	dir = 1;
-	name = "Captain's Storage"
+	name = "\improper Captain's Storage"
 	},
 /turf/open/floor/plating/mainship,
 /area/shuttle/big_ert)
@@ -880,9 +875,9 @@
 /area/shuttle/big_ert)
 "cb" = (
 /obj/structure/rack,
-/obj/item/ammo_magazine/smg/m39,
-/obj/item/ammo_magazine/smg/m39,
-/obj/item/ammo_magazine/smg/m39,
+/obj/item/ammo_magazine/smg/standard_smg,
+/obj/item/ammo_magazine/smg/standard_smg,
+/obj/item/ammo_magazine/smg/standard_smg,
 /obj/item/weapon/gun/smg/m39/elite,
 /turf/open/floor/mainship{
 	icon_state = "plate"
@@ -1023,8 +1018,8 @@
 /area/shuttle/big_ert)
 "cp" = (
 /obj/structure/rack,
-/obj/item/ammo_magazine/smg/m39,
-/obj/item/ammo_magazine/smg/m39,
+/obj/item/ammo_magazine/smg/standard_smg,
+/obj/item/ammo_magazine/smg/standard_smg,
 /obj/item/weapon/gun/smg/m39/elite,
 /turf/open/floor/mainship{
 	icon_state = "plate"

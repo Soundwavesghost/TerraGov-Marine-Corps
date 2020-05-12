@@ -42,7 +42,7 @@
 
 	if(info != initial(info))
 		info = html_encode(info)
-		info = oldreplacetext(info, "\n", "<BR>")
+		info = replacetext(info, "\n", "<BR>")
 		info = parsepencode(info)
 
 	update_icon()
@@ -57,10 +57,8 @@
 	icon_state = "paper"
 
 /obj/item/paper/examine(mob/user)
-//	..()	//We don't want them to see the dumb "this is a paper" thing every time.
-// I didn't like the idea that people can read tiny pieces of paper from across the room.
-// Now you need to be next to the paper in order to read it.
-	if(in_range(user, src) || isobserver(user))
+	. = ..()
+	if(in_range(user, src) || isobserver(user)) //You need to be next to the paper in order to read it.
 		if(!(isobserver(user) || ishuman(user) || issilicon(user)))
 			// Show scrambled paper if they aren't a ghost, human, or silicone.
 			usr << browse("<HTML><HEAD><TITLE>[name]</TITLE></HEAD><BODY>[stars(info)][stamps]</BODY></HTML>", "window=[name]")
@@ -69,7 +67,7 @@
 			user << browse("<HTML><HEAD><TITLE>[name]</TITLE></HEAD><BODY>[info][stamps]</BODY></HTML>", "window=[name]")
 			onclose(user, "[name]")
 	else
-		to_chat(user, "<span class='notice'>It is too far away.</span>")
+		to_chat(user, "<span class='notice'>It is too far away to read.</span>")
 	return
 
 /obj/item/paper/verb/rename()
@@ -77,7 +75,7 @@
 	set category = "Object"
 	set src in usr
 
-	var/n_name = copytext(sanitize(input(usr, "What would you like to label the paper?", "Paper Labelling", null)  as text), 1, MAX_NAME_LEN)
+	var/n_name = stripped_input(usr, "What would you like to label the paper?", "Paper Labelling")
 	if((loc == usr && usr.stat == 0))
 		name = "[(n_name ? text("[n_name]") : "paper")]"
 	return
@@ -124,22 +122,20 @@
 	var/locid = 0
 	var/laststart = 1
 	var/textindex = 1
-	var/spam_protection = 100
-	while(locid < 15) // I know this can cause infinite loops and fuck up the whole server, but the if(istart==0) should be safe as fuck
+	while(locid < 15)	//hey whoever decided a while(1) was a good idea here, i hate you
 		var/istart = 0
-		spam_protection--
-		if(spam_protection <= 0)
-			return
-
 		if(links)
 			istart = findtext(info_links, "<span class=\"paper_field\">", laststart)
 		else
 			istart = findtext(info, "<span class=\"paper_field\">", laststart)
 
-		if(istart==0)
-			return // No field found with matching id
+		if(istart == 0)
+			return	//No field found with matching id
 
-		laststart = istart+1
+		if(links)
+			laststart = istart + length(info_links[istart])
+		else
+			laststart = istart + length(info[istart])
 		locid++
 		if(locid == id)
 			var/iend = 1
@@ -245,8 +241,6 @@
 	. = ..()
 	if(.)
 		return
-	if(!usr || (usr.stat || usr.restrained()))
-		return
 
 	if(href_list["write"])
 		var/id = href_list["write"]
@@ -265,7 +259,7 @@
 		if(src.loc != usr && !src.Adjacent(usr) && !((istype(src.loc, /obj/item/clipboard) || istype(src.loc, /obj/item/folder)) && (src.loc.loc == usr || src.loc.Adjacent(usr)) ) )
 			return
 
-		t = oldreplacetext(t, "\n", "<BR>")
+		t = replacetext(t, "\n", "<BR>")
 		t = parsepencode(t, i, usr, iscrayon) // Encode everything from pencode to html
 
 		if(id!="end")
@@ -290,7 +284,7 @@
 			if(!C.iscopy && !C.copied)
 				to_chat(user, "<span class='notice'>Take off the carbon copy first.</span>")
 				return
-		if(loc != user) 
+		if(loc != user)
 			return
 		var/obj/item/paper_bundle/B = new(get_turf(user))
 		if(name != "paper")

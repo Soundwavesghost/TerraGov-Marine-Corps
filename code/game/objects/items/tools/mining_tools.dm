@@ -13,9 +13,8 @@
 	throwforce = 4.0
 	item_state = "pickaxe"
 	w_class = WEIGHT_CLASS_BULKY
-	matter = list("metal" = 3750)
+	materials = list(/datum/material/metal = 2000)
 	var/digspeed = 40 //moving the delay to an item var so R&D can make improved picks. --NEO
-	origin_tech = "materials=1;engineering=1"
 	attack_verb = list("hit", "pierced", "sliced", "attacked")
 	var/drill_sound = 'sound/weapons/genhit.ogg'
 	var/drill_verb = "picking"
@@ -32,7 +31,6 @@
 	icon_state = "spickaxe"
 	item_state = "spickaxe"
 	digspeed = 30
-	origin_tech = "materials=3"
 	desc = "This makes no metallurgic sense."
 
 /obj/item/tool/pickaxe/drill
@@ -40,7 +38,6 @@
 	icon_state = "handdrill"
 	item_state = "jackhammer"
 	digspeed = 30
-	origin_tech = "materials=2;powerstorage=3;engineering=2"
 	desc = "Yours is the drill that will pierce through the rock walls."
 	drill_verb = "drilling"
 
@@ -49,7 +46,6 @@
 	icon_state = "jackhammer"
 	item_state = "jackhammer"
 	digspeed = 20 //faster than drill, but cannot dig
-	origin_tech = "materials=3;powerstorage=2;engineering=2"
 	desc = "Cracks rocks with sonic blasts, perfect for killing cave lizards."
 	drill_verb = "hammering"
 
@@ -58,7 +54,6 @@
 	icon_state = "gpickaxe"
 	item_state = "gpickaxe"
 	digspeed = 20
-	origin_tech = "materials=4"
 	desc = "This makes no metallurgic sense."
 
 /obj/item/tool/pickaxe/diamond
@@ -66,7 +61,6 @@
 	icon_state = "dpickaxe"
 	item_state = "dpickaxe"
 	digspeed = 10
-	origin_tech = "materials=6;engineering=4"
 	desc = "A pickaxe with a diamond pick head, this is just like minecraft."
 
 /obj/item/tool/pickaxe/diamonddrill //When people ask about the badass leader of the mining tools, they are talking about ME!
@@ -74,7 +68,6 @@
 	icon_state = "diamonddrill"
 	item_state = "jackhammer"
 	digspeed = 5 //Digs through walls, girders, and can dig up sand
-	origin_tech = "materials=6;powerstorage=4;engineering=5"
 	desc = "Yours is the drill that will pierce the heavens!"
 	drill_verb = "drilling"
 
@@ -95,8 +88,7 @@
 	flags_equip_slot = ITEM_SLOT_BELT|ITEM_SLOT_BACK
 	force = 40.0
 	damtype = "fire"
-	digspeed = 20 //Can slice though normal walls, all girders, or be used in reinforced wall deconstruction/ light thermite on fire
-	origin_tech = "materials=4;phorontech=3;engineering=3"
+	digspeed = 20 //Can slice though normal walls, all girders, or be used in reinforced wall deconstruction
 	desc = "A tool that cuts with deadly hot plasma. You could use it to cut limbs off of xenos! Or, you know, cut apart walls or mine through stone. Eye protection strongly recommended."
 	drill_verb = "cutting"
 	heat = 3800
@@ -118,31 +110,33 @@
 	else
 		to_chat(user, "<span class='warning'>It does not have a power source installed!</span>")
 
-/obj/item/tool/pickaxe/plasmacutter/attack_self(mob/user as mob)
-	toggle()
-	return
+/obj/item/tool/pickaxe/plasmacutter/attack_self(mob/user)
+	toggle(user)
+	user.changeNext_move(CLICK_CD_LONG)
+
 
 //Toggles the cutter off and on
-/obj/item/tool/pickaxe/plasmacutter/proc/toggle(message = 0)
-	var/mob/M
-	if(ismob(loc))
-		M = loc
-	if(!powered)
-		if(!cell || cell.charge <= 0)
-			fizzle_message(M)
-			return
-		playsound(loc, 'sound/weapons/saberon.ogg', 25)
-		powered = TRUE
-		if(M)
-			to_chat(M, "<span class='notice'>You switch [src] on. <b>Charge Remaining: [cell.charge]/[cell.maxcharge]</b></span>")
-		update_plasmacutter()
-
-	else
-		playsound(loc, 'sound/weapons/saberoff.ogg', 25)
+/obj/item/tool/pickaxe/plasmacutter/proc/toggle(mob/user, silent)
+	if(powered)
+		playsound(loc, 'sound/weapons/saberoff.ogg', 15)
 		powered = FALSE
-		if(M)
-			to_chat(M, "<span class='notice'>You switch [src] off. <b>Charge Remaining: [cell.charge]/[cell.maxcharge]</b></span>")
+		if(!silent && user)
+			user.visible_message("<span class='notice'>[user] turns [src] off.</span>",
+		"<span class='notice'>You switch [src] off. <b>Charge Remaining: [cell.charge]/[cell.maxcharge]</b></span>")
 		update_plasmacutter()
+		return
+
+	if(!cell || cell.charge <= 0)
+		fizzle_message(user)
+		return
+	playsound(loc, 'sound/weapons/saberon.ogg', 15)
+	powered = TRUE
+	if(!silent && user)
+		user.visible_message("<span class='notice'>[user] turns [src] on.</span>",
+		"<span class='notice'>You switch [src] on. <b>Charge Remaining: [cell.charge]/[cell.maxcharge]</b></span>")
+
+	update_plasmacutter()
+
 
 /obj/item/tool/pickaxe/plasmacutter/proc/fizzle_message(mob/user)
 	playsound(src, 'sound/machines/buzz-two.ogg', 25, 1)
@@ -209,16 +203,14 @@
 	update_plasmacutter()
 
 /obj/item/tool/pickaxe/plasmacutter/proc/calc_delay(mob/user)
-	var/final_delay = PLASMACUTTER_CUT_DELAY
-	if (!istype(user) || !user.mind || !user.mind.cm_skills)
-		return
-	if(user.mind.cm_skills.engineer < SKILL_ENGINEER_ENGI) //We don't have proper skills; time to fumble and bumble.
+	. = PLASMACUTTER_CUT_DELAY
+	var/skill = user.skills.getRating("engineer")
+	if(skill < SKILL_ENGINEER_ENGI) //We don't have proper skills; time to fumble and bumble.
 		user.visible_message("<span class='notice'>[user] fumbles around figuring out how to use [src].</span>",
 		"<span class='notice'>You fumble around figuring out how to use [src].</span>")
-		final_delay *= max(1, 4 + (user.mind.cm_skills.engineer * -1)) //Takes twice to four times as long depending on your skill.
-	else
-		final_delay -= min(PLASMACUTTER_CUT_DELAY,(user.mind.cm_skills.engineer - 3)*5) //We have proper skills; delay lowered by 0.5 per skill point in excess of a field engineer's.
-	return final_delay
+		return . *= max(1, 4 - skill) //Takes twice to four times as long depending on your skill.
+	. -= min(PLASMACUTTER_CUT_DELAY, (skill - 3) * 5) //We have proper skills; delay lowered by 0.5 per skill point in excess of a field engineer's.
+
 
 /obj/item/tool/pickaxe/plasmacutter/emp_act(severity)
 	cell.use(round(cell.maxcharge / severity))
@@ -337,7 +329,7 @@
 
 	if(!start_cut(user, O.name, O))
 		return TRUE
-		
+
 	if(!do_after(user, calc_delay(user), TRUE, O, BUSY_ICON_HOSTILE))
 		return TRUE
 

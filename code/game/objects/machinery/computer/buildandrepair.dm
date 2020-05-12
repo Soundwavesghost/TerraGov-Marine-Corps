@@ -1,5 +1,3 @@
-//This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:31
-
 /obj/structure/computerframe
 	density = FALSE
 	anchored = FALSE
@@ -7,8 +5,7 @@
 	icon = 'icons/obj/stock_parts.dmi'
 	icon_state = "0"
 	var/state = 0
-	var/obj/item/circuitboard/computer/circuit = null
-//	weight = 1.0E8
+	var/obj/item/circuitboard/computer/circuit
 
 /obj/structure/computerframe/attackby(obj/item/I, mob/user, params)
 	switch(state)
@@ -27,7 +24,7 @@
 				if(!WT.remove_fuel(0, user))
 					to_chat(user, "[WT] must be on to complete this task.")
 					return
-					
+
 				playsound(loc, 'sound/items/welder.ogg', 25, 1)
 				if(!do_after(user, 20, TRUE, src, BUSY_ICON_BUILD, extra_checks = CALLBACK(WT, /obj/item/tool/weldingtool/proc/isOn)))
 					return FALSE
@@ -83,7 +80,7 @@
 				to_chat(user, "<span class='notice'>You start to add cables to the frame.</span>")
 
 				playsound(loc, 'sound/items/deconstruct.ogg', 25, 1)
-			
+
 				if(!do_after(user, 20, TRUE, src, BUSY_ICON_BUILD) || state != 2 || !C.use(5))
 					return FALSE
 

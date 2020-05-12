@@ -7,6 +7,7 @@
 	anchored = TRUE
 	obj_flags = CAN_BE_HIT
 	destroy_sound = 'sound/effects/metal_crash.ogg'
+	interaction_flags = INTERACT_MACHINE_DEFAULT
 
 	var/machine_stat = NONE
 	var/use_power = IDLE_POWER_USE
@@ -21,6 +22,8 @@
 	var/obj/item/circuitboard/circuit // Circuit to be created and inserted when the machinery is created
 	var/mob/living/carbon/human/operator
 
+	var/ui_x	//For storing and overriding ui dimensions
+	var/ui_y
 
 /obj/machinery/Initialize()
 	. = ..()
@@ -47,7 +50,7 @@
 				var/obj/item/I = i
 				I.forceMove(loc)
 			component_parts.Cut()
-	qdel(src)
+	return ..()
 
 
 /obj/machinery/proc/spawn_frame(disassembled)
@@ -78,7 +81,7 @@
 	STOP_PROCESSING(SSmachines, src)
 
 
-/obj/machinery/process()//If you dont use process or power why are you here
+/obj/machinery/process() // If you dont use process or power why are you here
 	return PROCESS_KILL
 
 
@@ -86,7 +89,7 @@
 	if(CHECK_BITFIELD(resistance_flags, INDESTRUCTIBLE))
 		return FALSE
 	if(use_power && !machine_stat)
-		use_power(7500/severity)
+		use_power(7500 / severity)
 	new /obj/effect/overlay/temp/emp_sparks (loc)
 	return ..()
 
@@ -95,13 +98,13 @@
 	if(CHECK_BITFIELD(resistance_flags, INDESTRUCTIBLE))
 		return FALSE
 	switch(severity)
-		if(1)
+		if(EXPLODE_DEVASTATE)
 			qdel(src)
-		if(2)
+		if(EXPLODE_HEAVY)
 			if(!prob(50))
 				return
 			qdel(src)
-		if(3)
+		if(EXPLODE_LIGHT)
 			if(!prob(25))
 				return
 			qdel(src)
@@ -133,42 +136,51 @@
 			if(machine_current_charge < machine_max_charge && anchored) //here we handle recharging the internal battery of machines
 				var/power_usage = CLAMP(machine_max_charge - machine_current_charge, 0, 500)
 				machine_current_charge += power_usage //recharge internal cell at max rate of 500
-				use_power(power_usage, power_channel, TRUE)
+				use_power(power_usage, power_channel)
 				update_icon()
 			else
-				use_power(idle_power_usage, power_channel, TRUE)
+				use_power(idle_power_usage, power_channel)
 
 		if(ACTIVE_POWER_USE)
-			use_power(active_power_usage, power_channel, TRUE)
+			use_power(active_power_usage, power_channel)
 	return TRUE
 
 
-/obj/machinery/Topic(href, href_list)
+/obj/machinery/can_interact(mob/user)
+	. = ..()
+	if(!.)
+		return FALSE
+
+	if(!is_operational())
+		return FALSE
+
+	if(iscarbon(usr) && (!in_range(src, usr) || !isturf(loc)))
+		return FALSE
+
+	if(ishuman(user))
+		var/mob/living/carbon/human/H = user
+		if(H.getBrainLoss() >= 60)
+			visible_message("<span class='warning'>[H] stares cluelessly at [src] and drools.</span>")
+			return FALSE
+		if(prob(H.getBrainLoss()))
+			to_chat(user, "<span class='warning'>You momentarily forget how to use [src].</span>")
+			return FALSE
+
+	return TRUE
+
+
+/obj/machinery/attack_ai(mob/living/silicon/ai/user)
+	return interact(user)
+
+
+/obj/machinery/attack_ghost(mob/dead/observer/user)
 	. = ..()
 	if(.)
-		return
-	if(!is_operational())
+		return //Already handled.
+
+	if(CHECK_BITFIELD(machine_stat, PANEL_OPEN) && wires && wires.interact(user))
 		return TRUE
 
-	if(usr.restrained() || usr.lying || usr.stat != CONSCIOUS)
-		return TRUE
-
-	if(!ishuman(usr) && !ismonkey(usr) && !issilicon(usr) && !isxeno(usr))
-		to_chat(usr, "<span class='warning'>You don't have the dexterity to do this!</span>")
-		return TRUE
-
-	if((!in_range(src, usr) || !isturf(loc)) && !issilicon(usr))
-		return TRUE
-
-	return FALSE
-
-
-/obj/machinery/attack_paw(mob/living/carbon/monkey/user)
-	return attack_hand(user)
-
-
-
-/obj/machinery/attack_ai(mob/user)
 	return interact(user)
 
 
@@ -177,29 +189,13 @@
 	if(.)
 		return
 
-	if(user.lying || user.stat != CONSCIOUS)
+	if(!can_interact(user))
+		return
+
+	if(CHECK_BITFIELD(machine_stat, PANEL_OPEN) && wires && wires.interact(user))
 		return TRUE
 
-	if(!ishuman(usr) && !ismonkey(usr) && !issilicon(usr) && !isxeno(usr))
-		to_chat(usr, "<span class='warning'>You don't have the dexterity to do this!</span>")
-		return TRUE
-
-	if(ishuman(user))
-		var/mob/living/carbon/human/H = user
-		if(H.getBrainLoss() >= 60)
-			visible_message("<span class='warning'> [H] stares cluelessly at [src] and drools.</span>")
-			return TRUE
-		else if(prob(H.getBrainLoss()))
-			to_chat(user, "<span class='warning'>You momentarily forget how to use [src].</span>")
-			return TRUE
-
-	if(CHECK_BITFIELD(machine_stat, PANEL_OPEN) && (attempt_wire_interaction(user) == WIRE_INTERACTION_BLOCK))
-		return TRUE
-
-	if(!is_operational())
-		return TRUE
-
-	return FALSE
+	return interact(user)
 
 
 /obj/machinery/proc/RefreshParts() //Placeholder proc for machines that are built using frames.
@@ -237,6 +233,7 @@
 	N.fields["autodoc_data"] = generate_autodoc_surgery_list(H)
 	visible_message("<span class='notice'>\The [src] pings as it stores the scan report of [H.real_name]</span>")
 	playsound(loc, 'sound/machines/ping.ogg', 25, 1)
+	use_power(active_power_usage)
 	return dat
 
 
@@ -254,7 +251,7 @@
 		"rads" = H.radiation,
 		"cloneloss" = H.getCloneLoss(),
 		"brainloss" = H.getBrainLoss(),
-		"knocked_out" = H.knocked_out,
+		"knocked_out" = H.AmountUnconscious(),
 		"bodytemp" = H.bodytemperature,
 		"inaprovaline_amount" = H.reagents.get_reagent_amount(/datum/reagent/medicine/inaprovaline),
 		"dexalin_amount" = H.reagents.get_reagent_amount(/datum/reagent/medicine/dexalin),
@@ -293,7 +290,7 @@
 	dat += text("[]\tRadiation Level %: []</font><br>", (occ["rads"] < 10 ?"<font color='#487553'>" : "<font color=#b54646>"), occ["rads"])
 	dat += text("[]\tGenetic Tissue Damage %: []</font><br>", (occ["cloneloss"] < 1 ?"<font color=#487553>" : "<font color=#b54646>"), occ["cloneloss"])
 	dat += text("[]\tApprox. Brain Damage %: []</font><br>", (occ["brainloss"] < 1 ?"<font color=#487553>" : "<font color=#b54646>"), occ["brainloss"])
-	dat += text("Knocked Out Summary %: [] ([] seconds left!)<br>", occ["knocked_out"], round(occ["knocked_out"] / 4))
+	dat += text("Knocked Out Summary %: [] ([] seconds left!)<br>", occ["knocked_out"], round(occ["knocked_out"] * 0.1))
 	dat += text("Body Temperature: [occ["bodytemp"]-T0C]&deg;C ([occ["bodytemp"]*1.8-459.67]&deg;F)<br><HR>")
 
 	dat += text("[]\tBlood Level %: [] ([] units)</FONT><BR>", (occ["blood_amount"] > 448 ?"<font color=#487553>" : "<font color=#b54646>"), occ["blood_amount"]*100 / 560, occ["blood_amount"])
@@ -442,3 +439,11 @@
 
 /obj/machinery/proc/remove_eye_control(mob/living/user)
 	return
+
+/obj/machinery/proc/adjust_item_drop_location(atom/movable/AM)	// Adjust item drop location to a 3x3 grid inside the tile, returns slot id from 0 to 8
+	var/md5 = md5(AM.name)										// Oh, and it's deterministic too. A specific item will always drop from the same slot.
+	for (var/i in 1 to 32)
+		. += hex2num(md5[i])
+	. = . % 9
+	AM.pixel_x = -8 + ((.%3)*8)
+	AM.pixel_y = -8 + (round( . / 3)*8)

@@ -5,6 +5,7 @@
 	verb_exclaim = "declares"
 	verb_yell = "alarms"
 	speech_span = SPAN_ROBOT
+	dextrous = TRUE
 
 	initial_language_holder = /datum/language_holder/synthetic
 
@@ -70,34 +71,30 @@
 	return
 
 
-/mob/living/silicon/contents_explosion(severity, target)
+/mob/living/silicon/contents_explosion(severity)
 	return
 
 
 /mob/living/silicon/emp_act(severity)
 	switch(severity)
 		if(1)
+			Stun(rand(10 SECONDS, 20 SECONDS))
 			take_limb_damage(20)
-			stun(rand(5, 10))
 		if(2)
+			Stun(rand(2 SECONDS, 10 SECONDS))
 			take_limb_damage(10)
-			stun(rand(1, ))
-	flash_eyes(1, TRUE, type = /obj/screen/fullscreen/flash/noise)
+	flash_act(1, TRUE, type = /obj/screen/fullscreen/flash/noise)
 
 	to_chat(src, "<span class='danger'>*BZZZT*</span>")
 	to_chat(src, "<span class='warning'>Warning: Electromagnetic pulse detected.</span>")
 	return ..()
 
 
-/mob/living/silicon/stun_effect_act(stun_amount, agony_amount)
+/mob/living/silicon/stun_effect_act(stun_amount, agony_amount, def_zone)
 	return
 
 
-/mob/living/silicon/IsAdvancedToolUser()
-	return TRUE
-
-
-/mob/living/silicon/apply_effect(effect = 0, effecttype = STUN, blocked = FALSE)
+/mob/living/silicon/apply_effect(effect = 0, effecttype = STUN, blocked = 0, updating_health = FALSE)
 	return FALSE
 
 
@@ -164,27 +161,27 @@
 
 
 /mob/living/silicon/ex_act(severity)
-	flash_eyes()
+	flash_act()
 
 	switch(severity)
-		if(1)
+		if(EXPLODE_DEVASTATE)
 			if(stat == DEAD)
 				return
 			adjustBruteLoss(100)
 			adjustFireLoss(100)
 			if(!anchored)
 				gib()
-		if(2)
+		if(EXPLODE_HEAVY)
 			if(stat == DEAD)
 				return
 			adjustBruteLoss(60)
 			adjustFireLoss(60)
-		if(3)
+		if(EXPLODE_LIGHT)
 			if(stat == DEAD)
 				return
 			adjustBruteLoss(30)
 
-	updatehealth()
+	UPDATEHEALTH(src)
 
 
 /mob/living/silicon/emp_act(severity)
@@ -199,7 +196,7 @@
 			adjustBruteLoss(10)
 
 	to_chat(src, "<span class='danger'>*BZZZT*</span>")
-	flash_eyes()
+	flash_act()
 
 
 /mob/living/silicon/update_transform()
@@ -223,12 +220,12 @@
 	switch(user.a_intent)
 		if(INTENT_HELP)
 			user.visible_message("[user] pets [src].", "<span class='notice'>You pet [src].</span>")
-		
+
 		if(INTENT_GRAB)
 			user.start_pulling(src)
 
 		else
-			user.do_attack_animation(src)
+			user.do_attack_animation(src, ATTACK_EFFECT_KICK)
 			playsound(loc, 'sound/effects/bang.ogg', 10, 1)
 			visible_message("<span class='danger'>[user] punches [src], but doesn't leave a dent.</span>", \
 				"<span class='warning'>[user] punches [src], but doesn't leave a dent.</span>")

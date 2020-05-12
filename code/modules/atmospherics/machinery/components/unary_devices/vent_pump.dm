@@ -12,7 +12,7 @@
 	desc = "Has a valve and pump attached to it."
 
 	use_power = IDLE_POWER_USE
-	can_unwrench = TRUE
+	can_unwrench = FALSE
 	welded = FALSE
 	level = 1
 	layer = GAS_SCRUBBER_LAYER
@@ -33,7 +33,7 @@
 	pipe_state = "uvent"
 
 /obj/machinery/atmospherics/components/unary/vent_pump/New()
-	..()
+	. = ..()
 	if(!id_tag)
 		id_tag = assign_uid_vents()
 
@@ -154,8 +154,10 @@
 
 
 /obj/machinery/atmospherics/components/unary/vent_pump/AltClick(mob/user)
-	user.handle_ventcrawl(src)
-
+	if(!isliving(user))
+		return
+	var/mob/living/living_user = user
+	living_user.handle_ventcrawl(src)
 
 
 /obj/machinery/atmospherics/components/unary/vent_pump/high_volume

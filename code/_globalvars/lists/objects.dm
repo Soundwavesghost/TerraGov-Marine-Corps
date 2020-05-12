@@ -4,6 +4,7 @@ GLOBAL_LIST_EMPTY(cargo_ammo_vendors)				//Used by our gamemode code
 GLOBAL_LIST_EMPTY(cargo_guns_vendors)				//Used by our gamemode code
 GLOBAL_LIST_EMPTY(marine_vendors)					//Used by our gamemode code
 GLOBAL_LIST_EMPTY(attachment_vendors)				//Used by our gamemode code
+GLOBAL_LIST_EMPTY(marine_turrets)
 
 GLOBAL_LIST_EMPTY(tank_list)
 GLOBAL_LIST_EMPTY(implant_list)
@@ -53,7 +54,7 @@ GLOBAL_LIST_INIT(do_not_preserve, typecacheof(list(
 	/obj/item/clothing/head/tgmcberet,
 	/obj/item/clothing/head/headband,
 	/obj/item/clothing/head/headset,
-	/obj/item/clothing/head/tgmcbandana,
+	/obj/item/clothing/head/tgmcbandanna,
 	/obj/item/clothing/gloves/black,
 	/obj/item/weapon/baton,
 	/obj/item/weapon/gun/energy/taser,

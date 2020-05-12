@@ -10,12 +10,18 @@
 	density = TRUE
 	anchored = TRUE
 	circuit = /obj/item/circuitboard/computer/powermonitor
-	use_power = 1
+	use_power = IDLE_POWER_USE
 	idle_power_usage = 300
 	active_power_usage = 300
 
-/obj/machinery/power/monitor/New()
-	..()
+/obj/machinery/power/monitor/core
+	name = "Core Power Monitoring"
+
+/obj/machinery/power/monitor/grid
+	name = "Main Power Grid Monitoring"		
+
+/obj/machinery/power/monitor/Initialize()
+	. = ..()
 	var/obj/structure/cable/attached = null
 	var/turf/T = loc
 	if(isturf(T))
@@ -23,31 +29,13 @@
 	if(attached)
 		powernet = attached.powernet
 
-/obj/machinery/power/monitor/attack_ai(mob/user)
-	if(machine_stat & (BROKEN|NOPOWER))
-		return
-	interact(user)
 
-/obj/machinery/power/monitor/attack_hand(mob/living/user)
+/obj/machinery/power/monitor/interact(mob/user)
 	. = ..()
 	if(.)
 		return
-	if(machine_stat & (BROKEN|NOPOWER))
-		return
-	interact(user)
 
-/obj/machinery/power/monitor/interact(mob/user)
-
-	if ( (get_dist(src, user) > 1 ) || (machine_stat & (BROKEN|NOPOWER)) )
-		if (!issilicon(user))
-			user.unset_interaction()
-			user << browse(null, "window=powcomp")
-			return
-
-
-	user.set_interaction(src)
 	var/t
-
 	t += "<BR><HR><A href='?src=\ref[src];update=1'>Refresh</A>"
 	t += "<BR><HR><A href='?src=\ref[src];close=1'>Close</A>"
 
@@ -74,8 +62,8 @@
 
 			for(var/obj/machinery/power/apc/A in L)
 
-				t += copytext(add_tspace("\The [A.area]", 30), 1, 30)
-				t += " [S[A.equipment+1]] [S[A.lighting+1]] [S[A.environ+1]] [add_lspace(A.lastused_total, 6)]  [A.cell ? "[add_lspace(round(A.cell.percent()), 3)]% [chg[A.charging+1]]" : "  N/C"]<BR>"
+				t += copytext(add_trailing("\The [A.area]", 30, " "), 1, 30)
+				t += " [S[A.equipment+1]] [S[A.lighting+1]] [S[A.environ+1]] [add_leading(num2text(A.lastused_total), 6, " ")]  [A.cell ? "[add_leading(num2text(round(A.cell.percent())), 3, " ")]% [chg[A.charging+1]]" : "  N/C"]<BR>"
 				total_demand += A.lastused_total
 
 			t += "<HR>Total demand: [total_demand] W</FONT>"
@@ -85,19 +73,6 @@
 	popup.set_content(t)
 	popup.open(FALSE)
 	onclose(user, "powcomp")
-
-
-/obj/machinery/power/monitor/Topic(href, href_list)
-	. = ..()
-	if(.)
-		return
-	if( href_list["close"] )
-		usr << browse(null, "window=powcomp")
-		usr.unset_interaction()
-		return
-	if( href_list["update"] )
-		src.updateUsrDialog()
-		return
 
 
 /obj/machinery/power/monitor/update_icon()

@@ -21,7 +21,7 @@
 
 	xeno_strings += "Name: '[xeno_caste.caste_name]'"
 	xeno_strings += "Tier: [tier_as_number()]"
-	xeno_strings += "Melee slash damage: between [xeno_caste.melee_damage_lower] and [xeno_caste.melee_damage_upper]"
+	xeno_strings += "Melee slash damage: [xeno_caste.melee_damage]"
 	xeno_strings += "Tackle damage: [xeno_caste.tackle_damage]"
 	switch(mob_size)
 		if(MOB_SIZE_BIG)
@@ -30,7 +30,7 @@
 			xeno_strings += "Can smash walls: No"
 	xeno_strings += "Max health: [xeno_caste.max_health]"
 	for(var/armor_type in GLOB.armour_to_descriptive_term)
-		switch(armor.getRating(armor_type))
+		switch(soft_armor.getRating(armor_type))
 			if(0)
 				xeno_strings += "Has no protection against [GLOB.armour_to_descriptive_term[armor_type]]."
 			if(1 to 20)

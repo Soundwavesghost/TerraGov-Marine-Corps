@@ -27,8 +27,7 @@
 
 	speak_chance = 1
 	turns_per_move = 5
-	melee_damage_upper = 10
-	melee_damage_lower = 5
+	melee_damage = 8
 
 	response_help  = "pets"
 	response_disarm = "gently moves aside"
@@ -91,7 +90,7 @@
 
 /mob/living/simple_animal/parrot/Stat()
 	. = ..()
-	if(statpanel("Status"))
+	if(statpanel("Game"))
 		stat("Held Item", held_item)
 
 
@@ -133,20 +132,18 @@
 /mob/living/simple_animal/parrot/show_inv(mob/user)
 	user.set_interaction(src)
 
-	var/dat = 	"<div align='center'><b>Inventory of [name]</b></div><p>"
+	var/dat = "<div align='center'><b>Inventory of [name]</b></div><p>"
 	dat += "<br><B>Headset:</B> <A href='?src=[REF(src)];[ears ? "remove_inv=ears'>[ears]" : "add_inv=ears'>Nothing"]</A>"
 
-	user << browse(dat, "window=mob[REF(src)];size=325x500")
-	onclose(user, "window=mob[REF(src)]")
+
+	var/datum/browser/popup = new(user, "mob[REF(src)]", "<div align='center'>Inventory of [src]</div>", 325, 500)
+	popup.set_content(dat)
+	popup.open()
 
 
 /mob/living/simple_animal/parrot/Topic(href, href_list)
 	. = ..()
 	if(.)
-		return
-	if(!iscarbon(usr) || !usr.canUseTopic(src, TRUE, FALSE))
-		usr << browse(null, "window=mob[REF(src)]")
-		usr.unset_interaction()
 		return
 
 	//Removing from inventory
@@ -162,8 +159,8 @@
 				ears.forceMove(drop_location())
 				ears = null
 				for(var/possible_phrase in speak)
-					if(copytext(possible_phrase,1,3) in GLOB.department_radio_keys)
-						possible_phrase = copytext(possible_phrase,3)
+					if(copytext_char(possible_phrase, 2, 3) in GLOB.department_radio_keys)
+						possible_phrase = copytext_char(possible_phrase, 3)
 
 	//Adding things to inventory
 	else if(href_list["add_inv"])
@@ -213,8 +210,6 @@
 								available_channels.Add(RADIO_TOKEN_CHARLIE)
 							if(RADIO_CHANNEL_DELTA)
 								available_channels.Add(RADIO_TOKEN_DELTA)
-	else
-		return ..()
 
 
 /mob/living/simple_animal/parrot/attack_hand(mob/living/user)
@@ -257,13 +252,13 @@
 	if(parrot_state == PARROT_PERCH)
 		parrot_sleep_dur = parrot_sleep_max //Reset it's sleep timer if it was perched
 
-	if(M.melee_damage_upper > 0 && !stat)
+	if(M.melee_damage > 0 && !stat)
 		parrot_interest = M
 		parrot_state = PARROT_SWOOP | PARROT_ATTACK //Attack other animals regardless
 		icon_state = icon_living
 
 
-/mob/living/simple_animal/parrot/bullet_act(obj/item/projectile/Proj)
+/mob/living/simple_animal/parrot/bullet_act(obj/projectile/Proj)
 	. = ..()
 	if(!stat && !client)
 		if(parrot_state == PARROT_PERCH)
@@ -330,8 +325,8 @@
 					//50/50 chance to not use the radio at all
 					var/useradio = prob(50)
 
-					if((copytext(possible_phrase, 1, 2) in GLOB.department_radio_prefixes) && (copytext(possible_phrase, 2, 3) in GLOB.department_radio_keys))
-						possible_phrase = "[useradio ? pick(available_channels) : ""][copytext(possible_phrase, 3)]" //crop out the channel prefix
+					if((possible_phrase[1] in GLOB.department_radio_prefixes) && (copytext_char(possible_phrase, 2, 3) in GLOB.department_radio_keys))
+						possible_phrase = "[useradio ? pick(available_channels) : ""][copytext_char(possible_phrase, 3)]" //crop out the channel prefix
 					else
 						possible_phrase = "[useradio ? pick(available_channels) : ""][possible_phrase]"
 
@@ -339,8 +334,8 @@
 
 			else //If we have no headset or channels to use, dont try to use any!
 				for(var/possible_phrase in speak)
-					if((copytext(possible_phrase,1,2) in GLOB.department_radio_prefixes) && (copytext(possible_phrase,2,3) in GLOB.department_radio_keys))
-						possible_phrase = copytext(possible_phrase,3) //crop out the channel prefix
+					if((possible_phrase[1] in GLOB.department_radio_prefixes) && (copytext_char(possible_phrase, 2, 3) in GLOB.department_radio_keys))
+						possible_phrase = copytext_char(possible_phrase, 3) //crop out the channel prefix
 					newspeak.Add(possible_phrase)
 			speak = newspeak
 
@@ -377,11 +372,11 @@
 				parrot_state = PARROT_SWOOP | PARROT_RETURN
 			return
 
-		if(parrot_interest && parrot_interest in view(src))
+		if(parrot_interest && (parrot_interest in view(src)))
 			parrot_state = PARROT_SWOOP | PARROT_STEAL
 			return
 
-		if(parrot_perch && parrot_perch in view(src))
+		if(parrot_perch && (parrot_perch in view(src)))
 			parrot_state = PARROT_SWOOP | PARROT_RETURN
 			return
 
@@ -445,8 +440,8 @@
 			return
 
 		var/mob/living/L = parrot_interest
-		if(melee_damage_upper == 0)
-			melee_damage_upper = parrot_damage_upper
+		if(melee_damage == 0)
+			melee_damage = parrot_damage_upper
 			a_intent = INTENT_HARM
 
 
@@ -611,6 +606,7 @@
 	color = "#FFFFFF77"
 	speak_chance = 20
 	status_flags = GODMODE
+	resistance_flags = RESIST_ALL
 
 
 /mob/living/simple_animal/parrot/Poly/ghost/Initialize()

@@ -42,6 +42,16 @@ SUBSYSTEM_DEF(codex)
 	if(!initialized)
 		return
 	var/searching = "\ref[entry]"
+	if(isatom(entry))
+		var/atom/entity = entry
+		if(entity.get_specific_codex_entry())
+			entry_cache[searching] = entity.get_specific_codex_entry()
+		else if(entries_by_string[lowertext(entity.name)])
+			entry_cache[searching] = entries_by_string[lowertext(entity.name)]
+		else if(entries_by_path[entity.type])
+			entry_cache[searching] = entries_by_path[entity.type]
+		return entry_cache[searching]
+
 	if(!entry_cache[searching])
 		if(istype(entry))
 			entry_cache[searching] = entry
@@ -49,14 +59,7 @@ SUBSYSTEM_DEF(codex)
 			entry_cache[searching] = FALSE
 			if(ispath(entry))
 				entry_cache[searching] = entries_by_path[entry]
-			else if(istype(entry, /atom))
-				var/atom/entity = entry
-				if(entries_by_string[lowertext(entity.name)])
-					entry_cache[searching] = entries_by_string[lowertext(entity.name)]
-				else if(entries_by_path[entity.type])
-					entry_cache[searching] = entries_by_path[entity.type]
-				else if(entity.get_specific_codex_entry())
-					entry_cache[searching] = entity.get_specific_codex_entry()
+
 	return entry_cache[searching]
 
 /datum/controller/subsystem/codex/proc/present_codex_entry(mob/presenting_to, datum/codex_entry/entry)
@@ -95,6 +98,11 @@ SUBSYSTEM_DEF(codex)
 		search_cache[searching] = dd_sortedObjectList(results)
 	return search_cache[searching]
 
+
+/datum/controller/subsystem/codex/can_interact(mob/user)
+	return TRUE
+
+
 /datum/controller/subsystem/codex/Topic(href, href_list)
 	. = ..()
 	if(.)
@@ -102,10 +110,9 @@ SUBSYSTEM_DEF(codex)
 	if(href_list["show_examined_info"] && href_list["show_to"])
 		var/atom/showing_atom = locate(href_list["show_examined_info"])
 		var/mob/showing_mob = locate(href_list["show_to"]) in GLOB.mob_list
-		if(!showing_atom || !showing_mob)
+		if(QDELETED(showing_atom) || QDELETED(showing_mob))
 			return
 		var/entry = get_codex_entry(showing_atom)
 		if(entry && showing_mob.can_use_codex())
 			present_codex_entry(showing_mob, entry)
 			return TRUE
-

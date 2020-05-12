@@ -12,7 +12,7 @@
 	icon = 'icons/obj/items/items.dmi'
 	icon_state = "table_parts"
 	item_state = "table_parts"
-	matter = list("metal" = 7500) //A table, takes two sheets to build
+	materials = list(/datum/material/metal = 7500) //A table, takes two sheets to build
 	flags_atom = CONDUCT
 	attack_verb = list("slammed", "bashed", "battered", "bludgeoned", "thrashed", "whacked")
 	var/table_type = /obj/structure/table //what type of table it creates when assembled
@@ -50,9 +50,9 @@
 		qdel(src)
 
 /obj/item/frame/table/attack_self(mob/user)
-
-
-
+	if(locate(/obj/structure/table) in get_turf(user))
+		to_chat(user, "<span class='warning'>There is another table built in here already.</span>")
+		return
 	if(istype(get_area(loc), /area/shuttle))  //HANGAR/SHUTTLE BUILDING
 		to_chat(user, "<span class='warning'>No. This area is needed for the dropship.</span>")
 		return
@@ -70,7 +70,7 @@
 	desc = "A kit for a table, including a large, flat metal surface and four legs. This kit has side panels. Some assembly required."
 	icon = 'icons/obj/items/items.dmi'
 	icon_state = "reinf_tableparts"
-	matter = list("metal" = 15000) //A reinforced table. Two sheets of metal and four rods
+	materials = list(/datum/material/metal = 15000) //A reinforced table. Two sheets of metal and four rods
 	table_type = /obj/structure/table/reinforced
 
 
@@ -134,7 +134,7 @@
 	icon = 'icons/obj/items/items.dmi'
 	icon_state = "rack_parts"
 	flags_atom = CONDUCT
-	matter = list("metal" = 3750)
+	materials = list(/datum/material/metal = 3750)
 
 
 /obj/item/frame/rack/attackby(obj/item/I, mob/user, params)

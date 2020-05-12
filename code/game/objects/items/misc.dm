@@ -22,7 +22,8 @@
 	throw_speed = 4
 	throw_range = 20
 
-/obj/item/bananapeel/Crossed(AM as mob|obj)
+/obj/item/bananapeel/Crossed(AM)
+	. = ..()
 	if (iscarbon(AM))
 		var/mob/living/carbon/C = AM
 		C.slip(name, 4, 2)
@@ -37,7 +38,6 @@
 	force = 5.0
 	throwforce = 7.0
 	w_class = WEIGHT_CLASS_SMALL
-	matter = list("metal" = 50)
 	attack_verb = list("bludgeoned", "whacked", "disciplined", "thrashed")
 
 /obj/item/gift

@@ -14,8 +14,8 @@
 	var/morgue_open = 0
 	anchored = TRUE
 
-/obj/structure/morgue/New()
-	..()
+/obj/structure/morgue/Initialize()
+	. = ..()
 	connected = new tray_path(src)
 
 /obj/structure/morgue/Destroy()
@@ -35,10 +35,10 @@
 
 /obj/structure/morgue/ex_act(severity)
 	switch(severity)
-		if(2)
+		if(EXPLODE_HEAVY)
 			if(prob(50))
 				return
-		if(3)
+		if(EXPLODE_LIGHT)
 			if(prob(95))
 				return
 	for(var/atom/movable/A in src)
@@ -125,10 +125,10 @@
 	anchored = TRUE
 	throwpass = 1
 
-/obj/structure/morgue_tray/New(loc, obj/structure/morgue/morgue_source)
+/obj/structure/morgue_tray/Initialize(mapload, obj/structure/morgue/morgue_source)
+	. = ..()
 	if(morgue_source)
 		linked_morgue = morgue_source
-	..()
 
 /obj/structure/morgue_tray/Destroy()
 	. = ..()

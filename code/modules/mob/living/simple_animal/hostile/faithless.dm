@@ -18,8 +18,7 @@
 
 	harm_intent_damage = 10
 	obj_damage = 50
-	melee_damage_lower = 15
-	melee_damage_upper = 15
+	melee_damage = 15
 	attacktext = "grips"
 	attack_sound = 'sound/hallucinations/growl1.ogg'
 	speak_emote = list("growls")
@@ -29,6 +28,6 @@
 	. = ..()
 	if(. && prob(12) && iscarbon(target))
 		var/mob/living/carbon/C = target
-		C.knock_down(10)
+		C.Paralyze(20 SECONDS)
 		C.visible_message("<span class='danger'>\The [src] knocks down \the [C]!</span>", \
 				"<span class='userdanger'>\The [src] knocks you down!</span>")

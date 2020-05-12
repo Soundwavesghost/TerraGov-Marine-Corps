@@ -1,18 +1,14 @@
-//This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:31
-
 /obj/machinery/computer/card
 	name = "Identification Computer"
 	desc = "Terminal for programming TGMC employee ID card access."
 	icon_state = "id"
 	req_access = list(ACCESS_MARINE_LOGISTICS)
 	circuit = "/obj/item/circuitboard/computer/card"
+	interaction_flags = INTERACT_MACHINE_NANO
 	var/obj/item/card/id/scan = null
 	var/obj/item/card/id/modify = null
 	var/mode = 0.0
 	var/printing = null
-
-/obj/machinery/computer/card/proc/is_centcom()
-	return 0
 
 /obj/machinery/computer/card/proc/is_authenticated()
 	return scan ? check_access(scan) : 0
@@ -24,7 +20,7 @@
 	var/list/formatted = list()
 	for(var/job in jobs)
 		formatted.Add(list(list(
-			"display_name" = oldreplacetext(job, " ", "&nbsp"),
+			"display_name" = replacetext(job, " ", "&nbsp"),
 			"target_rank" = get_target_rank(),
 			"job" = job)))
 
@@ -35,7 +31,8 @@
 	set name = "Eject ID Card"
 	set src in oview(1)
 
-	if(!usr || usr.stat || usr.lying)	return
+	if(!usr || usr.stat || usr.lying_angle)
+		return
 
 	if(scan)
 		to_chat(usr, "You remove \the [scan] from \the [src].")
@@ -61,7 +58,7 @@
 
 	var/obj/item/card/id/C = I
 
-	if(!scan && ACCESS_MARINE_LOGISTICS in C.access)
+	if(!scan && (ACCESS_MARINE_LOGISTICS in C.access))
 		if(!user.drop_held_item())
 			return
 
@@ -75,26 +72,24 @@
 		C.forceMove(src)
 		modify = C
 
-	SSnano.update_uis(src)
+	updateUsrDialog()
 	attack_hand(user)
 
-/obj/machinery/computer/card/attack_ai(mob/user as mob)
-	return attack_hand(user)
-
-/obj/machinery/computer/card/attack_paw(mob/living/carbon/monkey/user)
-	return attack_hand(user)
-
 /obj/machinery/computer/card/attack_hand(mob/living/user)
-	. = ..()
-	if(.) 
-		return
-	if(machine_stat & (NOPOWER|BROKEN)) return
-	ui_interact(user)
+	if(!ishuman(user))
+		return ..()
+	var/mob/living/carbon/human/H = user
+	if(H.wear_id)
+		return ..()
+	var/obj/item/card/id/newid = new(H)
+	newid.access = list(ACCESS_IFF_MARINE)
+	newid.assignment = "Passenger"
+	newid.registered_name = H.real_name
 
+	H.equip_to_slot(newid, SLOT_WEAR_ID)
+
+/*
 /obj/machinery/computer/card/ui_interact(mob/user, ui_key="main", datum/nanoui/ui = null, force_open = 1)
-
-	user.set_interaction(src)
-
 	var/data[0]
 	data["src"] = "\ref[src]"
 	data["ship_name"] = SSmapping.configs[SHIP_MAP].map_name
@@ -124,7 +119,7 @@
 			for(var/access in get_region_accesses(i))
 				if (get_access_desc(access))
 					accesses.Add(list(list(
-						"desc" = oldreplacetext(get_access_desc(access), " ", "&nbsp"),
+						"desc" = replacetext(get_access_desc(access), " ", "&nbsp"),
 						"ref" = access,
 						"allowed" = (access in modify.access) ? 1 : 0)))
 
@@ -196,7 +191,7 @@
 			if (is_authenticated() && modify)
 				var/t1 = href_list["assign_target"]
 				if(t1 == "Custom")
-					var/temp_t = copytext(sanitize(input("Enter a custom job assignment.","Assignment")),1,45)
+					var/temp_t = stripped_input("Enter a custom job assignment.","Assignment")), 45)
 					//let custom jobs function as an impromptu alt title, mainly for sechuds
 					if(temp_t && modify)
 						modify.assignment = temp_t
@@ -285,12 +280,8 @@
 		modify.name = text("[modify.registered_name]'s ID Card ([modify.assignment])")
 
 	return 1
-
+*/
 /obj/machinery/computer/card/centcom
 	name = "CentCom Identification Computer"
 	circuit = "/obj/item/circuitboard/computer/card/centcom"
 	req_access = list(ACCESS_NT_CORPORATE)
-
-
-/obj/machinery/computer/card/centcom/is_centcom()
-	return 1

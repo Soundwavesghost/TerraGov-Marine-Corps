@@ -4,7 +4,7 @@
 	icon = 'icons/obj/power.dmi'
 	icon_state = "ccharger0"
 	anchored = TRUE
-	use_power = 1
+	use_power = IDLE_POWER_USE
 	idle_power_usage = 5
 	active_power_usage = 40000	//40 kW. (this the power drawn when charging)
 	power_channel = EQUIP
@@ -84,8 +84,6 @@
 		updateicon()
 		stop_processing()
 
-/obj/machinery/cell_charger/attack_ai(mob/user)
-	return
 
 /obj/machinery/cell_charger/emp_act(severity)
 	if(machine_stat & (BROKEN|NOPOWER))

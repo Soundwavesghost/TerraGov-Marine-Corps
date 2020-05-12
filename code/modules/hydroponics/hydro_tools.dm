@@ -19,9 +19,9 @@
 	var/datum/reagents/grown_reagents
 	if(istype(target,/obj/structure/rack) || istype(target,/obj/structure/table))
 		return ..()
-	else if(istype(target,/obj/item/reagent_container/food/snacks/grown))
+	else if(istype(target,/obj/item/reagent_containers/food/snacks/grown))
 
-		var/obj/item/reagent_container/food/snacks/grown/G = target
+		var/obj/item/reagent_containers/food/snacks/grown/G = target
 		grown_seed = GLOB.seed_types[G.plantname]
 		grown_reagents = G.reagents
 
@@ -46,7 +46,7 @@
 		to_chat(user, "<span class='warning'>[src] can tell you nothing about [target].</span>")
 		return
 
-	var/dat = "<h3>Plant data for [target]</h3>"
+	var/dat
 	user.visible_message("<span class='notice'> [user] runs the scanner over [target].</span>")
 
 	dat += "<h2>General Data</h2>"
@@ -155,10 +155,9 @@
 	if(grown_seed.flowers)
 		dat += "<br>It has [grown_seed.flower_colour ? "<font color='[grown_seed.flower_colour]'>flowers</font>" : "flowers"]."
 
-	if(dat)
-		user << browse(dat,"window=plant_analyzer")
-
-	return
+	var/datum/browser/popup = new(user, "plant_analyzer", "<div align='center'>Plant data for [target]</div>")
+	popup.set_content(dat)
+	popup.open()
 
 
 
@@ -166,7 +165,7 @@
 // Nutrient defines for hydroponics
 // *************************************
 
-/obj/item/reagent_container/glass/fertilizer
+/obj/item/reagent_containers/glass/fertilizer
 	name = "fertilizer bottle"
 	desc = "A small glass bottle. Can hold up to 10 units."
 	icon = 'icons/obj/items/chemistry.dmi'
@@ -181,7 +180,7 @@
 	volume = 10
 
 
-/obj/item/reagent_container/glass/fertilizer/Initialize()
+/obj/item/reagent_containers/glass/fertilizer/Initialize()
 	. = ..()
 
 	pixel_x = rand(-5.0, 5)
@@ -191,17 +190,17 @@
 		reagents.add_reagent(fertilizer,10)
 
 
-/obj/item/reagent_container/glass/fertilizer/ez
+/obj/item/reagent_containers/glass/fertilizer/ez
 	name = "bottle of E-Z-Nutrient"
 	icon_state = "bottle16"
 	fertilizer = /datum/reagent/toxin/fertilizer/eznutrient
 
-/obj/item/reagent_container/glass/fertilizer/l4z
+/obj/item/reagent_containers/glass/fertilizer/l4z
 	name = "bottle of Left 4 Zed"
 	icon_state = "bottle18"
 	fertilizer = /datum/reagent/toxin/fertilizer/left4zed
 
-/obj/item/reagent_container/glass/fertilizer/rh
+/obj/item/reagent_containers/glass/fertilizer/rh
 	name = "bottle of Robust Harvest"
 	icon_state = "bottle15"
 	fertilizer = /datum/reagent/toxin/fertilizer/robustharvest

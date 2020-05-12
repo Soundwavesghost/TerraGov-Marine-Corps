@@ -3,6 +3,7 @@
 	desc = "A big hole in the wall that used to sport a large window. Can be vaulted through"
 	icon = 'icons/obj/structures/window_frames.dmi'
 	icon_state = "window0_frame"
+	interaction_flags = INTERACT_CHECK_INCAPACITATED
 	layer = WINDOW_FRAME_LAYER
 	density = TRUE
 	throwpass = TRUE
@@ -23,7 +24,10 @@
 		/obj/structure/window_frame)
 
 /obj/structure/window_frame/CanPass(atom/movable/mover, turf/target)
-	if(istype(mover) && climbable && CHECK_BITFIELD(mover.flags_pass, PASSTABLE))
+	if(climbable && CHECK_BITFIELD(mover.flags_pass, PASSTABLE))
+		return TRUE
+	var/obj/structure/S = locate(/obj/structure) in get_turf(mover)
+	if(S?.climbable)
 		return TRUE
 	return FALSE
 
@@ -51,7 +55,7 @@
 
 /obj/structure/window_frame/Destroy()
 	density = FALSE
-	update_nearby_icons()	
+	update_nearby_icons()
 	return ..()
 
 /obj/structure/window_frame/attackby(obj/item/I, mob/user, params)
@@ -77,14 +81,14 @@
 
 	else if(istype(I, /obj/item/grab))
 		var/obj/item/grab/G = I
-		if(isxeno(user)) 
+		if(isxeno(user))
 			return
 
 		if(!isliving(G.grabbed_thing))
 			return
 
 		var/mob/living/M = G.grabbed_thing
-		if(user.grab_level < GRAB_AGGRESSIVE)
+		if(user.grab_state < GRAB_AGGRESSIVE)
 			to_chat(user, "<span class='warning'>You need a better grip to do that!</span>")
 			return
 
@@ -98,9 +102,9 @@
 		user.visible_message("<span class='notice'>[user] starts pulling [M] onto [src].</span>",
 		"<span class='notice'>You start pulling [M] onto [src]!</span>")
 		var/oldloc = loc
-		if(!do_mob(user, M, 20, BUSY_ICON_GENERIC) || loc != oldloc) 
+		if(!do_mob(user, M, 20, BUSY_ICON_GENERIC) || loc != oldloc)
 			return
-		M.knock_down(2)
+		M.Paralyze(40)
 		user.visible_message("<span class='warning'>[user] pulls [M] onto [src].</span>",
 		"<span class='notice'>You pull [M] onto [src].</span>")
 		M.forceMove(loc)

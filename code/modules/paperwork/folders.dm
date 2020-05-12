@@ -10,6 +10,10 @@
 	desc = "A blue folder."
 	icon_state = "folder_blue"
 
+/obj/item/folder/grape
+	desc = "A violet folder."
+	icon_state = "folder_grape"
+
 /obj/item/folder/red
 	desc = "A red folder."
 	icon_state = "folder_red"
@@ -30,11 +34,12 @@
 	desc = "A black folder. It is decorated with stripes."
 	icon_state = "folder_black_green"
 
-/obj/item/folder/black_random/New()
-	..()
+/obj/item/folder/black_random/Initialize()
+	. = ..()
 	icon_state = "folder_black[pick("_red", "_green", "_blue", "_yellow", "_white")]"
 
-/obj/item/folder/New()
+/obj/item/folder/Initialize()
+	. = ..()
 	if(updateicon)
 		update_icon()
 
@@ -54,14 +59,17 @@
 		update_icon()
 
 	else if(istype(I, /obj/item/tool/pen))
-		var/n_name = copytext(sanitize(input(user, "What would you like to label the folder?", "Folder Labelling", null) as null|text), 1, MAX_NAME_LEN)
+		var/n_name = stripped_input(user, "What would you like to label the folder?", "Folder Labelling")
 		if(loc != user || user.stat != CONSCIOUS)
 			return
 
 		name = "folder[(n_name ? "- '[n_name]'" : "")]"
 
-/obj/item/folder/attack_self(mob/user as mob)
-	var/dat = "<title>[name]</title>"
+/obj/item/folder/interact(mob/user)
+	. = ..()
+	if(.)
+		return
+	var/dat
 
 	for(var/obj/item/paper/P in src)
 		dat += "<A href='?src=\ref[src];remove=\ref[P]'>Remove</A> - <A href='?src=\ref[src];read=\ref[P]'>[P.name]</A><BR>"
@@ -69,15 +77,13 @@
 		dat += "<A href='?src=\ref[src];remove=\ref[Ph]'>Remove</A> - <A href='?src=\ref[src];look=\ref[Ph]'>[Ph.name]</A><BR>"
 	for(var/obj/item/paper_bundle/Pb in src)
 		dat += "<A href='?src=\ref[src];remove=\ref[Pb]'>Remove</A> - <A href='?src=\ref[src];browse=\ref[Pb]'>[Pb.name]</A><BR>"
-	user << browse(dat, "window=folder")
-	onclose(user, "folder")
-	return
+	var/datum/browser/popup = new(user, "folder", "<div align='center'>[src]</div>")
+	popup.set_content(dat)
+	popup.open()
 
 /obj/item/folder/Topic(href, href_list)
 	. = ..()
 	if(.)
-		return
-	if((usr.stat || usr.restrained()))
 		return
 
 	if(src.loc == usr)
@@ -108,6 +114,5 @@
 				onclose(usr, "[P.name]")
 
 		//Update everything
-		attack_self(usr)
+		updateUsrDialog()
 		update_icon()
-	return

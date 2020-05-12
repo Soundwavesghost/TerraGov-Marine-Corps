@@ -1,31 +1,7 @@
 #define MAXIMUM_EMP_WIRES 3
 
-/proc/is_wire_tool(obj/item/I)
-	if(ismultitool(I))
-		return TRUE
-
-	else if(istype(I, /obj/item/assembly))
-		var/obj/item/assembly/A = I
-		if(A.attachable)
-			return TRUE
-
-	return FALSE
-
-
-/atom
-	var/datum/wires/wires = null
-
-
-/atom/proc/attempt_wire_interaction(mob/user)
-	if(!wires)
-		return WIRE_INTERACTION_FAIL
-	if(!user.CanReach(src))
-		return WIRE_INTERACTION_FAIL
-	wires.interact(user)
-	return WIRE_INTERACTION_BLOCK
-
-
 /datum/wires
+	interaction_flags = INTERACT_UI_INTERACT
 	var/atom/holder = null // The holder (atom that contains these wires).
 	var/holder_type = null // The holder's typepath (used to make wire colors common to all holders).
 	var/proper_name = "Unknown" // The display name for the wire set shown in station blueprints. Not used if randomize is true or it's an item NT wouldn't know about (Explosives/Nuke)
@@ -42,7 +18,6 @@
 	. = ..()
 	if(!istype(holder, holder_type))
 		CRASH("Wire holder is not of the expected type! holder: [holder.type], holder_type: [holder_type]")
-		return
 
 	src.holder = holder
 	if(randomize)
@@ -141,20 +116,20 @@
 
 
 /datum/wires/proc/is_dud(wire)
-	return dd_hasprefix(wire, WIRE_DUD_PREFIX)
+	return findtext(wire, WIRE_DUD_PREFIX, 1, length(WIRE_DUD_PREFIX) + 1)
 
 
 /datum/wires/proc/is_dud_color(color)
 	return is_dud(get_wire(color))
 
-
-/datum/wires/proc/cut(wire)
-	if(usr?.mind?.cm_skills && usr.mind.cm_skills.engineer < SKILL_ENGINEER_ENGI)
-		usr.visible_message("<span class='notice'>[usr] fumbles around figuring out the wiring.</span>",
-		"<span class='notice'>You fumble around figuring out the wiring.</span>")
-		var/fumbling_time = 20 * (SKILL_ENGINEER_ENGI - usr.mind.cm_skills.engineer)
-		if(!do_after(usr, fumbling_time, TRUE, holder, BUSY_ICON_UNSKILLED))
-			return
+/datum/wires/proc/cut(wire, mob/user)
+	if(user)
+		var/skill = user.skills.getRating("engineer")
+		if(skill < SKILL_ENGINEER_ENGI)
+			user.visible_message("<span class='notice'>[user] fumbles around figuring out the wiring.</span>",
+			"<span class='notice'>You fumble around figuring out the wiring.</span>")
+			if(!do_after(user, 2 SECONDS * (SKILL_ENGINEER_ENGI - skill), TRUE, holder, BUSY_ICON_UNSKILLED))
+				return
 
 	if(is_cut(wire))
 		cut_wires -= wire
@@ -164,8 +139,8 @@
 		on_cut(wire, mend = FALSE)
 
 
-/datum/wires/proc/cut_color(color)
-	cut(get_wire(color))
+/datum/wires/proc/cut_color(color, mob/user)
+	cut(get_wire(color), user)
 
 
 /datum/wires/proc/cut_random()
@@ -177,21 +152,21 @@
 		cut(wire)
 
 
-/datum/wires/proc/pulse(wire, user)
+/datum/wires/proc/pulse(wire, mob/user)
 	if(is_cut(wire))
 		return
 
-	if(usr.mind?.cm_skills && usr.mind.cm_skills.engineer < SKILL_ENGINEER_ENGI)
-		usr.visible_message("<span class='notice'>[usr] fumbles around figuring out the wiring.</span>",
+	var/skill = user.skills.getRating("engineer")
+	if(skill < SKILL_ENGINEER_ENGI)
+		user.visible_message("<span class='notice'>[usr] fumbles around figuring out the wiring.</span>",
 		"<span class='notice'>You fumble around figuring out the wiring.</span>")
-		var/fumbling_time = 20 * (SKILL_ENGINEER_ENGI - usr.mind.cm_skills.engineer)
-		if(!do_after(usr, fumbling_time, TRUE, holder, BUSY_ICON_UNSKILLED) || is_cut(wire))
+		if(!do_after(user, 2 SECONDS * (SKILL_ENGINEER_ENGI - skill), TRUE, holder, BUSY_ICON_UNSKILLED) || is_cut(wire))
 			return
 
 	on_pulse(wire, user)
 
 
-/datum/wires/proc/pulse_color(color, mob/living/user)
+/datum/wires/proc/pulse_color(color, mob/user)
 	pulse(get_wire(color), user)
 
 
@@ -232,11 +207,8 @@
 		if(!remaining_pulses)
 			break
 
-
-// Overridable Procs
 /datum/wires/proc/interactable(mob/user)
 	return TRUE
-
 
 /datum/wires/proc/get_status()
 	return
@@ -251,20 +223,40 @@
 // End Overridable Procs
 
 
-/datum/wires/proc/interact(mob/user)
-	if(!interactable(user))
-		return
-	ui_interact(user)
-	for(var/A in assemblies)
-		var/obj/item/I = assemblies[A]
-		if(istype(I) && I.on_found(user))
-			return
+/datum/wires/can_interact(mob/user)
+	. = ..()
+	if(!.)
+		return FALSE
+
+	if(!user.CanReach(holder))
+		return FALSE
+
+	return TRUE
 
 
-/datum/wires/ui_interact(mob/user, ui_key = "main", datum/nanoui/ui, force_open = TRUE)
+/datum/wires/ui_host()
+	return holder
+
+/datum/wires/ui_status(mob/user)
+	if(interactable(user))
+		return ..()
+	return UI_CLOSE
+
+/datum/wires/ui_interact(mob/user, ui_key = "wires", datum/tgui/ui = null, force_open = FALSE, \
+							datum/tgui/master_ui = null, datum/ui_state/state = GLOB.physical_state)
+	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
+	if (!ui)
+		ui = new(user, src, ui_key, "Wires", "[holder.name] Wires", 350, 150 + wires.len * 30, master_ui, state)
+		ui.open()
+
+/datum/wires/ui_data(mob/user)
 	var/list/data = list()
 	var/list/payload = list()
 	var/reveal_wires = FALSE
+
+	// Admin ghost can see a purpose of each wire.
+	if(IsAdminGhost(user))
+		reveal_wires = TRUE
 
 	for(var/color in colors)
 		payload.Add(list(list(
@@ -273,68 +265,52 @@
 			"cut" = is_color_cut(color),
 			"attached" = is_attached(color)
 		)))
-
 	data["wires"] = payload
 	data["status"] = get_status()
+	return data
 
-	ui = SSnano.try_update_ui(user, src, ui_key, ui, data, force_open)
-	if(!ui)
-		ui = new(user, src, ui_key, "wires.tmpl", holder, 500, 150 + length(wires) * 30)
-		ui.set_initial_data(data)
-		ui.open()
-
-
-/datum/wires/Topic(href, href_list)
-	. = ..()
-	if(. || !interactable(usr))
+/datum/wires/ui_act(action, params)
+	if(..() || !interactable(usr))
 		return
-
-	if(!isliving(usr))
-		return
-
-	var/target_wire = href_list["wire"]
+	var/target_wire = params["wire"]
 	var/mob/living/L = usr
-	var/obj/item/I = L.get_active_held_item()
-
-	if(href_list["cut"])
-		if(!iswirecutter(I))
-			to_chat(L, "<span class='warning'>You need wirecutters!</span>")
-			return
-
-		cut_color(target_wire)
-		. = TRUE
-
-	else if(href_list["pulse"])
-		if(!ismultitool(I))
-			to_chat(L, "<span class='warning'>You need a multitool!</span>")
-			return
-
-		pulse_color(target_wire, L)
-		. = TRUE
-
-	else if(href_list["attach"])
-		if(is_attached(target_wire))
-			I = detach_assembly(target_wire)
-			if(!I)
-				return
-
-			L.put_in_hands(I)
-			. = TRUE
-		else
-			if(!istype(I, /obj/item/assembly))
-				to_chat(L, "<span class='warning'>You need an assembly!</span>")
-				return
-
-			var/obj/item/assembly/A = I
-			if(!A.attachable)
-				to_chat(L, "<span class='warning'>You need an attachable assembly!</span>")
-				return
-
-			if(!L.temporarilyRemoveItemFromInventory(A))
-				return
-			if(!attach_assembly(target_wire, A))
-				A.forceMove(get_turf(L))
-			. = TRUE
-
+	var/obj/item/I
+	switch(action)
+		if("cut")
+			I = L.is_holding_tool_quality(TOOL_WIRECUTTER)
+			if(I || IsAdminGhost(usr))
+				if(I && holder)
+					I.play_tool_sound(holder, 20)
+				cut_color(target_wire)
+				. = TRUE
+			else
+				to_chat(L, "<span class='warning'>You need wirecutters!</span>")
+		if("pulse")
+			I = L.is_holding_tool_quality(TOOL_MULTITOOL)
+			if(I || IsAdminGhost(usr))
+				if(I && holder)
+					I.play_tool_sound(holder, 20)
+				pulse_color(target_wire, L)
+				. = TRUE
+			else
+				to_chat(L, "<span class='warning'>You need a multitool!</span>")
+		if("attach")
+			if(is_attached(target_wire))
+				I = detach_assembly(target_wire)
+				if(I)
+					L.put_in_hands(I)
+					. = TRUE
+			else
+				I = L.get_active_held_item()
+				if(istype(I, /obj/item/assembly))
+					var/obj/item/assembly/A = I
+					if(A.attachable)
+						if(!L.temporarilyRemoveItemFromInventory(A))
+							return
+						if(!attach_assembly(target_wire, A))
+							A.forceMove(L.drop_location())
+						. = TRUE
+					else
+						to_chat(L, "<span class='warning'>You need an attachable assembly!</span>")
 
 #undef MAXIMUM_EMP_WIRES

@@ -15,7 +15,7 @@
 	var/specialfunctions = 1
 	anchored = TRUE
 	var/pressed = FALSE
-	use_power = 1
+	use_power = IDLE_POWER_USE
 	idle_power_usage = 2
 	active_power_usage = 4
 
@@ -30,15 +30,13 @@
 	name = "AI Interior Lockdown"
 	id = "ailockdowninterior"
 
-/obj/machinery/door_control/attack_paw(mob/living/carbon/monkey/user)
-	return src.attack_hand(user)
-
 /obj/machinery/door_control/attackby(obj/item/I, mob/user, params)
 	. = ..()
-
+	if(.)
+		return
 	if(istype(I, /obj/item/detective_scanner))
 		return
-	else 
+	else
 		return attack_hand(user)
 
 /obj/machinery/door_control/proc/handle_door()
@@ -92,7 +90,7 @@
 		flick("doorctrl-denied",src)
 		return
 
-	use_power(5)
+	use_power(active_power_usage)
 	pressed = TRUE
 	update_icon()
 
@@ -125,8 +123,6 @@
 /obj/machinery/driver_button/attack_ai(mob/living/silicon/ai/AI)
 	return attack_hand(AI)
 
-/obj/machinery/driver_button/attack_paw(mob/living/carbon/monkey/user)
-	return src.attack_hand(user)
 
 /obj/machinery/driver_button/attackby(obj/item/I, mob/user, params)
 	. = ..()
@@ -145,7 +141,7 @@
 	if(active)
 		return
 
-	use_power(5)
+	use_power(active_power_usage)
 
 	active = 1
 	icon_state = "launcheract"
@@ -162,3 +158,83 @@
 
 	icon_state = "launcherbtt"
 	active = 0
+
+//mainship door controls
+/obj/machinery/door_control/mainship/ammo
+	name = "Ammunition Storage"
+	id = "ammo2"
+	req_one_access = list(ACCESS_MARINE_BRIG, ACCESS_MARINE_LOGISTICS, ACCESS_MARINE_ENGINEERING, ACCESS_MARINE_LEADER, ACCESS_MARINE_BRIDGE, ACCESS_MARINE_DROPSHIP)
+
+/obj/machinery/door_control/mainship/engineering
+	req_access = list(ACCESS_MARINE_ENGINEERING)
+
+/obj/machinery/door_control/mainship/medbay
+	req_access = list(ACCESS_MARINE_MEDBAY)
+
+/obj/machinery/door_control/mainship/fuel
+	name = "Solid Fuel Storage"
+	id = "solid_fuel"	
+
+/obj/machinery/door_control/mainship/hangar
+	name = "Hangar Shutters"	
+	id = "hangar_shutters"
+
+/obj/machinery/door_control/mainship/research
+	name = "Medical Research Wing"
+	id = "researchdoorext"
+	req_access = list(ACCESS_MARINE_RESEARCH)
+
+/obj/machinery/door_control/mainship/research/lockdown
+	name = "Research Lockdown"
+	id = "researchlockdownext"	
+
+/obj/machinery/door_control/mainship/brigarmory
+	name = "Brig Armory"	
+	id = "brig_armory"
+	req_access = list(ACCESS_MARINE_BRIG)
+
+/obj/machinery/door_control/mainship/checkpoint
+	name = "Checkpoint Shutters"
+	req_one_access = list(ACCESS_MARINE_LOGISTICS, ACCESS_MARINE_BRIG, ACCESS_MARINE_LEADER, ACCESS_MARINE_BRIDGE)
+
+/obj/machinery/door_control/mainship/checkpoint/north
+	id = "northcheckpoint"
+
+/obj/machinery/door_control/mainship/checkpoint/south
+	id = "southcheckpoint"
+
+/obj/machinery/door_control/mainship/cic
+	name = "CIC Lockdown"
+	id = "cic_lockdown"
+	req_one_access = list(ACCESS_MARINE_BRIDGE)	
+
+/obj/machinery/door_control/mainship/cic/armory
+	name = "Armory Lockdown"	
+	id = "cic_armory"
+
+/obj/machinery/door_control/mainship/cic/hangar
+	name = "Hangar Lockdown"
+	id = "hangar_lockdown"	
+
+/obj/machinery/door_control/mainship/tcomms
+	name = "Telecommunications Entrance"
+	id = "tcomms"
+	req_one_access = list(ACCESS_MARINE_ENGINEERING, ACCESS_MARINE_LOGISTICS, ACCESS_MARINE_BRIDGE)	
+
+/obj/machinery/door_control/mainship/corporate
+	name = "Privacy Shutters"
+	id = "cl_shutters"
+	req_access = list(ACCESS_NT_CORPORATE)	
+
+/obj/machinery/door_control/mainship/req	
+	name = "RO Line Shutters"
+	id = "ROlobby"
+	req_one_access = list(ACCESS_MARINE_CARGO)
+
+/obj/machinery/door_control/mainship/req/ro1	
+	name = "RO Line 1 Shutters"
+	id = "ROlobby1"
+
+/obj/machinery/door_control/mainship/req/ro2	
+	name = "RO Line 2 Shutters"
+	id = "ROlobby2"

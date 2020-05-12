@@ -19,10 +19,9 @@
 		return TRUE
 
 	var/mob/living/carbon/human/H = M
-	var/datum/limb/affecting = H.get_limb(user.zone_selected)
+	var/datum/limb/affecting = user.client.prefs.toggles_gameplay & RADIAL_MEDICAL ? radial_medical(H, user) : H.get_limb(user.zone_selected)
 
 	if(!affecting)
-		to_chat(user, "<span class='warning'>[H] has no [parse_zone(user.zone_selected)]!</span>")
 		return TRUE
 
 	if(affecting.body_part == HEAD)
@@ -39,6 +38,7 @@
 		return TRUE
 
 	H.UpdateDamageIcon()
+	return affecting
 
 /obj/item/stack/medical/bruise_pack
 	name = "roll of gauze"
@@ -46,23 +46,20 @@
 	desc = "Some sterile gauze to wrap around bloody stumps."
 	icon_state = "brutepack"
 	heal_brute = 1
-	origin_tech = "biotech=1"
 
 
 /obj/item/stack/medical/bruise_pack/attack(mob/living/carbon/M as mob, mob/user as mob)
 	. = ..()
-	if(.)
+	if(. == TRUE)
 		return TRUE
 
 	if (ishuman(M))
 		var/mob/living/carbon/human/H = M
 
-		if(user.mind && user.mind.cm_skills)
-			if(user.mind.cm_skills.medical < SKILL_MEDICAL_PRACTICED)
-				if(!do_mob(user, M, 10, BUSY_ICON_UNSKILLED, BUSY_ICON_MEDICAL))
-					return TRUE
+		if(user.skills.getRating("medical") < SKILL_MEDICAL_PRACTICED && !do_mob(user, M, 1 SECONDS, BUSY_ICON_UNSKILLED, BUSY_ICON_MEDICAL))
+			return TRUE
 
-		var/datum/limb/affecting = H.get_limb(user.zone_selected)
+		var/datum/limb/affecting = .
 
 		if(affecting.surgery_open_stage == 0)
 			if(!affecting.bandage())
@@ -96,23 +93,20 @@
 	singular_name = "ointment"
 	icon_state = "ointment"
 	heal_burn = 3
-	origin_tech = "biotech=1"
 
 
 /obj/item/stack/medical/ointment/attack(mob/living/carbon/M as mob, mob/user as mob)
 	. = ..()
-	if(.)
+	if(. == TRUE)
 		return TRUE
 
 	if (ishuman(M))
 		var/mob/living/carbon/human/H = M
 
-		if(user.mind && user.mind.cm_skills)
-			if(user.mind.cm_skills.medical < SKILL_MEDICAL_PRACTICED)
-				if(!do_mob(user, M, 10, BUSY_ICON_UNSKILLED, BUSY_ICON_MEDICAL))
-					return TRUE
+		if(user.skills.getRating("medical") < SKILL_MEDICAL_PRACTICED && !do_mob(user, M, 1 SECONDS, BUSY_ICON_UNSKILLED, BUSY_ICON_MEDICAL))
+			return TRUE
 
-		var/datum/limb/affecting = H.get_limb(user.zone_selected)
+		var/datum/limb/affecting = .
 
 		if(affecting.surgery_open_stage == 0)
 			if(!affecting.salve())
@@ -147,6 +141,15 @@
 	heal_burn = 7
 
 
+/obj/item/stack/medical/bruise_pack/sectoid
+	name = "\improper healing resin pack"
+	singular_name = "healing resin pack"
+	desc = "A strange tool filled with a sticky, alien resin. It seems it is meant for covering wounds."
+	icon = 'icons/obj/items/surgery_tools.dmi'
+	icon_state = "predator_fixovein"
+	heal_brute = 20
+	heal_burn = 20
+
 
 /obj/item/stack/medical/advanced
 	dir = NORTH
@@ -174,26 +177,25 @@
 	desc = "An advanced trauma kit for severe injuries."
 	icon_state = "traumakit"
 	heal_brute = 12
-	origin_tech = "biotech=1"
 
 
 /obj/item/stack/medical/advanced/bruise_pack/attack(mob/living/carbon/M, mob/user)
 	. = ..()
-	if(.)
+	if(. == TRUE)
 		return TRUE
+
 
 	if (ishuman(M))
 		var/mob/living/carbon/human/H = M
 
 		var/heal_amt = heal_brute
-		if(user.mind && user.mind.cm_skills)
-			if(user.mind.cm_skills.medical < SKILL_MEDICAL_PRACTICED) //untrained marines have a hard time using it
-				to_chat(user, "<span class='warning'>You start fumbling with [src].</span>")
-				if(!do_mob(user, M, 30, BUSY_ICON_UNSKILLED, BUSY_ICON_MEDICAL))
-					return
-				heal_amt = heal_brute * 0.5 //non optimal application means less healing
+		if(user.skills.getRating("medical") < SKILL_MEDICAL_PRACTICED) //untrained marines have a hard time using it
+			to_chat(user, "<span class='warning'>You start fumbling with [src].</span>")
+			if(!do_mob(user, M, 3 SECONDS, BUSY_ICON_UNSKILLED, BUSY_ICON_MEDICAL))
+				return
+			heal_amt = heal_brute * 0.5 //non optimal application means less healing
 
-		var/datum/limb/affecting = H.get_limb(user.zone_selected)
+		var/datum/limb/affecting = .
 
 		if(affecting.surgery_open_stage == 0)
 			var/bandaged = affecting.bandage()
@@ -216,7 +218,7 @@
 						user.visible_message("<span class='notice'>[user] smears some bioglue over [W.desc] on [M]'s [affecting.display_name].</span>",
 						"<span class='notice'>You smear some bioglue over [W.desc] on [M]'s [affecting.display_name].</span>")
 				if(bandaged)
-					affecting.heal_damage(heal_amt, 0)
+					affecting.heal_limb_damage(heal_amt, updating_health = TRUE)
 				use(1)
 		else
 			if(H.can_be_operated_on())        //Checks if mob is lying down on table for surgery
@@ -232,26 +234,24 @@
 	desc = "An advanced treatment kit for severe burns."
 	icon_state = "burnkit"
 	heal_burn = 12
-	origin_tech = "biotech=1"
 
 
 /obj/item/stack/medical/advanced/ointment/attack(mob/living/carbon/M as mob, mob/user as mob)
 	. = ..()
-	if(.)
+	if(. == TRUE)
 		return TRUE
 
 	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
 
 		var/heal_amt = heal_burn
-		if(user.mind && user.mind.cm_skills)
-			if(user.mind.cm_skills.medical < SKILL_MEDICAL_PRACTICED) //untrained marines have a hard time using it
-				to_chat(user, "<span class='warning'>You start fumbling with [src].</span>")
-				if(!do_mob(user, M, 30, BUSY_ICON_UNSKILLED, BUSY_ICON_MEDICAL))
-					return
-				heal_amt = heal_burn * 0.5 //non optimal application means less healing
+		if(user.skills.getRating("medical") < SKILL_MEDICAL_PRACTICED) //untrained marines have a hard time using it
+			to_chat(user, "<span class='warning'>You start fumbling with [src].</span>")
+			if(!do_mob(user, M, 3 SECONDS, BUSY_ICON_UNSKILLED, BUSY_ICON_MEDICAL))
+				return
+			heal_amt = heal_burn * 0.5 //non optimal application means less healing
 
-		var/datum/limb/affecting = H.get_limb(user.zone_selected)
+		var/datum/limb/affecting = .
 
 		if(affecting.surgery_open_stage == 0)
 			if(!affecting.salve())
@@ -260,7 +260,7 @@
 			else
 				user.visible_message("<span class='notice'>[user] covers wounds on [M]'s [affecting.display_name] with regenerative membrane.</span>",
 				"<span class='notice'>You cover wounds on [M]'s [affecting.display_name] with regenerative membrane.</span>")
-				affecting.heal_damage(0, heal_amt)
+				affecting.heal_limb_damage(burn = heal_amt, updating_health = TRUE)
 				use(1)
 		else
 			if(H.can_be_operated_on()) //Checks if mob is lying down on table for surgery
@@ -279,15 +279,14 @@
 
 /obj/item/stack/medical/splint/attack(mob/living/carbon/M, mob/user)
 	. = ..()
-	if(.)
+	if(. == TRUE)
 		return TRUE
 
 	if(user.action_busy)
 		return
 
 	if(ishuman(M))
-		var/mob/living/carbon/human/H = M
-		var/datum/limb/affecting = H.get_limb(user.zone_selected)
+		var/datum/limb/affecting = .
 		var/limb = affecting.display_name
 
 		if(!(affecting.name in list("l_arm", "r_arm", "l_leg", "r_leg", "r_hand", "l_hand", "r_foot", "l_foot", "chest", "groin", "head")))

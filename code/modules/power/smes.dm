@@ -12,8 +12,9 @@
 	density = TRUE
 	anchored = TRUE
 	use_power = NO_POWER_USE
-	var/capacity = 5e6		//Maximum amount of power it can hold
-	var/charge = 1e6		//Current amount of power it holds
+	interaction_flags = INTERACT_MACHINE_NANO
+	var/capacity = 5e5		//Maximum amount of power it can hold
+	var/charge = 1e5		//Current amount of power it holds
 
 	var/input_attempt = TRUE //attempting to charge ?
 	var/inputting = TRUE
@@ -185,17 +186,6 @@
 	return FALSE
 
 
-/obj/machinery/power/smes/attack_ai(mob/user)
-	ui_interact(user)
-
-
-/obj/machinery/power/smes/attack_hand(mob/living/user)
-	. = ..()
-	if(.)
-		return
-	ui_interact(user)
-
-
 /obj/machinery/power/smes/attackby(obj/item/I, mob/user, params)
 	. = ..()
 
@@ -260,59 +250,100 @@
 		terminal.deconstruct(user)
 
 
-/obj/machinery/power/smes/ui_interact(mob/user, ui_key = "main", datum/nanoui/ui = null, force_open = 1)
-
-	if(machine_stat & BROKEN)
-		return
-
-	// this is the data which will be sent to the ui
-	var/list/data = list(
-		"storedCapacity" = round(100.0*charge/capacity, 0.1),
-		"charging" = inputting,
-		"chargeMode" = input_attempt,
-		"chargeLevel" = input_level,
-		"chargeMax" = input_level_max,
-		"outputOnline" = output_attempt,
-		"outputLevel" = output_level,
-		"outputMax" = output_level_max,
-		"outputLoad" = round(output_used)
-		)
-
-	// update the ui if it exists, returns null if no ui is passed/found
-	ui = SSnano.try_update_ui(user, src, ui_key, ui, data, force_open)
-	if (!ui)
-		// the ui does not exist, so we'll create a new() one
-		// for a list of parameters and their descriptions see the code docs in \code\modules\nano\nanoui.dm
-		ui = new(user, src, ui_key, "smes.tmpl", "SMES Power Storage Unit", 540, 380)
-		// when the ui is first opened this is the data it will use
-		ui.set_initial_data(data)
-		// open the new ui window
+/obj/machinery/power/smes/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, \
+										datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
+	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
+	if(!ui)
+		ui = new(user, src, ui_key, "Smes", name, ui_x, ui_y, master_ui, state)
 		ui.open()
-		// auto update every Master Controller tick
-		ui.set_auto_update(1)
 
+/obj/machinery/power/smes/ui_data()
+	var/list/data = list(
+		"capacity" = capacity,
+		"capacityPercent" = round(100*charge/capacity, 0.1),
+		"charge" = charge,
+		"inputAttempt" = input_attempt,
+		"inputting" = inputting,
+		"inputLevel" = input_level,
+		"inputLevel_text" = DisplayPower(input_level),
+		"inputLevelMax" = input_level_max,
+		"inputAvailable" = input_available,
+		"outputAttempt" = output_attempt,
+		"outputting" = outputting,
+		"outputLevel" = output_level,
+		"outputLevel_text" = DisplayPower(output_level),
+		"outputLevelMax" = output_level_max,
+		"outputUsed" = output_used,
+	)
+	return data
+
+/obj/machinery/power/smes/ui_act(action, params)
+	if(..())
+		return
+	switch(action)
+		if("tryinput")
+			input_attempt = !input_attempt
+			update_icon()
+			. = TRUE
+		if("tryoutput")
+			output_attempt = !output_attempt
+			update_icon()
+			. = TRUE
+		if("input")
+			var/target = params["target"]
+			var/adjust = text2num(params["adjust"])
+			if(target == "input")
+				target = input("New input target (0-[input_level_max]):", name, input_level) as num|null
+				if(!isnull(target) && !..())
+					. = TRUE
+			else if(target == "min")
+				target = 0
+				. = TRUE
+			else if(target == "max")
+				target = input_level_max
+				. = TRUE
+			else if(adjust)
+				target = input_level + adjust
+				. = TRUE
+			else if(text2num(target) != null)
+				target = text2num(target)
+				. = TRUE
+			if(.)
+				input_level = CLAMP(target, 0, input_level_max)
+		if("output")
+			var/target = params["target"]
+			var/adjust = text2num(params["adjust"])
+			if(target == "input")
+				target = input("New output target (0-[output_level_max]):", name, output_level) as num|null
+				if(!isnull(target) && !..())
+					. = TRUE
+			else if(target == "min")
+				target = 0
+				. = TRUE
+			else if(target == "max")
+				target = output_level_max
+				. = TRUE
+			else if(adjust)
+				target = output_level + adjust
+				. = TRUE
+			else if(text2num(target) != null)
+				target = text2num(target)
+				. = TRUE
+			if(.)
+				output_level = CLAMP(target, 0, output_level_max)
 
 /obj/machinery/power/smes/Topic(href, href_list)
 	. = ..()
 	if(.)
 		return
-	if (usr.stat || usr.restrained() )
-		return
-
-//to_chat(world, "[href] ; [href_list[href]]")
-
-	if (!istype(src.loc, /turf) && !istype(usr, /mob/living/silicon/))
-		return FALSE // Do not update ui
 
 	if(href_list["cmode"])
 		input_attempt = !input_attempt
 		update_icon()
-		return TRUE
 
 	else if(href_list["online"])
 		output_attempt = !output_attempt
 		update_icon()
-		return TRUE
 
 	else if(href_list["input"])
 		switch( href_list["input"] )
@@ -323,7 +354,6 @@
 			if("set")
 				input_level = input(usr, "Enter new input level (0-[input_level_max])", "SMES Input Power Control", input_level) as num
 		input_level = CLAMP(input_level,0,input_level_max)
-		return TRUE
 
 	else if( href_list["output"] )
 		switch( href_list["output"] )
@@ -334,9 +364,7 @@
 			if("set")
 				output_level = input(usr, "Enter new output level (0-[output_level_max])", "SMES Output Power Control", output_level) as num
 		output_level = CLAMP(output_level,0,output_level_max)
-		return TRUE
 
-	return TRUE
 
 /obj/machinery/power/smes/proc/ion_act()
 	if(is_ground_level(z))
@@ -346,7 +374,7 @@
 			var/datum/effect_system/smoke_spread/smoke = new(src)
 			smoke.set_up(1, loc)
 			smoke.start()
-			explosion(src.loc, -1, 0, 1, 3, 1, 0)
+			explosion(loc, light_impact_range = 2, flash_range = 3)
 			qdel(src)
 			return
 		if(prob(15)) //Power drain

@@ -2,6 +2,8 @@
 	name = "item"
 	icon = 'icons/obj/items/items.dmi'
 	mouse_drag_pointer = MOUSE_ACTIVE_POINTER
+	materials = list(/datum/material/metal = 50)
+
 	var/image/blood_overlay = null //this saves our blood splatter overlay, which will be processed not to go over the edges of the sprite
 
 	var/item_state = null //if you don't want to use icon_state for onmob inhand/belt/back/ear/suitstorage/glove sprite.
@@ -10,7 +12,7 @@
 	var/force = 0
 	var/damtype = BRUTE
 	var/attack_speed = 11
-	var/list/attack_verb = list() //Used in attackby() to say how something was attacked "[x] has been [z.attack_verb] by [y] with [z]"
+	var/list/attack_verb //Used in attackby() to say how something was attacked "[x] has been [z.attack_verb] by [y] with [z]"
 
 	var/sharp = FALSE		// whether this item cuts
 	var/edge = FALSE		// whether this item is more likely to dismember
@@ -49,6 +51,8 @@
 	var/zoomdevicename = null //name used for message when binoculars/scope is used
 	var/zoom = FALSE //TRUE if item is actively being used to zoom. For scoped guns and binoculars.
 
+	var/datum/embedding_behavior/embedding
+	var/mob/living/embedded_into
 
 	var/time_to_equip = 0 // set to ticks it takes to equip a worn suit.
 	var/time_to_unequip = 0 // set to ticks it takes to unequip a worn suit.
@@ -67,11 +71,14 @@
 	var/icon_override = null  //Used to override hardcoded ON-MOB clothing dmis in human clothing proc (i.e. not the icon_state sprites).
 	var/sprite_sheet_id = 0 //Select which sprite sheet ID to use due to the sprite limit per .dmi. 0 is default, 1 is the new one.
 
+	var/flags_item_map_variant = NONE
 
 	//TOOL RELATED VARS
 	var/tool_behaviour = FALSE
 	var/toolspeed = 1
 	var/usesound = null
+
+	var/active = FALSE
 
 
 /obj/item/Initialize()
@@ -81,6 +88,14 @@
 		new path(src)
 	if(w_class <= 3) //pulling small items doesn't slow you down much
 		drag_delay = 1
+
+	if(!embedding)
+		embedding = getEmbeddingBehavior()
+	else if(islist(embedding))
+		embedding = getEmbeddingBehavior(arglist(embedding))
+
+	if(flags_item_map_variant)
+		update_item_sprites()
 
 
 /obj/item/Destroy()
@@ -92,7 +107,13 @@
 	for(var/X in actions)
 		qdel(X)
 	master = null
+	embedding = null
+	embedded_into = null //Should have been removed by temporarilyRemoveItemFromInventory, but let's play it safe.
 	return ..()
+
+
+/obj/item/proc/update_item_state(mob/user)
+	item_state = "[initial(icon_state)][flags_item & WIELDED ? "_w" : ""]"
 
 
 //user: The mob that is suiciding
@@ -119,6 +140,13 @@
 	loc = T
 
 
+/obj/item/attack_ghost(mob/dead/observer/user)
+	if(!can_interact(user))
+		return
+
+	return interact(user)
+
+
 /obj/item/attack_hand(mob/living/user)
 	. = ..()
 	if(.)
@@ -134,12 +162,10 @@
 		var/obj/item/storage/S = loc
 		S.remove_from_storage(src, user.loc)
 
-	throwing = FALSE
+	set_throwing(FALSE)
 
 	if(loc == user && !user.temporarilyRemoveItemFromInventory(src))
 		return
-
-	user.changeNext_move(CLICK_CD_RAPID)
 
 	if(QDELETED(src))
 		return
@@ -149,9 +175,6 @@
 		user.dropItemToGround(src)
 		dropped(user)
 
-
-/obj/item/attack_paw(mob/living/carbon/monkey/user)
-	return attack_hand(user)
 
 // Due to storage type consolidation this should get used more now.
 // I have cleaned it up a little, but it could probably use more.  -Sayu
@@ -200,10 +223,6 @@
 	if(user?.client && zoom) //Dropped when disconnected, whoops
 		zoom(user, 11, 12)
 
-	for(var/X in actions)
-		var/datum/action/A = X
-		A.remove_action(user)
-
 	SEND_SIGNAL(src, COMSIG_ITEM_DROPPED, user)
 
 	if(flags_item & DELONDROP)
@@ -230,13 +249,12 @@
 			if(!affected_limbs.Find(X.name) )
 				continue
 			armor_block = H.run_armor_check(X, "acid")
-			if(istype(X) && X.take_damage_limb(0, rand(raw_damage * 0.75, raw_damage * 1.25), FALSE, FALSE, armor_block))
+			if(istype(X) && X.take_damage_limb(0, rand(raw_damage * 0.75, raw_damage * 1.25), blocked = armor_block))
 				H.UpdateDamageIcon()
 			limb_count++
-		H.updatehealth()
+		UPDATEHEALTH(H)
 		qdel(current_acid)
 		current_acid = null
-	user.changeNext_move(CLICK_CD_RAPID)
 	return
 
 
@@ -260,11 +278,51 @@
 // for items that can be placed in multiple slots
 // note this isn't called during the initial dressing of a player
 /obj/item/proc/equipped(mob/user, slot)
+	SHOULD_CALL_PARENT(TRUE) // no exceptions
 	SEND_SIGNAL(src, COMSIG_ITEM_EQUIPPED, user, slot)
+
+	var/equipped_to_slot = flags_equip_slot & slotdefine2slotbit(slot)
+	if(equipped_to_slot) // flags_equip_slot is a bitfield
+		SEND_SIGNAL(src, COMSIG_ITEM_EQUIPPED_TO_SLOT, user)
+	else
+		SEND_SIGNAL(src, COMSIG_ITEM_EQUIPPED_NOT_IN_SLOT, user, slot)
+
 	for(var/X in actions)
 		var/datum/action/A = X
 		if(item_action_slot_check(user, slot)) //some items only give their actions buttons when in a specific slot.
 			A.give_action(user)
+
+	if(!equipped_to_slot)
+		return
+
+	if(ishuman(user))
+		var/mob/living/carbon/human/human_user = user
+		if(flags_armor_protection)
+			human_user.add_limb_armor(src)
+		if(slowdown)
+			human_user.add_movespeed_modifier(type, TRUE, 0, NONE, TRUE, slowdown)
+
+
+///Called when an item is removed from an equipment slot. The loc should still be in the unequipper.
+/obj/item/proc/unequipped(mob/unequipper, slot)
+	SHOULD_CALL_PARENT(TRUE)
+	SEND_SIGNAL(src, COMSIG_ITEM_UNEQUIPPED, unequipper, slot)
+
+	var/equipped_from_slot = flags_equip_slot & slotdefine2slotbit(slot)
+
+	for(var/X in actions)
+		var/datum/action/A = X
+		A.remove_action(unequipper)
+
+	if(!equipped_from_slot)
+		return
+
+	if(ishuman(unequipper))
+		var/mob/living/carbon/human/human_unequipper = unequipper
+		if(flags_armor_protection)
+			human_unequipper.remove_limb_armor(src)
+		if(slowdown)
+			human_unequipper.remove_movespeed_modifier(type)
 
 
 //sometimes we only want to grant the item's action if it's equipped in a specific slot.
@@ -279,7 +337,7 @@
 /obj/item/proc/mob_can_equip(mob/M, slot, warning = TRUE)
 	if(!slot)
 		return FALSE
-	
+
 	if(!M)
 		return FALSE
 
@@ -542,6 +600,25 @@
 		//END MONKEY
 
 
+/obj/item/proc/update_item_sprites()
+	switch(SSmapping.configs[GROUND_MAP].armor_style)
+		if(MAP_ARMOR_STYLE_JUNGLE)
+			if(flags_item_map_variant & ITEM_JUNGLE_VARIANT)
+				icon_state = "m_[icon_state]"
+				item_state = "m_[item_state]"
+		if(MAP_ARMOR_STYLE_ICE)
+			if(flags_item_map_variant & ITEM_ICE_VARIANT)
+				icon_state = "s_[icon_state]"
+				item_state = "s_[item_state]"
+		if(MAP_ARMOR_STYLE_PRISON)
+			if(flags_item_map_variant & ITEM_PRISON_VARIANT)
+				icon_state = "k_[icon_state]"
+				item_state = "k_[item_state]"
+
+	if(SSmapping.configs[GROUND_MAP].environment_traits[MAP_COLD] && (flags_item_map_variant & ITEM_ICE_PROTECTION))
+		min_cold_protection_temperature = ICE_PLANET_MIN_COLD_PROTECTION_TEMPERATURE
+
+
 /obj/item/verb/verb_pickup()
 	set src in oview(1)
 	set category = "Object"
@@ -562,9 +639,9 @@
 /obj/item/proc/ui_action_click(mob/user, datum/action/item_action/action)
 	attack_self(user)
 
-
-/obj/item/proc/IsShield()
-	return FALSE
+/obj/item/proc/toggle_item_state(mob/user)
+	SHOULD_CALL_PARENT(TRUE)
+	SEND_SIGNAL(src, COMSIG_ITEM_TOGGLE_ACTION, user)
 
 
 /mob/living/carbon/verb/showoff()
@@ -593,26 +670,42 @@ modules/mob/living/carbon/human/life.dm if you die, you will be zoomed out.
 
 	if(is_blind(user))
 		to_chat(user, "<span class='warning'>You are too blind to see anything.</span>")
-	else if(!user.IsAdvancedToolUser())
+		return
+
+	if(!user.dextrous)
 		to_chat(user, "<span class='warning'>You do not have the dexterity to use \the [zoom_device].</span>")
-	else if(!zoom && user.get_total_tint() >= TINT_HEAVY)
+		return
+
+	if(!zoom && user.tinttotal >= TINT_5)
 		to_chat(user, "<span class='warning'>Your vision is too obscured for you to look through \the [zoom_device].</span>")
-	else if(!zoom && user.get_active_held_item() != src)
+		return
+
+	if(!zoom && user.get_active_held_item() != src)
 		to_chat(user, "<span class='warning'>You need to hold \the [zoom_device] to look through it.</span>")
-	else if(zoom) //If we are zoomed out, reset that parameter.
+		return
+
+	if(zoom) //If we are zoomed out, reset that parameter.
 		user.visible_message("<span class='notice'>[user] looks up from [zoom_device].</span>",
 		"<span class='notice'>You look up from [zoom_device].</span>")
-		zoom = !zoom
-		user.cooldowns[COOLDOWN_ZOOM] = addtimer(VARSET_LIST_CALLBACK(user.cooldowns, COOLDOWN_ZOOM, null), 2 SECONDS)
-		if(user.client.click_intercept)
-			user.client.click_intercept = null
-	else //Otherwise we want to zoom in.
-		if(user.cooldowns[COOLDOWN_ZOOM]) //If we are spamming the zoom, cut it out
-			return
-		user.cooldowns[COOLDOWN_ZOOM] = addtimer(VARSET_LIST_CALLBACK(user.cooldowns, COOLDOWN_ZOOM, null), 2 SECONDS)
+		zoom = FALSE
+		COOLDOWN_START(user, COOLDOWN_ZOOM, 2 SECONDS)
+
+		if(user.interactee == src)
+			user.unset_interaction()
 
 		if(user.client)
-			user.client.change_view(viewsize)
+			user.client.click_intercept = null
+			user.client.change_view(WORLD_VIEW)
+			user.client.pixel_x = 0
+			user.client.pixel_y = 0
+
+	else //Otherwise we want to zoom in.
+		if(COOLDOWN_CHECK(user, COOLDOWN_ZOOM)) //If we are spamming the zoom, cut it out
+			return
+		COOLDOWN_START(user, COOLDOWN_ZOOM, 2 SECONDS)
+
+		if(user.client)
+			user.client.change_view(VIEW_NUM_TO_STRING(viewsize))
 
 			var/tilesize = 32
 			var/viewoffset = tilesize * tileoffset
@@ -633,18 +726,12 @@ modules/mob/living/carbon/human/life.dm if you die, you will be zoomed out.
 
 		user.visible_message("<span class='notice'>[user] peers through \the [zoom_device].</span>",
 		"<span class='notice'>You peer through \the [zoom_device].</span>")
-		zoom = !zoom
+		zoom = TRUE
 		if(user.interactee)
 			user.unset_interaction()
 		else if(!istype(src, /obj/item/attachable/scope))
 			user.set_interaction(src)
-		return
 
-	//General reset in case anything goes wrong, the view will always reset to default unless zooming in.
-	if(user.client)
-		user.client.change_view(world.view)
-		user.client.pixel_x = 0
-		user.client.pixel_y = 0
 
 /obj/item/proc/eyecheck(mob/user)
 	if(!ishuman(user))
@@ -861,3 +948,30 @@ modules/mob/living/carbon/human/life.dm if you die, you will be zoomed out.
 // Used in a callback that is passed by use_tool into do_after call. Do not override, do not call manually.
 /obj/item/proc/tool_check_callback(mob/living/user, amount, datum/callback/extra_checks)
 	return tool_use_check(user, amount) && (!extra_checks || extra_checks.Invoke())
+
+
+/obj/item/can_interact(mob/user)
+	. = ..()
+	if(!.)
+		return FALSE
+
+	if(!user.CanReach(src))
+		return FALSE
+
+	return TRUE
+
+
+/obj/item/attack_self(mob/user)
+	if(!can_interact(user))
+		return
+
+	interact(user)
+
+/obj/item/proc/toggle_active(new_state)
+	if(!isnull(new_state))
+		if(new_state == active)
+			return
+		new_state = active
+	else
+		active = !active
+	SEND_SIGNAL(src, COMSIG_ITEM_TOGGLE_ACTIVE, active)

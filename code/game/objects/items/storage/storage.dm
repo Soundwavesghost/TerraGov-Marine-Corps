@@ -41,7 +41,7 @@
 /obj/item/storage/MouseDrop(obj/over_object as obj)
 	if(ishuman(usr) || ismonkey(usr)) //so monkeys can take off their backpacks -- Urist
 
-		if(usr.lying)
+		if(usr.lying_angle)
 			return
 
 		if(istype(usr.loc, /obj/vehicle/multitile/root/cm_armored)) // stops inventory actions in a mech/tank
@@ -126,7 +126,8 @@
 
 /obj/item/storage/proc/can_see_content()
 	var/list/lookers = list()
-	for(var/mob/M in content_watchers)
+	for(var/i in content_watchers)
+		var/mob/M = i
 		if(M.s_active == src && M.client)
 			lookers |= M
 		else
@@ -277,9 +278,9 @@
 	for(var/i = 1 to length(S.click_border_start))
 		if(S.click_border_start[i] > click_x || click_x > S.click_border_end[i])
 			continue
-		I = S.contents[i]
-		if(!I)
+		if(length(S.contents) < i)
 			continue
+		I = S.contents[i]
 		I.attack_hand(usr)
 		return
 
@@ -411,38 +412,39 @@
 	return 1
 
 //Call this proc to handle the removal of an item from the storage item. The item will be moved to the atom sent as new_target
-/obj/item/storage/proc/remove_from_storage(obj/item/W as obj, atom/new_location)
-	if(!istype(W))
+/obj/item/storage/proc/remove_from_storage(obj/item/I, atom/new_location)
+	if(!istype(I))
 		return FALSE
 
-	for(var/mob/M in can_see_content())
+	for(var/i in can_see_content())
+		var/mob/M = i
 		if(!M.client)
 			continue
-		M.client.screen -= W
-
-	if(QDELETED(W))
-		return TRUE
+		M.client.screen -= I
 
 	if(new_location)
 		if(ismob(new_location))
-			W.layer = ABOVE_HUD_LAYER
-			W.plane = ABOVE_HUD_PLANE
-			W.pickup(new_location)
+			I.layer = ABOVE_HUD_LAYER
+			I.plane = ABOVE_HUD_PLANE
+			I.pickup(new_location)
 		else
-			W.layer = initial(W.layer)
-			W.plane = initial(W.plane)
-		W.forceMove(new_location)
+			I.layer = initial(I.layer)
+			I.plane = initial(I.plane)
+		I.forceMove(new_location)
 	else
-		W.forceMove(get_turf(src))
+		I.moveToNullspace()
 
 	orient2hud()
-	for(var/mob/M in can_see_content())
+
+	for(var/i in can_see_content())
+		var/mob/M = i
 		show_to(M)
-	if(W.maptext)
-		W.maptext = ""
-	W.on_exit_storage(src)
+
+	if(!QDELETED(I))
+		I.on_exit_storage(src)
+		I.mouse_opacity = initial(I.mouse_opacity)
+
 	update_icon()
-	W.mouse_opacity = initial(W.mouse_opacity)
 	return TRUE
 
 //This proc is called when you want to place an item into the storage item.
@@ -509,6 +511,7 @@
 
 /obj/item/storage/Initialize(mapload, ...)
 	. = ..()
+	PopulateContents()
 	if(length(can_hold))
 		can_hold = typecacheof(can_hold)
 	else if(length(cant_hold))
@@ -695,10 +698,10 @@
 		show_to(M)
 
 
-/obj/item/storage/contents_explosion(severity, target)
+/obj/item/storage/contents_explosion(severity)
 	for(var/i in contents)
 		var/atom/A = i
-		A.ex_act(severity, target)
+		A.ex_act(severity)
 
 
 /obj/item/storage/AltClick(mob/user)
@@ -708,3 +711,5 @@
 		return ..() //User is already holding something.
 	var/obj/item/drawn_item = contents[length(contents)]
 	drawn_item.attack_hand(user)
+
+/obj/item/storage/proc/PopulateContents()

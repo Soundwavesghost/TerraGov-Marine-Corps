@@ -73,10 +73,12 @@ obj/item/limb/New(loc, mob/living/carbon/human/H)
 	var/brain_item_type = /obj/item/organ/brain
 	var/braindeath_on_decap = 1 //whether the brainmob dies when head is decapitated (used by synthetics)
 
-/obj/item/limb/head/New(loc, mob/living/carbon/human/H)
-	if(istype(H))
-		src.icon_state = H.gender == MALE? "head_m" : "head_f"
-	..()
+/obj/item/limb/head/Initialize(mapload, mob/living/carbon/human/H)
+	. = ..()
+	if(!istype(H))
+		return
+
+	icon_state = H.gender == MALE? "head_m" : "head_f"
 	if(H.species.species_flags & HAS_NO_HAIR)
 		return
 	//Add (facial) hair.
@@ -97,14 +99,7 @@ obj/item/limb/New(loc, mob/living/carbon/human/H)
 				hair.Blend(rgb(H.r_hair, H.g_hair, H.b_hair), ICON_ADD)
 
 			overlays.Add(hair) //icon.Blend(hair, ICON_OVERLAY)
-	spawn(5)
-	if(brainmob && brainmob.client)
-		brainmob.client.screen.len = null //clear the hud
 
-	//if(ishuman(H))
-	//	if(H.gender == FEMALE)
-	//		H.icon_state = "head_f"
-	//	H.overlays += H.generate_head_icon()
 	transfer_identity(H)
 
 	name = "[H.real_name]'s head"
@@ -112,9 +107,8 @@ obj/item/limb/New(loc, mob/living/carbon/human/H)
 	H.regenerate_icons()
 
 	if(braindeath_on_decap)
-		brainmob.stat = DEAD
 		brainmob.death()
-	
+
 	GLOB.head_list += src
 
 /obj/item/limb/head/Destroy()
@@ -159,7 +153,6 @@ obj/item/limb/New(loc, mob/living/carbon/human/H)
 				to_chat(brainmob, "<span class='warning'>[user] severs your brain's connection to the spine with [I]!</span>")
 
 				log_combat(user, brainmob, "debrained", I, "(INTENT: [uppertext(user.a_intent)])")
-				msg_admin_attack("[ADMIN_TPMONTY(user)] debrained [ADMIN_TPMONTY(brainmob)].")
 
 				//TODO: ORGAN REMOVAL UPDATE.
 				var/obj/item/organ/brain/B = new brain_item_type(loc)

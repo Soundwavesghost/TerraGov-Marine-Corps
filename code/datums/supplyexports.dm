@@ -22,6 +22,10 @@
 	cost = 30
 	export_obj = /mob/living/carbon/xenomorph/runner
 
+/datum/supply_export/xemomorph/panther
+	cost = 30
+	export_obj = /mob/living/carbon/xenomorph/panther
+
 /datum/supply_export/xemomorph/defender
 	cost = 30
 	export_obj = /mob/living/carbon/xenomorph/defender
@@ -46,6 +50,11 @@
 /datum/supply_export/xemomorph/warrior
 	cost = 40
 	export_obj = /mob/living/carbon/xenomorph/warrior
+
+/datum/supply_export/xemomorph/bull
+	cost = 40
+	export_obj = /mob/living/carbon/xenomorph/bull
+
 
 /datum/supply_export/xemomorph/spitter
 	cost = 40

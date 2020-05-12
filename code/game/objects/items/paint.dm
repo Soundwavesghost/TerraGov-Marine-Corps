@@ -1,12 +1,12 @@
 //NEVER USE THIS IT SUX	-PETETHEGOAT
 
-/obj/item/reagent_container/glass/paint
+/obj/item/reagent_containers/glass/paint
 	desc = "It's a paint bucket."
 	name = "paint bucket"
 	icon = 'icons/obj/items/items.dmi'
 	icon_state = "paint_neutral"
 	item_state = "paintcan"
-	matter = list("metal" = 200)
+	materials = list(/datum/material/metal = 200)
 	w_class = WEIGHT_CLASS_NORMAL
 	amount_per_transfer_from_this = 10
 	possible_transfer_amounts = list(10,20,30,50,70)
@@ -27,7 +27,7 @@
 	New()
 		if(paint_type == "remover")
 			name = "paint remover bucket"
-		else if(paint_type && lentext(paint_type) > 0)
+		else if(paint_type && length(paint_type) > 0)
 			name = paint_type + " " + name
 		..()
 		reagents.add_reagent(text2path("/datum/reagent/paint/[paint_type]"), volume)

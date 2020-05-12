@@ -13,6 +13,7 @@
 	var/base_icon = 'icons/effects/blood.dmi'
 	var/basecolor="#ff3b00" // Color when wet.
 	var/amount = 5
+	var/drying_timer
 
 
 /obj/effect/decal/cleanable/blood/Initialize()
@@ -26,25 +27,35 @@
 		for(var/obj/effect/decal/cleanable/blood/B in loc)
 			if(B == src)
 				continue
-			return INITIALIZE_HINT_QDEL
+			qdel(B)
 	return INITIALIZE_HINT_LATELOAD
 
 /obj/effect/decal/cleanable/blood/LateInitialize()
 	. = ..()
-	addtimer(CALLBACK(src, .proc/dry), DRYING_TIME * (amount+1))
+	if(QDELETED(src))
+		CRASH("[type] already deleted on LateInitialize. Loc: ([x], [y], [z])")
+	drying_timer = addtimer(CALLBACK(src, .proc/dry), DRYING_TIME * (amount + 1), TIMER_STOPPABLE)
+
+
+/obj/effect/decal/cleanable/blood/Destroy()
+	if(drying_timer)
+		deltimer(drying_timer)
+	return ..()
+
 
 /obj/effect/decal/cleanable/blood/update_icon()
 	if(basecolor == "rainbow") basecolor = "#[pick(list("FF0000","FF7F00","FFFF00","00FF00","0000FF","4B0082","8F00FF"))]"
 	color = basecolor
 
 /obj/effect/decal/cleanable/blood/Crossed(mob/living/carbon/human/perp)
+	. = ..()
 	if (!istype(perp))
 		return
 	if(amount < 1)
 		return
 
-	var/datum/limb/l_foot = perp.get_limb("l_foot")
-	var/datum/limb/r_foot = perp.get_limb("r_foot")
+	var/datum/limb/foot/l_foot = perp.get_limb("l_foot")
+	var/datum/limb/foot/r_foot = perp.get_limb("r_foot")
 	var/hasfeet = 1
 	if((!l_foot || l_foot.limb_status & LIMB_DESTROYED) && (!r_foot || r_foot.limb_status & LIMB_DESTROYED))
 		hasfeet = 0
@@ -106,6 +117,18 @@
 	amount = 0
 	var/drips
 
+
+/obj/effect/decal/cleanable/blood/drip/tracking_fluid
+	name = "tracking fluid"
+	desc = "Tracking fluid from a tracking round."
+	basecolor = "#00FFFF"
+
+/obj/effect/decal/cleanable/blood/drip/tracking_fluid/dry()
+	name = "dried [name]"
+	desc = "Tracking fluid from a tracking round. It appears to have lost its color."
+	color = adjust_brightness(color, -75)
+	amount = 0
+
 /obj/effect/decal/cleanable/blood/writing
 	icon_state = "tracks"
 	desc = "It looks like a writing in blood."
@@ -114,9 +137,9 @@
 	amount = 0
 	var/message
 
-/obj/effect/decal/cleanable/blood/writing/New()
-	..()
-	if(random_icon_states.len)
+/obj/effect/decal/cleanable/blood/writing/Initialize()
+	. = ..()
+	if(length(random_icon_states))
 		for(var/obj/effect/decal/cleanable/blood/writing/W in loc)
 			random_icon_states.Remove(W.icon_state)
 		icon_state = pick(random_icon_states)

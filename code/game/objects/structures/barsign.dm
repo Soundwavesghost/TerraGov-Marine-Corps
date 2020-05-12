@@ -3,8 +3,8 @@
 	icon_state = "off"
 	anchored = TRUE
 
-/obj/structure/sign/double/barsign/New()
-	..()
+/obj/structure/sign/double/barsign/Initialize()
+	. = ..()
 	ChangeSign(pick(
 	"pinkflamingo",
 	"magmasea",
@@ -68,6 +68,6 @@
 		if(!sign_type)
 			return
 
-		sign_type = oldreplacetext(lowertext(sign_type), " ", "")
+		sign_type = replacetext(lowertext(sign_type), " ", "")
 		ChangeSign(sign_type)
 		to_chat(user, "You change the barsign.")

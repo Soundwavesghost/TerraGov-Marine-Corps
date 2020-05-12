@@ -7,10 +7,23 @@ Thumbs.db
 *.lk
 *.backup
 *.dmm.before
+*.cache
 data/
 cfg/
 tmp/
 tools/Runtime Condenser/Input.txt
 tools/Runtime Condenser/Output.txt
 tools/MapDaemon/logs/*.txt
-.vscode/*
+
+#Visual studio stuff
+*.vscode/*
+!/.vscode/extensions.json
+
+tools/BalanceTool/raw.json
+
+#extra map stuff
+/_maps/**/backup/
+/_maps/templates.dm
+
+# DM Doc ignores
+dmdoc/*

@@ -9,7 +9,7 @@
 	desc = "The basic construction for cameras."
 	icon = 'icons/obj/machines/monitors.dmi'
 	icon_state = "cameracase"
-	matter = list("metal" = 400, "glass" = 250)
+	materials = list(/datum/material/metal = 400, /datum/material/glass = 250)
 
 
 /obj/item/frame/camera/attackby(obj/item/I, mob/user, params)
@@ -74,13 +74,13 @@
 
 /obj/structure/camera_assembly/Initialize(mapload, newDir)
 	. = ..()
-	
+
 	if(newDir)
 		setDir(newDir)
 
 	switch(dir)
 		if(NORTH)
-			pixel_y = 16 
+			pixel_y = 16
 		if(SOUTH)
 			pixel_y = -16
 		if(EAST)
@@ -185,7 +185,7 @@
 /obj/structure/camera_assembly/deconstruct(disassembled = TRUE)
 	if(!(flags_atom & NODECONSTRUCT))
 		new /obj/item/stack/sheet/metal(loc)
-	qdel(src)
+	return ..()
 
 
 #undef STATE_WRENCHED

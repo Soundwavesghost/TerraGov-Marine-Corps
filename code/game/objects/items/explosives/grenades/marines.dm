@@ -9,15 +9,13 @@
 	underslug_launchable = TRUE
 
 /obj/item/explosive/grenade/frag/prime()
-	spawn(0)
-		explosion(loc, -1, -1, 3)
-		qdel(src)
-	return
+	explosion(loc, light_impact_range = 4)
+	qdel(src)
 
 /obj/item/explosive/grenade/frag/flamer_fire_act()
 	var/turf/T = loc
 	qdel(src)
-	explosion(T, -1, -1, 3)
+	explosion(T, light_impact_range = 4)
 
 
 
@@ -52,10 +50,8 @@
 	underslug_launchable = FALSE
 
 /obj/item/explosive/grenade/frag/PMC/prime()
-	spawn(0)
-		explosion(loc, -1, -1, 4)
-		qdel(src)
-	return
+	explosion(loc, light_impact_range = 5)
+	qdel(src)
 
 
 /obj/item/explosive/grenade/frag/m15
@@ -67,10 +63,8 @@
 	underslug_launchable = FALSE
 
 /obj/item/explosive/grenade/frag/m15/prime()
-	spawn(0)
-		explosion(loc, -1, -1, 4)
-		qdel(src)
-	return
+	explosion(loc, light_impact_range = 5)
+	qdel(src)
 
 
 /obj/item/explosive/grenade/frag/stick
@@ -87,10 +81,8 @@
 	underslug_launchable = FALSE
 
 /obj/item/explosive/grenade/frag/stick/prime()
-	spawn(0)
-		explosion(src.loc,-1,-1,3)
-		del(src)
-	return
+	explosion(loc, light_impact_range = 4)
+	del(src)
 
 
 /obj/item/explosive/grenade/frag/upp
@@ -104,10 +96,20 @@
 	underslug_launchable = FALSE
 
 /obj/item/explosive/grenade/frag/upp/prime()
-	spawn(0)
-		explosion(src.loc,-1,-1,3)
-		del(src)
-	return
+	explosion(loc, light_impact_range = 4)
+	del(src)
+
+
+/obj/item/explosive/grenade/frag/sectoid
+	desc = "An odd, squishy, organ-like grenade. It will explode 3 seconds after squeezing it."
+	icon_state = "alien_grenade"
+	item_state = "grenade_ex"
+	hud_state = "grenade_frag"
+	underslug_launchable = FALSE
+
+/obj/item/explosive/grenade/frag/sectoid/prime()
+	explosion(loc, light_impact_range = 6)
+	qdel(src)
 
 
 /obj/item/explosive/grenade/incendiary
@@ -120,24 +122,23 @@
 	underslug_launchable = TRUE
 
 /obj/item/explosive/grenade/incendiary/prime()
-	spawn(0)
-		flame_radius(2, get_turf(src))
-		playsound(src.loc, 'sound/weapons/guns/fire/flamethrower2.ogg', 35, 1, 4)
-		qdel(src)
-	return
+	flame_radius(2, get_turf(src))
+	playsound(loc, 'sound/weapons/guns/fire/flamethrower2.ogg', 35, TRUE, 4)
+	qdel(src)
 
 
-proc/flame_radius(radius = 1, turf/T, burn_intensity = 25, burn_duration = 25, burn_damage = 25, fire_stacks = 15, int_var = 0.5, dur_var = 0.5, colour = "red") //~Art updated fire.
-	if(!T || !isturf(T))
-		return
+/proc/flame_radius(radius = 1, turf/epicenter, burn_intensity = 25, burn_duration = 25, burn_damage = 25, fire_stacks = 15, int_var = 0.5, dur_var = 0.5, colour = "red") //~Art updated fire.
+	if(!isturf(epicenter))
+		CRASH("flame_radius used without a valid turf parameter")
 	radius = CLAMP(radius, 1, 50) //Sanitize inputs
 	int_var = CLAMP(int_var, 0.1,0.5)
 	dur_var = CLAMP(int_var, 0.1,0.5)
 	fire_stacks = rand(burn_damage*(0.5-int_var),burn_damage*(0.5+int_var) ) + rand(burn_damage*(0.5-int_var),burn_damage*(0.5+int_var) )
 	burn_damage = rand(burn_damage*(0.5-int_var),burn_damage*(0.5+int_var) ) + rand(burn_damage*(0.5-int_var),burn_damage*(0.5+int_var) )
 
-	for(var/turf/IT in filled_circle_turfs(T,radius))
-		IT.ignite(rand(burn_intensity*(0.5-int_var), burn_intensity*(0.5+int_var)) + rand(burn_intensity*(0.5-int_var), burn_intensity*(0.5+int_var)), rand(burn_duration*(0.5-int_var), burn_duration*(0.5-int_var)) + rand(burn_duration*(0.5-int_var), burn_duration*(0.5-int_var)), colour, burn_damage, fire_stacks)
+	for(var/t in filled_turfs(epicenter, radius, "circle"))
+		var/turf/turf_to_flame = t
+		turf_to_flame.ignite(rand(burn_intensity*(0.5-int_var), burn_intensity*(0.5+int_var)) + rand(burn_intensity*(0.5-int_var), burn_intensity*(0.5+int_var)), rand(burn_duration*(0.5-int_var), burn_duration*(0.5-int_var)) + rand(burn_duration*(0.5-int_var), burn_duration*(0.5-int_var)), colour, burn_damage, fire_stacks)
 
 
 /obj/item/explosive/grenade/incendiary/molotov
@@ -148,17 +149,15 @@ proc/flame_radius(radius = 1, turf/T, burn_intensity = 25, burn_duration = 25, b
 	arm_sound = 'sound/items/welder2.ogg'
 	underslug_launchable = FALSE
 
-/obj/item/explosive/grenade/incendiary/molotov/New()
+/obj/item/explosive/grenade/incendiary/molotov/Initialize()
+	. = ..()
 	det_time = rand(10,40)//Adds some risk to using this thing.
-	return ..()
 
 /obj/item/explosive/grenade/incendiary/molotov/prime()
-	spawn(0)
-		playsound(src.loc, 'sound/effects/hit_on_shattered_glass.ogg', 35, 1, 4)
-		flame_radius(2, get_turf(src))
-		playsound(src.loc, 'sound/weapons/guns/fire/flamethrower2.ogg', 30, 1, 4)
-		qdel(src)
-	return
+	playsound(loc, 'sound/effects/hit_on_shattered_glass.ogg', 35, TRUE, 4)
+	flame_radius(2, get_turf(src))
+	playsound(loc, 'sound/weapons/guns/fire/flamethrower2.ogg', 30, TRUE, 4)
+	qdel(src)
 
 
 /obj/item/explosive/grenade/smokebomb
@@ -172,7 +171,7 @@ proc/flame_radius(radius = 1, turf/T, burn_intensity = 25, burn_duration = 25, b
 	dangerous = FALSE
 	var/datum/effect_system/smoke_spread/bad/smoke
 
-/obj/item/explosive/grenade/smokebomb/New()
+/obj/item/explosive/grenade/smokebomb/Initialize()
 	. = ..()
 	smoke = new(src)
 
@@ -194,7 +193,7 @@ proc/flame_radius(radius = 1, turf/T, burn_intensity = 25, burn_duration = 25, b
 	underslug_launchable = TRUE
 	var/datum/effect_system/smoke_spread/tactical/smoke
 
-/obj/item/explosive/grenade/cloakbomb/New()
+/obj/item/explosive/grenade/cloakbomb/Initialize()
 	. = ..()
 	smoke = new(src)
 
@@ -215,17 +214,18 @@ proc/flame_radius(radius = 1, turf/T, burn_intensity = 25, burn_duration = 25, b
 	underslug_launchable = TRUE
 	var/datum/effect_system/smoke_spread/phosphorus/smoke
 
-/obj/item/explosive/grenade/phosphorus/New()
+/obj/item/explosive/grenade/phosphorus/Initialize()
 	. = ..()
 	smoke = new(src)
 
 /obj/item/explosive/grenade/phosphorus/prime()
 	playsound(loc, 'sound/effects/smoke.ogg', 25, 1, 4)
-	smoke.set_up(4, loc, 7)
+	smoke.set_up(5, loc, 7)
 	smoke.start()
+	flame_radius(4, get_turf(src))
+	flame_radius(1, get_turf(src), burn_intensity = 45, burn_duration = 75, burn_damage = 15, fire_stacks = 75)	//The closer to the middle you are the more it hurts
 	qdel(src)
-
-
+	
 /obj/item/explosive/grenade/phosphorus/upp
 	name = "\improper Type 8 WP grenade"
 	desc = "A deadly gas grenade found within the ranks of the UPP. Designed to spill white phosporus on the target. It explodes 2 seconds after the pin has been pulled."
@@ -243,20 +243,17 @@ proc/flame_radius(radius = 1, turf/T, burn_intensity = 25, burn_duration = 25, b
 	underslug_launchable = TRUE
 
 /obj/item/explosive/grenade/impact/prime()
-	spawn(0)
-		explosion(loc, -1, -1, 1, 2)
-		qdel(src)
-	return
+	explosion(loc, light_impact_range = 3)
+	qdel(src)
 
 /obj/item/explosive/grenade/impact/flamer_fire_act()
-	var/turf/T = loc
+	explosion(loc, light_impact_range = 3)
 	qdel(src)
-	explosion(T, -1, -1, 1, 2)
 
 /obj/item/explosive/grenade/impact/throw_impact(atom/hit_atom, speed)
 	. = ..()
 	if(launched && active && !istype(hit_atom, /turf/open)) //Only contact det if active, we actually hit something, and we're fired from a grenade launcher.
-		explosion(loc, -1, -1, 1, 2)
+		explosion(loc, light_impact_range = 1, flash_range = 2)
 		qdel(src)
 
 
@@ -272,11 +269,13 @@ proc/flame_radius(radius = 1, turf/T, burn_intensity = 25, burn_duration = 25, b
 	hud_state = "grenade_frag"
 	var/fuel = 0
 
-/obj/item/explosive/grenade/flare/New()
+/obj/item/explosive/grenade/flare/Initialize()
+	. = ..()
 	fuel = rand(800, 1000) // Sorry for changing this so much but I keep under-estimating how long X number of ticks last in seconds.
-	return ..()
 
 /obj/item/explosive/grenade/flare/flamer_fire_act()
+	if(!fuel) //it's out of fuel, an empty shell.
+		return
 	if(!active)
 		turn_on()
 
@@ -328,8 +327,7 @@ proc/flame_radius(radius = 1, turf/T, burn_intensity = 25, burn_duration = 25, b
 	if(!active)
 		turn_on(user)
 
-/obj/item/explosive/grenade/flare/on/New()
-
+/obj/item/explosive/grenade/flare/on/Initialize()
 	. = ..()
 	active = TRUE
 	heat = 1500
@@ -344,7 +342,7 @@ proc/flame_radius(radius = 1, turf/T, burn_intensity = 25, burn_duration = 25, b
 /obj/item/explosive/grenade/flare/proc/update_brightness()
 	if(active && fuel > 0)
 		icon_state = "[initial(icon_state)]_active"
-		set_light(5)
+		set_light(5, l_color = LIGHT_COLOR_FLARE)
 	else
 		icon_state = initial(icon_state)
 		set_light(0)
@@ -363,6 +361,7 @@ proc/flame_radius(radius = 1, turf/T, burn_intensity = 25, burn_duration = 25, b
 		if(launched && CHECK_BITFIELD(resistance_flags, ON_FIRE))
 			var/armor_block = L.run_armor_check(target_zone, "fire")
 			L.apply_damage(rand(throwforce*0.75,throwforce*1.25), BURN, target_zone, armor_block) //Do more damage if launched from a proper launcher and active
+			UPDATEHEALTH(L)
 
 	// Flares instantly burn out nodes when thrown at them.
 	var/obj/effect/alien/weeds/node/N = locate() in loc

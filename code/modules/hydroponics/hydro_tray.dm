@@ -123,8 +123,8 @@
 		/datum/reagent/toxin/mutagen = 15
 		)
 
-/obj/machinery/portable_atmospherics/hydroponics/New()
-	..()
+/obj/machinery/portable_atmospherics/hydroponics/Initialize()
+	. = ..()
 	temp_chem_holder = new()
 	temp_chem_holder.create_reagents(10)
 	create_reagents(200, AMOUNT_VISIBLE|REFILLABLE)
@@ -527,8 +527,8 @@
 		force_update = TRUE
 		process()
 
-	else if(istype(I, /obj/item/reagent_container/syringe))
-		var/obj/item/reagent_container/syringe/S = I
+	else if(istype(I, /obj/item/reagent_containers/syringe))
+		var/obj/item/reagent_containers/syringe/S = I
 		if(S.mode == 1)
 			if(seed)
 				return FALSE
@@ -558,12 +558,12 @@
 		to_chat(user, "You plant the [S.seed.seed_name] [S.seed.seed_noun].")
 
 		if(S.seed.spread == 1)
-			msg_admin_attack("[key_name(user)] has planted a creeper packet.")
+			message_admins("[key_name(user)] has planted a creeper packet.")
 			var/obj/effect/plant_controller/creeper/PC = new(get_turf(src))
 			if(PC)
 				PC.seed = S.seed
 		else if(S.seed.spread == 2)
-			msg_admin_attack("[key_name(user)] has planted a spreading vine packet.")
+			message_admins("[key_name(user)] has planted a spreading vine packet.")
 			var/obj/effect/plant_controller/PC = new(get_turf(src))
 			if(PC)
 				PC.seed = S.seed
@@ -593,7 +593,7 @@
 		var/obj/item/storage/bag/plants/S = I
 
 		attack_hand(user)
-		for(var/obj/item/reagent_container/food/snacks/grown/G in user.loc)
+		for(var/obj/item/reagent_containers/food/snacks/grown/G in user.loc)
 			if(!S.can_be_inserted(G))
 				return
 			S.handle_item_insertion(G, TRUE, user)
@@ -620,8 +620,6 @@
 /obj/machinery/portable_atmospherics/hydroponics/attack_hand(mob/living/user)
 	. = ..()
 	if(.)
-		return
-	if(istype(usr,/mob/living/silicon))
 		return
 
 	if(harvest)
@@ -671,8 +669,8 @@
 		to_chat(user, "You clear up [src]!")
 		qdel(src)
 
-/obj/machinery/portable_atmospherics/hydroponics/soil/New()
-	..()
+/obj/machinery/portable_atmospherics/hydroponics/soil/Initialize()
+	. = ..()
 	verbs -= /obj/machinery/portable_atmospherics/hydroponics/verb/close_lid
 
 #undef HYDRO_SPEED_MULTIPLIER

@@ -59,7 +59,7 @@
 	name = "broken cryptographic sequencer"
 	icon_state = "emag"
 	item_state = "card-id"
-	origin_tech = "magnets=2;syndicate=2"
+
 
 /obj/item/card/emag
 	desc = "It's a card with a magnetic strip attached to some circuitry."
@@ -67,7 +67,6 @@
 	icon_state = "emag"
 	item_state = "card-id"
 	flags_item = NOBLUDGEON
-	origin_tech = "magnets=2;syndicate=2"
 
 
 /obj/item/card/id
@@ -86,7 +85,6 @@
 	var/rank = null			//actual job
 	var/dorm = 0		// determines if this ID has claimed a dorm already
 	var/paygrade = null  // Marine's paygrade
-	var/claimedgear = 1 // For medics and engineers to 'claim' a locker
 
 	var/assigned_fireteam = "" //which fire team this ID belongs to, only used by squad marines.
 
@@ -143,12 +141,12 @@
 /obj/item/card/id/syndicate
 	name = "agent card"
 	access = list(ACCESS_ILLEGAL_PIRATE)
-	origin_tech = "syndicate=3"
 	var/registered_user=null
 
-/obj/item/card/id/syndicate/New(mob/user as mob)
-	..()
-	if(!isnull(user)) // Runtime prevention on laggy starts or where users log out because of lag at round start.
+/obj/item/card/id/syndicate/Initialize(mapload)
+	. = ..()
+	if(ismob(loc)) // Runtime prevention on laggy starts or where users log out because of lag at round start.
+		var/mob/user = loc
 		registered_name = ishuman(user) ? user.real_name : user.name
 	else
 		registered_name = "Agent Card"
@@ -165,7 +163,7 @@
 			return
 		src.registered_name = t
 
-		var u = copytext(sanitize(input(user, "What occupation would you like to put on this card?\nNote: This will not grant any access levels other than Maintenance.", "Agent card job assignment", "Agent")),1,MAX_MESSAGE_LEN)
+		var u = stripped_input(user, "What occupation would you like to put on this card?\nNote: This will not grant any access levels other than Maintenance.", "Agent card job assignment", "Agent")
 		if(!u)
 			alert("Invalid assignment.")
 			src.registered_name = ""
@@ -180,13 +178,13 @@
 
 		switch(alert("Would you like to display the ID, or retitle it?","Choose.","Rename","Show"))
 			if("Rename")
-				var t = copytext(sanitize(input(user, "What name would you like to put on this card?", "Agent card name", ishuman(user) ? user.real_name : user.name)),1,26)
+				var t = stripped_input(user, "What name would you like to put on this card?", "Agent card name", ishuman(user) ? user.real_name : user.name, max_length = 26)
 				if(!t || t == "Unknown" || t == "floor" || t == "wall" || t == "r-wall") //Same as mob/new_player/prefrences.dm
 					alert("Invalid name.")
 					return
 				src.registered_name = t
 
-				var u = copytext(sanitize(input(user, "What occupation would you like to put on this card?\nNote: This will not grant any access levels other than Maintenance.", "Agent card job assignment", "Assistant")),1,MAX_MESSAGE_LEN)
+				var u = stripped_input(user, "What occupation would you like to put on this card?\nNote: This will not grant any access levels other than Maintenance.", "Agent card job assignment", "Assistant")
 				if(!u)
 					alert("Invalid assignment.")
 					return

@@ -326,6 +326,8 @@
 	throwpass = TRUE
 	climbable = TRUE
 	icon = 'icons/Marine/mainship_props.dmi'
+	resistance_flags = XENO_DAMAGEABLE
+	coverage = 100
 	var/is_solid_fuel = 0
 
 /obj/structure/ob_ammo/attackby(obj/item/I, mob/user, params)
@@ -352,6 +354,11 @@
 	to_chat(user, "Moving this will require some sort of lifter.")
 
 
+/obj/structure/ob_ammo/obj_destruction(damage_flag)
+	explosion(loc, light_impact_range = 2, flash_range = 3, flame_range = 2)
+	return ..()
+
+
 /obj/structure/ob_ammo/warhead
 	name = "theoretical orbital ammo"
 	var/warhead_kind
@@ -366,7 +373,7 @@
 	icon_state = "ob_warhead_1"
 
 /obj/structure/ob_ammo/warhead/explosive/warhead_impact(turf/target, inaccuracy_amt = 0)
-	explosion(target, 4 - inaccuracy_amt, 6 - inaccuracy_amt, 9 - inaccuracy_amt, 11 - inaccuracy_amt, 1, 0)
+	explosion(target, 5 - inaccuracy_amt, 7 - inaccuracy_amt, 10 - inaccuracy_amt, 11 - inaccuracy_amt)
 
 
 
@@ -396,7 +403,7 @@
 	var/total_amt = max(25 - inaccuracy_amt, 20)
 	for(var/i = 1 to total_amt)
 		var/turf/U = pick_n_take(turf_list)
-		explosion(U, 1, 3, 5, 6, 1, 0) //rocket barrage
+		explosion(U, 1, 4, 6, 6, throw_range = 0, adminlog = FALSE) //rocket barrage
 		sleep(1)
 
 /obj/structure/ob_ammo/ob_fuel
@@ -404,10 +411,10 @@
 	icon_state = "ob_fuel"
 	is_solid_fuel = 1
 
-/obj/structure/ob_ammo/ob_fuel/New()
-	..()
-	pixel_x = rand(-5,5)
-	pixel_y = rand(-5,5)
+/obj/structure/ob_ammo/ob_fuel/Initialize()
+	. = ..()
+	pixel_x = rand(-5, 5)
+	pixel_y = rand(-5, 5)
 
 
 
@@ -427,21 +434,19 @@
 	return
 
 
-/obj/machinery/computer/orbital_cannon_console/attack_hand(mob/living/user)
+/obj/machinery/computer/orbital_cannon_console/interact(mob/user)
 	. = ..()
 	if(.)
 		return
 
-	if(user.mind && user.mind.cm_skills && user.mind.cm_skills.engineer < SKILL_ENGINEER_ENGI)
+	if(user.skills.getRating("engineer") < SKILL_ENGINEER_ENGI)
 		user.visible_message("<span class='notice'>[user] fumbles around figuring out how to use the console.</span>",
 		"<span class='notice'>You fumble around figuring out how to use the console.</span>")
-		var/fumbling_time = 50 * ( SKILL_ENGINEER_ENGI - user.mind.cm_skills.engineer )
+		var/fumbling_time = 5 SECONDS * ( SKILL_ENGINEER_ENGI - user.skills.getRating("engineer") )
 		if(!do_after(user, fumbling_time, TRUE, src, BUSY_ICON_UNSKILLED))
 			return
 
-	user.set_interaction(src)
-
-	var/dat = "<font size=5><center>Orbital Cannon System Control Console</center></font><HR>"
+	var/dat
 	if(!GLOB.marine_main_ship?.orbital_cannon)
 		dat += "No Orbital Cannon System Detected!<BR>"
 	else if(!GLOB.marine_main_ship.orbital_cannon.tray)
@@ -474,8 +479,10 @@
 
 		dat += "<HR><BR><A href='?src=\ref[src];close=1'><font size=3>Close</font></A><BR>"
 
-	user << browse(dat, "window=orbital_console;size=500x350")
-	onclose(user, "orbital_console")
+
+	var/datum/browser/popup = new(user, "orbital_console", "<div align='center'>Orbital Cannon System Control Console</div>", 500, 350)
+	popup.set_content(dat)
+	popup.open()
 
 
 /obj/machinery/computer/orbital_cannon_console/Topic(href, href_list)
@@ -498,12 +505,8 @@
 	else if(href_list["back"])
 		orbital_window_page = 0
 
-	else if(href_list["close"])
-		usr << browse(null, "window=orbital_console")
-		usr.unset_interaction()
+	updateUsrDialog()
 
-//	updateUsrDialog()
-	attack_hand(usr)
 
 /obj/structure/ship_rail_gun
 	name = "\improper Rail Gun"
@@ -526,8 +529,8 @@
 	if(!GLOB.marine_main_ship.rail_gun)
 		GLOB.marine_main_ship.rail_gun = src
 	rail_gun_ammo = new /obj/structure/ship_ammo/heavygun/highvelocity(src)
-	rail_gun_ammo.max_ammo_count = 16000 //400 uses
-	rail_gun_ammo.ammo_count = 16000
+	rail_gun_ammo.max_ammo_count = 8000 //200 uses or 15 full minutes of firing.
+	rail_gun_ammo.ammo_count = 8000
 
 /obj/structure/ship_rail_gun/proc/fire_rail_gun(turf/T, mob/user)
 	set waitfor = 0
@@ -544,4 +547,5 @@
 	var/turf/target = locate(T.x + pick(-2,2), T.y + pick(-2,2), T.z)
 	sleep(15)
 	rail_gun_ammo.detonate_on(target)
+	rail_gun_ammo.ammo_count = max(0, rail_gun_ammo.ammo_count - rail_gun_ammo.ammo_used_per_firing)
 	cannon_busy = FALSE

@@ -8,8 +8,7 @@
 	upgrade = XENO_UPGRADE_BASETYPE
 
 	// *** Melee Attacks *** //
-	melee_damage_lower = 70
-	melee_damage_upper = 90
+	melee_damage = 80
 
 	// *** Tackle *** //
 	tackle_damage = 55
@@ -30,12 +29,16 @@
 	caste_flags = CASTE_IS_INTELLIGENT|CASTE_HIDE_IN_STATUS
 
 	// *** Defense *** //
-	armor = list("melee" = 20, "bullet" = 20, "laser" = 20, "energy" = 20, "bomb" = 20, "bio" = 20, "rad" = 20, "fire" = 20, "acid" = 20)
+	soft_armor = list("melee" = 20, "bullet" = 20, "laser" = 20, "energy" = 20, "bomb" = 20, "bio" = 20, "rad" = 20, "fire" = 20, "acid" = 20)
 
 	fire_resist = 0.5 //0 to 1; lower is better as it is a multiplier.
 
 	// *** Ranged Attack *** //
-	charge_type = 3 //Claw at end of charge
+	charge_type = CHARGE_TYPE_LARGE
+
+	actions = list(
+		/datum/action/xeno_action/activable/breathe_fire,
+		)
 
 /datum/xeno_caste/ravager/ravenger/young
 	upgrade = XENO_UPGRADE_THREE
@@ -46,9 +49,6 @@
 	plasma_stored = 200
 	upgrade = XENO_UPGRADE_THREE
 	var/used_fire_breath = 0
-	actions = list(
-		/datum/action/xeno_action/activable/breathe_fire,
-		)
 
 /mob/living/carbon/xenomorph/ravager/ravenger/Initialize()
 	. = ..()

@@ -34,11 +34,6 @@
 
 	var/update = 0
 
-/obj/machinery/portable_atmospherics/canister/interact(mob/user)
-	if(!allowed(user))
-		to_chat(user, "<span class='warning'>Error - Unauthorized User</span>")
-		return
-	..()
 
 /obj/machinery/portable_atmospherics/canister/nitrogen
 	name = "n2 canister"
@@ -113,7 +108,7 @@
 			new /obj/item/stack/sheet/metal (loc, 10)
 		else
 			new /obj/item/stack/sheet/metal (loc, 5)
-	qdel(src)
+	return ..()
 
 
 /obj/machinery/portable_atmospherics/canister/proc/canister_break()

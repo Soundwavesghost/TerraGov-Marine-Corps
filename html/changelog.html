@@ -53,399 +53,349 @@
 		-->
 		<div class="commit sansserif">
 
-			<h2 class="date">08 September 2019</h2>
-			<h3 class="author">Maciekkub updated:</h3>
+			<h2 class="date">23 April 2020</h2>
+			<h3 class="author">LorenzoTheMarauder updated:</h3>
 			<ul class="changes bgimages16">
-				<li class="tweak">PMC no longer has MP skills or tank access.</li>
+				<li class="rscadd">MedpatchHUD Icon and mob sprite</li>
+			</ul>
+			<h3 class="author">XElectricX updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="rscadd">Pillar of Spring's req department gets an autolathe. A requests console is installed next to the req line.</li>
+				<li class="tweak">Remapping of Pillar's requisitions. Several items removed and added in the department.</li>
 			</ul>
 
-			<h2 class="date">04 September 2019</h2>
-			<h3 class="author">Hughgent updated:</h3>
+			<h2 class="date">22 April 2020</h2>
+			<h3 class="author">Ghostboy1217 updated:</h3>
 			<ul class="changes bgimages16">
-				<li class="rscadd">YeeHaw fancy action shooting time. git yer lever action here!</li>
+				<li class="bugfix">fixed the Wheelchair sprite</li>
 			</ul>
-			<h3 class="author">Maciekkub updated:</h3>
+			<h3 class="author">Pariah919 updated:</h3>
 			<ul class="changes bgimages16">
-				<li class="tweak">Ammunition naming</li>
+				<li class="balance">Added imi/alky/tricord pill bottles to marine med</li>
 			</ul>
-
-			<h2 class="date">03 September 2019</h2>
-			<h3 class="author">Kuro updated:</h3>
+			<h3 class="author">psykzz updated:</h3>
 			<ul class="changes bgimages16">
-				<li class="imageadd">Every PFC armor along with the basic helmet now has a new sprite!</li>
-				<li class="imageadd">Redone all the squad color markings</li>
+				<li class="rscadd">Regenerating resin walls</li>
 			</ul>
 
-			<h2 class="date">02 September 2019</h2>
-			<h3 class="author">Rohesie updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="balance">Crusher charge/crushing heavily refactored. There should be some differences in behavior, such as being able to break more things, dealing more consistent damage to objects (thus no longer deleting some and being stopped by others).  Interaction with crushing mobs also changed, should do a bit less damage and have an easier time plowing through them.</li>
-				<li class="balance">Xeno bump delay removed. If xenos want to escape bodyblocking from smaller creatures (such as humans), all they need is to do is be on help intent.</li>
-			</ul>
+			<h2 class="date">20 April 2020</h2>
 			<h3 class="author">grinkgo updated:</h3>
 			<ul class="changes bgimages16">
-				<li class="rscadd">Real green beret added to custom loadout.</li>
-				<li class="bugfix">Fixed the name of the TGMC beret in custom loadout. It's definitely not green.</li>
-			</ul>
-
-			<h2 class="date">31 August 2019</h2>
-			<h3 class="author">Rohesie updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="rscadd">Girders reworked. Wall construction formula tweaked. Marines can build reinforced walls now.</li>
-				<li class="tweak">Structure hitchance tweaked. The direction they are facing matters once again (barricades, flipped tables). Even unflipped tables and window frames have a chance, though lower, to stop bullets. Accuracy modifiers, distance between shooter and obstacle, and effective accuracy range of the bullet all affect it.</li>
-				<li class="bugfix">Windoors no longer block lasers.</li>
-				<li class="rscadd">You can now repair beat-up barricades you couldn't before by adding two sheets of metal/plasteel to them and then welding them.</li>
-			</ul>
-
-			<h2 class="date">30 August 2019</h2>
-			<h3 class="author">Ghommie updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="bugfix">Patches up an issue with storage items and cryo. No more loadsa pills cluttering your stored items list, empty pill bottles, MREs etcetera.</li>
+				<li class="rscadd">Added lollipops. Find them in snack vendors or ask your medical officer if you can have one after your surgery!</li>
 			</ul>
 			<h3 class="author">psykzz updated:</h3>
 			<ul class="changes bgimages16">
-				<li class="rscadd">message to the xenos when crash nuke is set.</li>
+				<li class="admin">adds links to OOC, Dead chat, and Say chat (when ghosting) as admin</li>
+				<li class="balance">updated the lv624 map a little</li>
 			</ul>
 
-			<h2 class="date">28 August 2019</h2>
-			<h3 class="author">Rohesie updated:</h3>
+			<h2 class="date">19 April 2020</h2>
+			<h3 class="author">BobSlim updated:</h3>
 			<ul class="changes bgimages16">
-				<li class="balance">Xenos with devoured hosts can no longer cross the fog.</li>
-			</ul>
-			<h3 class="author">psykzz updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="rscadd">Marines lose when leaving without a nuke set on crash</li>
-			</ul>
-
-			<h2 class="date">26 August 2019</h2>
-			<h3 class="author">Rohesie updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="rscadd">Reworked projectiles to use pixel movement (but not collisions, those are still tile-based), tracking the clicked pixel (unless a mob is clicked, in which case it will aim for the center of the target's tile for maximum accuracy, or unless scatter happens) in a straight line. For most bullets (rifles, SMGs, pistols, revolvers) the difference will be subtle at best, given how fast they are. It is more noticeable in tasers. For lasguns and faster projectiles the moving animation is outright disabled.</li>
-				<li class="bugfix">Fixed a speed inconsistency of old projectiles, which would make bullet speed lower if you clicked closer to your own sprite.</li>
-				<li class="balance">Tweaked accuracy to make the calculations a bit more sane. This may impact on it as reproducing the exact same behavior is hard, but it can be more easily adjusted now.</li>
-				<li class="balance">Once a sniper acquires a target through its laser market it will no longer need to click on it to aim it. Any shots while active will be auto-targeted to it.</li>
-				<li class="balance">Projectile speeds reduced all round the board. Xeno projectiles are slow, so you can see them traveling. Non-slug shotgun shells are slow and more visible. Slugs and regular bullets are fast, and hard to see. Sniper bullets and lasers are very fast, and even harder to see.</li>
-				<li class="balance">Scatter is now angle-based, so it doesn't matter if the target (where you click) is near or far. Maximum scatter is 45 degrees in either direction. Extra projectiles (additional buckshot and flechettes) have a smoother, less random scatter, firing in a cone.</li>
-				<li class="balance">Smartgun slowdown while wielded increased some to make it more defensive and less mobile..</li>
-			</ul>
-			<h3 class="author">psykzz updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="balance">(Crash Only) Xenos now start with the first tier already unlocked.</li>
-				<li class="balance">bullets are now able to pass the fog barriers</li>
-			</ul>
-
-			<h2 class="date">25 August 2019</h2>
-			<h3 class="author">Compadre Sonoliento(sprites) Kuro(Idea) MetroidLover(Editing and recoloring sprites) updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="imageadd">New B18 sprites with a darker look and glowing colored visor</li>
-			</ul>
-
-			<h2 class="date">23 August 2019</h2>
-			<h3 class="author">Rohesie updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="balance">M41A, lasgun, flechettes, smartgun and grenade launcher nerfed to different degrees to account for the xeno warding nerf.</li>
-			</ul>
-
-			<h2 class="date">22 August 2019</h2>
-			<h3 class="author">(Arachnidnexus) updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="imageadd">added new icons for the nuke disk generators</li>
-			</ul>
-			<h3 class="author">Rohesie updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="rscadd">Full-auto and autoburst modes added, along with actions to toggle those. Dakka-dakka!</li>
-			</ul>
-			<h3 class="author">grinkgo updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="rscadd">Added some holopads around the Theseus.</li>
-			</ul>
-
-			<h2 class="date">19 August 2019</h2>
-			<h3 class="author">DalekThePerson updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="balance">Decreased the time it takes to dig into the ground and acid blob launch by 1 seconds each. And increases the cooldown between bombards by 10 seconds.</li>
-			</ul>
-			<h3 class="author">LaKiller8 updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="balance">Marines can now destroy almost anything using bullets.</li>
-				<li class="tweak">The AI can no longer toggle it's floor bolts, dropship crash disables them automatically.</li>
-			</ul>
-
-			<h2 class="date">17 August 2019</h2>
-			<h3 class="author">Francinum updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="soundadd">Faxes now sound reasonable.</li>
-			</ul>
-			<h3 class="author">LaKiller8 updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="tweak">The pizza ERT is now admin only.</li>
-			</ul>
-			<h3 class="author">grinkgo updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="rscadd">Marine essential clothing sets now come with a boot knife included.</li>
-			</ul>
-
-			<h2 class="date">16 August 2019</h2>
-			<h3 class="author">Alterist updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="imageadd">EAT Bars are now ENRG Bars, same "Great" taste, new packaging!</li>
-				<li class="imageadd">Jones now shows up on your head when you equip him</li>
-			</ul>
-			<h3 class="author">LaKiller8 updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="balance">Queen larval growth has been removed.</li>
-			</ul>
-			<h3 class="author">grinkgo updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="rscadd">Added the G8 general utility pouch to the synth vendor.</li>
-				<li class="rscdel">Removed the HealthMate HUD from the Essential Synthetic Set</li>
-				<li class="balance">N2, N3, and M3 variant armors can now hold a machete scabbard.</li>
-			</ul>
-			<h3 class="author">psykzz updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="rscadd">CAS has been re-enabled</li>
-			</ul>
-
-			<h2 class="date">12 August 2019</h2>
-			<h3 class="author">LaKiller8 updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="tweak">Xenos without night vision should now be able to tell if they are in a lit area better without being completely blinded.</li>
-				<li class="tweak">You can now change your AI name, remember to follow the rules folks!</li>
-			</ul>
-			<h3 class="author">MoXuT0 updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="imageadd">Added Terra Gov logo to briefing room of Theseus.</li>
-			</ul>
-			<h3 class="author">psykzz updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="balance">tactical binoculars allow you to see in the dark</li>
-			</ul>
-
-			<h2 class="date">11 August 2019</h2>
-			<h3 class="author">grinkgo updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="tweak">Intelligence Officer has been reverted to Staff Officer.</li>
-			</ul>
-
-			<h2 class="date">09 August 2019</h2>
-			<h3 class="author">DoctorMad updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="tweak">Shotgun's incendiary slugs now deal brute damage when hitting someone. Still sets them on fire.</li>
-			</ul>
-			<h3 class="author">LaKiller8 updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="tweak">The synth can now use the taser.</li>
-			</ul>
-			<h3 class="author">psykzz updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="rscadd">New lowpop gamemode: Crash (name pending)</li>
-			</ul>
-
-			<h2 class="date">08 August 2019</h2>
-			<h3 class="author">LaKiller8 updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="tweak">Synths can now understand xenos, but can't speak with them.</li>
-				<li class="tweak">Synths now have a permanent medhud.</li>
-				<li class="tweak">Added the much-wanted clientside FPS preference.</li>
-			</ul>
-
-			<h2 class="date">04 August 2019</h2>
-			<h3 class="author">Francinum updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="bugfix">Focus Chat now relays text to the input.</li>
-				<li class="rscadd">Focus Chat now allows unprintable keys to be used as hotkeys.</li>
-			</ul>
-			<h3 class="author">LaKiller8 updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="balance">You can now equip the spec cloak with any armor.</li>
-			</ul>
-			<h3 class="author">Maciekkub updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="tweak">toggles deaf when unconscious</li>
-			</ul>
-			<h3 class="author">grinkgo updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="balance">The officer and captain's cloak are now worn on the back and have limited storage, so you can have both aesthetic AND utility!</li>
-				<li class="balance">Two flasks should be able to fit in helmets now.</li>
-			</ul>
-			<h3 class="author">psykzz updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="rscadd">A new verb has been added to preferences that allows you to set your own custom css for goonchat.</li>
-			</ul>
-
-			<h2 class="date">03 August 2019</h2>
-			<h3 class="author">psykzz updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="rscadd">You can now drag a body over the sleeper, autodoc, cryo, and bodyscanner to enter.</li>
-			</ul>
-
-			<h2 class="date">02 August 2019</h2>
-			<h3 class="author">MoXuT0 updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="imageadd">Replaced colors on some medical equipment from blue to green.</li>
-			</ul>
-			<h3 class="author">grinkgo updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="tweak">Cigars actually have nicotine in them now.</li>
-				<li class="tweak">Cigarette packets now contain 200% more cigarettes!</li>
-			</ul>
-
-			<h2 class="date">31 July 2019</h2>
-			<h3 class="author">MoXuT0 updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="tweak">Prison station adjustments. Added catwalks to canteen. Added podlocks to civilian hangar. Deleted signs containing space refference. Replaced water sprite with sea. Fixed some areas having zero or more than one APC's.</li>
-			</ul>
-			<h3 class="author">Rohesie updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="balance">Warding nerfed. Instead of being able to reduce damage up to 12.5%, it can only go up to 5%.</li>
-			</ul>
-			<h3 class="author">ma44 updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="rscadd">Xenomorphs can now potentially be able to suffer no healing penalties when not resting on weeds and when there's no queen that lives, accessible to admin memery only</li>
-			</ul>
-
-			<h2 class="date">28 July 2019</h2>
-			<h3 class="author">Shadow-Quill updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="tweak">Humans now shake when a larvae inside them grows older.</li>
-			</ul>
-			<h3 class="author">ma44 updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="bugfix">Ravager's now actually gain rage on harm slashing</li>
-				<li class="bugfix">Defiler's neuroinjectors now inject neuro on disarm and harm attacks</li>
-			</ul>
-
-			<h2 class="date">27 July 2019</h2>
-			<h3 class="author">Maciekkub updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="rscadd">New rank CMN - Crewman, for Cargo technicians as it's unfit for sergeants' only job to be moving crates</li>
-				<li class="tweak">change in the ranks of IO to Lieutenant Commander, CSE to Lieutenant Junior Grade together with the CMP, Cargo technician to Crewman, SL to Sergeant Spec to Corporal Sgner to Lance Corporal</li>
-			</ul>
-			<h3 class="author">MoXuT0 updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="code_imp">Removed USCM and Almayer refferences.</li>
-			</ul>
-			<h3 class="author">Rohesie updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="rscadd">Tweaked all ground maps. They will all have LV-like fog protecting areas, but it can be crossed by xenos at will. The marines gain shutters on both landing zones only they can open (and not close), from inside.</li>
-				<li class="rscadd">Added a dropship consoles to every LZ.</li>
-				<li class="balance">Xenos gained the ability to regress back into lower tier stages, even back into larvas.</li>
-			</ul>
-
-			<h2 class="date">26 July 2019</h2>
-			<h3 class="author">MoXuT0 updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="rscdel">Removed hunter games.</li>
-				<li class="imagedel">Deleted W-Y refference from colonist jumpsuit.</li>
-				<li class="imageadd">Replaced TerraGov poster icon with actual logo.</li>
-			</ul>
-			<h3 class="author">grinkgo updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="rscadd">Added the M57 Synthetic Equipment Vendor, which provides a synth with essential equipment and various uniforms to choose from!</li>
-				<li class="rscdel">Removed the engineering locker in the synth's closet</li>
-				<li class="refactor">Marine vendors can now check for either job or squad assignment.</li>
-			</ul>
-
-			<h2 class="date">23 July 2019</h2>
-			<h3 class="author">Rohesie updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="rscadd">Alt+clicking storage containers will remove the last placed item in them. This works for pill bottles to make the medic life easier, ammo belts, and several other things.</li>
-				<li class="balance">Shrikes can no longer ventcrawl.</li>
-				<li class="balance">Bipods can be deployed anywhere (after a second-long delay), granting bonuses while deployed. It will auto-retract once the user moves, or drops or equips the weapon.</li>
-				<li class="balance">Scatter reworked to be a bit more organic. Instead of a random adjacent tile it will take into account the pixel clicked on the tile and the shooting direction. The bullet can deviate several tiles (on edge cases, such as untrained dual-wielding on burst, even up to 4 or more).</li>
-				<li class="balance">Suppressors, extended barrels, stocks, grips and recoil compensators provide a little better effect against scatter. Quickfire and barrel chargers a bit worse.</li>
-			</ul>
-
-			<h2 class="date">22 July 2019</h2>
-			<h3 class="author">MoXuT0 updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="balance">Increased M4RA accuracy multiplier slightly.</li>
-				<li class="balance">Nerfed high velocity incendiary bullet damage and accuracy bonus.</li>
-			</ul>
-			<h3 class="author">psykzz updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="balance">Weeds will now decay over time if their node is destroyed, at a rate of about 3 times slower than the growth speed.</li>
-			</ul>
-
-			<h2 class="date">21 July 2019</h2>
-			<h3 class="author">psykzz updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="rscadd">Admins can choose what ERT to send, instead of it always being random.</li>
-			</ul>
-
-			<h2 class="date">20 July 2019</h2>
-			<h3 class="author">LaKiller8 updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="tweak">Each side now gets the relevant round-end sound according to whether they won or lost, with roundstart observers getting some special fun ones.</li>
-			</ul>
-			<h3 class="author">MoXuT0 updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="imageadd">Defib icon on medhud is now animated.</li>
-				<li class="tweak">Added ammo counter to most spec weapons and grenade launchers.</li>
-			</ul>
-			<h3 class="author">Rohesie updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="rscadd">Firemode actions added, if the gun allows for a different one.</li>
-			</ul>
-
-			<h2 class="date">19 July 2019</h2>
-			<h3 class="author">MoXuT0 updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="soundadd">Added new unloading, reloading and cocking sounds for various firearms.</li>
-			</ul>
-			<h3 class="author">psykzz updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="balance">Flares now instantly burn out weed nodes under them, but will consume all of the fuel in the flare.</li>
-			</ul>
-
-			<h2 class="date">18 July 2019</h2>
-			<h3 class="author">MoXuT0 updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="rscadd">PO's now start with aviator sunglasses instead of regular ones. Added a pair of avivator sunglasses to PO's locker.</li>
-			</ul>
-			<h3 class="author">psykzz updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="balance">Weed nodes are backing to creating squares of weeds, which should be much more similar to the original weeds before the last refactor</li>
-			</ul>
-
-			<h2 class="date">14 July 2019</h2>
-			<h3 class="author">Spyroshark updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="tweak">Xenomorph corpses now sell for more in requisitions.</li>
-				<li class="bugfix">You can sell Defiler, Shrike, and Larva corpses now.</li>
-			</ul>
-
-			<h2 class="date">13 July 2019</h2>
-			<h3 class="author">Rohesie updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="balance">UGLs and miniflamers are now shot via ctrl+click when the attachment is active.</li>
-			</ul>
-
-			<h2 class="date">12 July 2019</h2>
-			<h3 class="author">Eskjjlj updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="rscadd">Plastique (C4) can be disarmed using a multitool.</li>
-				<li class="bugfix">Plastique (C4) blows up at the correct location now if you move it while armed.</li>
+				<li class="balance">Xeno Neurotoxin begins its effects immediately, and ramp up over time.</li>
+				<li class="balance">Xeno Neurotoxin deals a small amount of toxin damage if overdosed.</li>
+				<li class="bugfix">A single Neurotoxin Sting will no longer trigger an overdose.</li>
+				<li class="tweak">Boilers glow a mix of yellow/green, based on amount of neuro/corrosive ammo stored.</li>
+				<li class="bugfix">Boilers don't stop glowing when they are extinguished</li>
+				<li class="rscadd">the Queen and Drone heals now heal some sunder.</li>
 			</ul>
 			<h3 class="author">Hughgent updated:</h3>
 			<ul class="changes bgimages16">
-				<li class="rscadd">FC has a box of .45 ACP ammo for their pistol now.</li>
+				<li class="bugfix">Double Barrel Shotgun sprites are fixed.</li>
+				<li class="imageadd">New lobby art!</li>
 			</ul>
-			<h3 class="author">LaKiller8 updated:</h3>
+			<h3 class="author">Pariah919 updated:</h3>
 			<ul class="changes bgimages16">
-				<li class="rscadd">The AI is now playable, also fixed the last interaction issues with certain machines.</li>
+				<li class="balance">Adds a spare post to the M56D box.</li>
+				<li class="balance">Scopes added to rifles, gyros added to handguns, removed qfa from scout shotgun and handguns</li>
+			</ul>
+			<h3 class="author">XElectricX updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="tweak">RO lockers spawn a flash, which the RO can now use</li>
+				<li class="balance">RO, CE, and early gen synths have level 4 powerloader skill</li>
+				<li class="balance">Combet engis gain level 1 powerloader skill</li>
+			</ul>
+			<h3 class="author">psykzz updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="rscadd">xenos can now melt mines</li>
 			</ul>
 
-			<h2 class="date">08 July 2019</h2>
-			<h3 class="author">MoXuT0 updated:</h3>
+			<h2 class="date">17 April 2020</h2>
+			<h3 class="author">psykzz updated:</h3>
 			<ul class="changes bgimages16">
-				<li class="balance">Belts. Increased shotgun belt capacity up to 14. Increased regular grenade belt capacity up to 9. Increased pistol and revolver belt capacity up to 7.</li>
-				<li class="balance">Pouches. Increased flare pouch and M40 flare box capacity up to 7. Increased electronics pouch capacity up to 6.</li>
-				<li class="balance">Misc. M37 aka shotgun holster can now hold scout's shotgun. Increased integrated storage armor by 1 (It's now same as satchel). Increased incendiary grenade box nade count up to 25. Increased shotgun box weight class, it can't fit in satchels or backpacks now. Reduced backpack storage by 6, it can now contain 8 normal sized items instead of 10.</li>
-				<li class="balance">Cargo armaments vendor. Added M37 holster, satchel, utility, knife and grenade belts, large general and magazine pouches. Added flamethrower, 88 Mod 4 and KSG shotgun to contraband. Increased ammount of existing items. Removed impact nades.</li>
-				<li class="balance">Cargo munition vendor. Added hollowpoint revolver bullets. Increased amount of some existing items. Added ammo for flamer and 88 Mod 4 to contraband. Moved machete holster to armaments vendor.</li>
-				<li class="balance">Marine vendors . Removed explosive and G8 pouches from regular PFC vendor. Removed machete holster, toolbelt and G8 pouch from uniform vendor, tools pouch now starts empty.</li>
-				<li class="imageadd">Field utility, explosive and shotgun shells pouches now have unique sprites. Recolored syringe pouch.</li>
+				<li class="admin">added a flag to disable ert on distress</li>
+			</ul>
+
+			<h2 class="date">16 April 2020</h2>
+			<h3 class="author">BobSlim updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="tweak">xeno bump attack is on by default</li>
+			</ul>
+			<h3 class="author">Pariah919 updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="bugfix">Readded helmets to SG box</li>
+			</ul>
+
+			<h2 class="date">15 April 2020</h2>
+			<h3 class="author">Drawsstuff updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="rscadd">New lobby art</li>
+			</ul>
+			<h3 class="author">Hathkar updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="rscadd">New operating table attachment for the Alamo.</li>
+			</ul>
+			<h3 class="author">Mouseofthecake updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="balance">Increased bull charge steps, lowered bull charge damage.</li>
+			</ul>
+			<h3 class="author">Pariah919 updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="balance">Too much to list. But I added Sunder to most weapons in the game. If not all! Also MBX buffs. Checkout https://github.com/tgstation/TerraGov-Marine-Corps/pull/3818 for more detailed changes.</li>
+			</ul>
+			<h3 class="author">jroinc updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="rscadd">Water regens stamina and heals brute and burns slightly at the cost of purging all chems slowly.</li>
+				<li class="rscadd">Coffee regens stamina and makes you run faster at the cost of purging oxy and removing stamina when it runs out.</li>
+				<li class="tweak">Doubles metabolism rates of roulettium, polyhexanide, and synaptizine to match intended</li>
+			</ul>
+			<h3 class="author">psykzz updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="rscadd">eating a crayons will give you a small amount of toxin damage. Mime crayons will also mute you for 30 seconds.</li>
+			</ul>
+
+			<h2 class="date">14 April 2020</h2>
+			<h3 class="author">TiviPlus updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="balance">Platforms are now destructible until xeno AI pathfinding is improved</li>
+			</ul>
+
+			<h2 class="date">13 April 2020</h2>
+			<h3 class="author">BobSlim updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="rscadd">All Xenos can see if an impregnated human is inoculated with Larval accelerant if examined.</li>
+			</ul>
+			<h3 class="author">MrStonedOne updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="admin">Admins can now issue a shutdown command mid round. It will automatically shut the server down at the end of the round.</li>
+			</ul>
+			<h3 class="author">TiviPlus updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="rscadd">G8 utility pouches added to marine vendors</li>
+			</ul>
+			<h3 class="author">factoryman942 updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="tweak">beakers can use 15/30/60u transfer amounts</li>
+			</ul>
+
+			<h2 class="date">12 April 2020</h2>
+			<h3 class="author">TiviPlus updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="bugfix">fixed shotgun huds displaying the wrong ammo type</li>
+			</ul>
+
+			<h2 class="date">11 April 2020</h2>
+			<h3 class="author">KwinOriginal updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="rscadd">AI nodes</li>
+			</ul>
+			<h3 class="author">MerryweatherLost updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="tweak">Changes the theseus</li>
+				<li class="balance">May change strategies on the theseus</li>
+				<li class="rscadd">New Json file I guess.</li>
+				<li class="bugfix">Now its in rotation temporarily.</li>
+			</ul>
+			<h3 class="author">psykzz updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="rscadd">Xenos get a new hud to show sundering levels</li>
+				<li class="balance">power generator can no longer be destroyed</li>
+			</ul>
+
+			<h2 class="date">10 April 2020</h2>
+			<h3 class="author">Hughgent updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="rscadd">Tactical Binocs get a third and fourth mode, to direct the railgun and orbital cannon respectively.</li>
+				<li class="tweak">Lobby music now plays via YouTube links.</li>
+				<li class="bugfix">The stunbaton no longer acts like a battery based magnet railgun</li>
+			</ul>
+			<h3 class="author">MJP updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="rscadd">Codex entries for all your favorite weapons.</li>
+			</ul>
+			<h3 class="author">Mouseofthecake updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="spellcheck">Fixed ancient boiler caste description.</li>
+			</ul>
+			<h3 class="author">TiviPlus updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="rscadd">Buckshot is now red and slugs are now green</li>
+			</ul>
+			<h3 class="author">XElectricX updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="tweak">Weed nodes can be built over.</li>
+			</ul>
+			<h3 class="author">grinkgo updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="bugfix">Ship Techs should now be able to properly access most maintenance airlocks on the Pillar</li>
+				<li class="bugfix">Anyone with engineering access should be able to use the FOB construction drone now.</li>
+			</ul>
+
+			<h2 class="date">09 April 2020</h2>
+			<h3 class="author">KwinOriginal updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="rscadd">Added missing pipes in hangar</li>
+			</ul>
+			<h3 class="author">TiviPlus updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="balance">If you get put out you will also slightly cool down</li>
+				<li class="rscadd">AI xenos will now gib on death, this should help with lategame lag on WO</li>
+				<li class="rscadd">You can now sing by prefacing your message with %</li>
+			</ul>
+			<h3 class="author">XSlayer300 updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="rscadd">Added many more names to the namelists, including the Deathsquad ERT.</li>
+				<li class="tweak">Combined PMC and SoM/Freelancer (and CLF) names into the main namelist, as a result, PMC and SoM/Freelancers now use the main namelist. This does not apply to UPP.</li>
+				<li class="tweak">Rearranged names as well as removal of duplicate names.</li>
+			</ul>
+			<h3 class="author">psykzz updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="rscadd">new ammo type of sundering, currently added to the standard dmr ammo.</li>
+			</ul>
+
+			<h2 class="date">08 April 2020</h2>
+			<h3 class="author">Hughgent updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="rscadd">There is a data analysis tool in the tools folder for those interested.</li>
+			</ul>
+			<h3 class="author">KwinOriginal updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="balance">Rebalanced icy caves LZ2</li>
+			</ul>
+			<h3 class="author">Mouseofthecake updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="balance">Lowered crusher charge knockdown to 20. Ungas get up quicker from rams.</li>
+				<li class="rscadd">Improved description to scout/sniper cloaks.</li>
+			</ul>
+			<h3 class="author">TiviPlus updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="rscadd">Phosphorus grenades. Can be ordered in req.</li>
+			</ul>
+			<h3 class="author">grinkgo updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="bugfix">The pistol rig now properly holds pistols other than the TP-14</li>
+			</ul>
+
+			<h2 class="date">07 April 2020</h2>
+			<h3 class="author">Mouseofthecake updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="balance">Lowered crusher bullet armor by 4 for mature/elder/ancient.</li>
+			</ul>
+
+			<h2 class="date">06 April 2020</h2>
+			<h3 class="author">ma44 updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="balance">Synths can't get head delimbed provided they wear a helmet</li>
+			</ul>
+
+			<h2 class="date">05 April 2020</h2>
+			<h3 class="author">psykzz updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="balance">xenos upgrade and mature faster when there are more marines</li>
+			</ul>
+
+			<h2 class="date">04 April 2020</h2>
+			<h3 class="author">Kuro-ai updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="rscadd">added prison variant clothes</li>
+				<li class="tweak">gas mask and heavy helmet don't have tint anymore/armor sprites changes</li>
+				<li class="balance">heavy helmet accuracy debuff from 10% to 15%</li>
+			</ul>
+			<h3 class="author">KwinOriginal updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="rscadd">Added uniform surplus vendor in Canterbury Cryo</li>
+				<li class="rscadd">Added weapon vendor in Canterbury main area</li>
+				<li class="rscdel">Removed uniform surplus vendor in Canterbury main area</li>
+				<li class="rscdel">Removed one GHMME closet from Canterbury Cryo</li>
+			</ul>
+			<h3 class="author">ma44 updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="code_imp">A code framework for AI via components</li>
+				<li class="code_imp">In layman's term it means a more dynamic and featureful:tm: human and xenomorphs artificial intelligence</li>
+			</ul>
+			<h3 class="author">psykzz updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="tweak">Nuke must be anchored for the timer to be active, disabling the nuke resets the timer</li>
+			</ul>
+
+			<h2 class="date">03 April 2020</h2>
+			<h3 class="author">KwinOriginal updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="rscadd">Added FOB drone computer in Theseus Hangar</li>
+			</ul>
+			<h3 class="author">Toxici11i updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="rscdel">removed hivemind cores automatically spawning a hivemind (to prevent queens from spawning another)</li>
+				<li class="rscadd">the ability for drones to evolve into hiveminds</li>
+				<li class="rscdel">queens and shrikes being able to manually spawn them</li>
+				<li class="tweak">hiveminds now have loudvoice</li>
+				<li class="tweak">hiveminds no longer display their name in xeno hivemind, instead are just 'The hivemind'</li>
+				<li class="tweak">synth and old synth now have 0.9* the normal burn damage.</li>
+				<li class="tweak">old synths now have extra brute armor to accompany the slowdown and extra HP compared to new synths</li>
+				<li class="tweak">Bumps the 1.5X burn pain modifier down to 1.2X</li>
+				<li class="tweak">removed spooky synth skills (super specialist skills that not even DS had)</li>
+				<li class="tweak">gives synths a boost to CQC and meele respectively</li>
+				<li class="tweak">gives synths pistol training, but untrained firearm training for everything else</li>
+				<li class="bugfix">now factors in melee skill for damaging objects and humans.</li>
+				<li class="tweak">synths/robotic users can now use nanopaste on themselves smh</li>
+			</ul>
+
+			<h2 class="date">02 April 2020</h2>
+			<h3 class="author">MerryweatherLost updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="tweak">Changed many sprites.</li>
+			</ul>
+
+			<h2 class="date">29 March 2020</h2>
+			<h3 class="author">Kuro-ai updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="balance">heavy helmet now has no tint but decreases accuracy by 20%,gasmask has no tint but doesn't filter xeno gasses</li>
+				<li class="bugfix">fixed an annoying white pixel on the shotgun mob sprite</li>
+				<li class="imageadd">added new fatigue and new armor/helmet sprites</li>
+			</ul>
+
+			<h2 class="date">26 March 2020</h2>
+			<h3 class="author">Pariah919 updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="balance">defiler lost neuroclaws, minor buffs to compensate</li>
+			</ul>
+
+			<h2 class="date">25 March 2020</h2>
+			<h3 class="author">Toxici11i updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="rscadd">adds the miniscope to vendors.</li>
+				<li class="tweak">the m43 lasgun can now use railscopes</li>
+			</ul>
+			<h3 class="author">grinkgo updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="rscadd">Several more holopads around the Pillar of Spring</li>
+				<li class="rscadd">Finally added a tool closet outside of requisitions. You're welcome, David.</li>
+			</ul>
+
+			<h2 class="date">20 March 2020</h2>
+			<h3 class="author">MerryweatherLost updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="rscadd">Added new ID cards and order icons</li>
+				<li class="rscdel">Deleted/Replaced old ID cards and order icons</li>
+				<li class="rscadd">The new target</li>
+				<li class="rscdel">The old target</li>
+			</ul>
+
+			<h2 class="date">19 March 2020</h2>
+			<h3 class="author">MerryweatherLost updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="rscadd">Added the new dress hat</li>
+				<li class="rscdel">Removed the old dress hat</li>
 			</ul>
 		</div>
 

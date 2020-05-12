@@ -7,7 +7,7 @@
 	w_class = WEIGHT_CLASS_SMALL
 	flags_atom = CONDUCT
 	flags_equip_slot = ITEM_SLOT_BELT
-	matter = list("metal" = 50,"glass" = 20)
+	materials = list(/datum/material/metal = 50, /datum/material/glass = 20)
 	actions_types = list(/datum/action/item_action)
 	var/on = FALSE
 	var/brightness_on = 5 //luminosity when on
@@ -61,10 +61,6 @@
 			to_chat(user, "<span class='warning'>Turn off [src] first.</span>")
 			return
 
-		if(istype(loc, /obj/item/storage))
-			var/obj/item/storage/S = loc
-			S.remove_from_storage(src)
-
 		if(loc == user)
 			user.dropItemToGround(src) //This part is important to make sure our light sources update, as it calls dropped()
 
@@ -88,7 +84,7 @@
 			return
 
 		if(M == user)	//they're using it on themselves
-			M.flash_eyes()
+			M.flash_act()
 			M.visible_message("<span class='notice'>[M] directs [src] to [M.p_their()] eyes.</span>", \
 								"<span class='notice'>You wave the light in front of your eyes! Trippy!</span>")
 			return
@@ -101,7 +97,7 @@
 			if(C.stat == DEAD || C.disabilities & BLIND)	//mob is dead or fully blind
 				to_chat(user, "<span class='notice'>[C] pupils does not react to the light!</span>")
 			else	//they're okay!
-				C.flash_eyes()
+				C.flash_act()
 				to_chat(user, "<span class='notice'>[C]'s pupils narrow.</span>")
 	else
 		return ..()
@@ -165,6 +161,13 @@
 
 	if(!usr.stat)
 		attack_self(usr)
+
+/obj/item/flashlight/lamp/attack_alien(mob/living/carbon/xenomorph/xeno_attacker)
+	xeno_attacker.do_attack_animation(src, ATTACK_EFFECT_SMASH)
+	playsound(loc, 'sound/effects/metalhit.ogg', 20, TRUE)
+	xeno_attacker.visible_message("<span class='danger'>\The [xeno_attacker] smashes [src]!</span>", \
+	"<span class='danger'>We smash [src]!</span>", null, 5)
+	deconstruct(FALSE)
 
 // FLARES
 

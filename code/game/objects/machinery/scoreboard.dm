@@ -4,15 +4,15 @@
 	name = "basketball scoreboard"
 	anchored = TRUE
 	density = FALSE
-	use_power = 1
+	use_power = IDLE_POWER_USE
 	idle_power_usage = 10
 	var/id = ""
 
 	var/scoreleft = 0
 	var/scoreright = 0
 
-/obj/machinery/scoreboard/New()
-	..()
+/obj/machinery/scoreboard/Initialize()
+	. = ..()
 	update_display()
 
 /obj/machinery/scoreboard/proc/update_display()
@@ -53,7 +53,7 @@
 	var/id = null
 	var/active = 0
 	anchored = TRUE
-	use_power = 1
+	use_power = IDLE_POWER_USE
 	idle_power_usage = 2
 	active_power_usage = 4
 
@@ -66,7 +66,7 @@
 	if(active)
 		return
 
-	use_power(5)
+	use_power(active_power_usage)
 
 	active = 1
 	icon_state = "launcheract"

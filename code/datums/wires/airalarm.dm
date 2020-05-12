@@ -13,7 +13,10 @@
 	return ..()
 
 
-/datum/wires/airalarm/interactable(mob/user)
+/datum/wires/airalarm/can_interact(mob/user)
+	. = ..()
+	if(!.)
+		return FALSE
 	var/obj/machinery/alarm/A = holder
 	if(CHECK_BITFIELD(A.machine_stat, PANEL_OPEN) && A.buildstage == 2)
 		return TRUE
@@ -21,9 +24,9 @@
 
 /datum/wires/airalarm/get_status()
 	var/obj/machinery/alarm/A = holder
-	var/status
-	status += "The interface light is [A.locked ? "red" : "green"].<br>"
-	status += "The short indicator is [A.shorted ? "lit" : "off"].<br>"
+	var/list/status = list()
+	status += "The interface light is [A.locked ? "red" : "green"]."
+	status += "The short indicator is [A.shorted ? "lit" : "off"]."
 	status += "The AI connection light is [!A.aidisabled ? "on" : "off"]."
 	return status
 

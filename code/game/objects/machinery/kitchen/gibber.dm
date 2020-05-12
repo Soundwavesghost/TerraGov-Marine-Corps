@@ -10,14 +10,14 @@
 	var/dirty = 0 // Does it need cleaning?
 	var/gibtime = 40 // Time from starting until meat appears
 	var/mob/living/occupant // Mob who has been put inside
-	use_power = 1
+	use_power = IDLE_POWER_USE
 	idle_power_usage = 2
-	active_power_usage = 500
+	active_power_usage = 1000
 
 
-/obj/machinery/gibber/New()
-	..()
-	src.overlays += image('icons/obj/kitchen.dmi', "grjam")
+/obj/machinery/gibber/Initialize()
+	. = ..()
+	overlays += image('icons/obj/kitchen.dmi', "grjam")
 
 /obj/machinery/gibber/update_icon()
 	overlays.Cut()
@@ -44,13 +44,11 @@
 	. = ..()
 	if(.)
 		return
-	if(machine_stat & (NOPOWER|BROKEN))
-		return
 	if(operating)
 		to_chat(user, "<span class='warning'>It's locked and running</span>")
 		return
-	else
-		src.startgibbing(user)
+
+	startgibbing(user)
 
 /obj/machinery/gibber/attackby(obj/item/grab/I, mob/user, param)
 	. = ..()
@@ -68,7 +66,7 @@
 		return
 
 	var/mob/living/M = I.grabbed_thing
-	if(user.grab_level < GRAB_AGGRESSIVE)
+	if(user.grab_state < GRAB_AGGRESSIVE)
 		to_chat(user, "<span class='warning'>You need a better grip to do that!</span>")
 		return
 
@@ -116,23 +114,23 @@
 	if(!src.occupant)
 		visible_message("<span class='warning'> You hear a loud metallic grinding sound.</span>")
 		return
-	use_power(1000)
+	use_power(active_power_usage)
 	visible_message("<span class='warning'> You hear a loud squelchy grinding sound.</span>")
 	src.operating = 1
 	update_icon()
 
 	var/totalslabs = 3
-	var/obj/item/reagent_container/food/snacks/meat/allmeat[totalslabs]
+	var/obj/item/reagent_containers/food/snacks/meat/allmeat[totalslabs]
 
 	if( istype(src.occupant, /mob/living/carbon/human/) )
 		var/mob/living/carbon/human/H = occupant
 		var/sourcename = src.occupant.real_name
-		var/sourcejob = src.occupant.job
+		var/sourcejob = src.occupant.job?.title
 		var/sourcenutriment = H.nutrition / 15
 		var/sourcetotalreagents = src.occupant.reagents.total_volume
 
 		for(var/i=1 to totalslabs)
-			var/obj/item/reagent_container/food/snacks/meat/human/newmeat = new
+			var/obj/item/reagent_containers/food/snacks/meat/human/newmeat = new
 			newmeat.name = sourcename + newmeat.name
 			newmeat.subjectname = sourcename
 			newmeat.subjectjob = sourcejob
@@ -142,7 +140,6 @@
 
 
 		log_combat(user, src.occupant, "gibbed") //One shall not simply gib a mob unnoticed!
-		msg_admin_attack("[ADMIN_TPMONTY(usr)] gibbed [ADMIN_TPMONTY(src.occupant)].")
 
 		src.occupant.death(1)
 		src.occupant.ghostize()
@@ -164,7 +161,7 @@
 			sourcenutriment = C.nutrition / 30 // small animals don't have as much nutrition
 
 		for(var/i=1 to totalslabs)
-			var/obj/item/reagent_container/food/snacks/meat/newmeat = new
+			var/obj/item/reagent_containers/food/snacks/meat/newmeat = new
 			newmeat.name = "[sourcename]-[newmeat.name]"
 
 			newmeat.reagents.add_reagent(/datum/reagent/consumable/nutriment, sourcenutriment / totalslabs)
@@ -177,7 +174,6 @@
 
 		if(occupant.client) // Gibbed a cow with a client in it? log that shit
 			log_combat(occupant, user, "gibbed")
-			msg_admin_attack("[ADMIN_TPMONTY(user)] gibbed [ADMIN_TPMONTY(src.occupant)].")
 
 		occupant.death(1)
 		occupant.ghostize()

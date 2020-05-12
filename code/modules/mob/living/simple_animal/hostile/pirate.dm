@@ -14,14 +14,13 @@
 	maxHealth = 100
 	health = 100
 	harm_intent_damage = 5
-	melee_damage_lower = 10
-	melee_damage_upper = 10
+	melee_damage = 10
 	attacktext = "punches"
 	attack_sound = 'sound/weapons/punch1.ogg'
 	a_intent = INTENT_HARM
 	speak_emote = list("yarrs")
 	del_on_death = TRUE
-	faction = "Pirate"
+	faction = FACTION_PIRATE
 
 
 /mob/living/simple_animal/hostile/pirate/melee
@@ -29,8 +28,7 @@
 	icon_state = "piratemelee"
 	icon_living = "piratemelee"
 	icon_dead = "piratemelee_dead"
-	melee_damage_lower = 30
-	melee_damage_upper = 30
+	melee_damage = 30
 	armour_penetration = 35
 	attacktext = "slashes"
 	attack_sound = 'sound/weapons/blade1.ogg'

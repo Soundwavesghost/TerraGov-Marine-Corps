@@ -38,11 +38,12 @@
 		stealthy_beno.cancel_stealth()
 		add_cooldown()
 		return TRUE
-	
+
 	succeed_activate()
 	to_chat(stealthy_beno, "<span class='xenodanger'>We vanish into the shadows...</span>")
 	stealthy_beno.last_stealth = world.time
 	stealthy_beno.stealth = TRUE
+	stealthy_beno.RegisterSignal(stealthy_beno, COMSIG_MOVABLE_MOVED, /mob/living/carbon/xenomorph/hunter/.proc/handle_stealth_movement)
 	stealthy_beno.handle_stealth()
 	add_cooldown()
 	addtimer(CALLBACK(stealthy_beno, /mob/living/carbon/xenomorph/hunter/.proc/sneak_attack_cooldown), HUNTER_POUNCE_SNEAKATTACK_DELAY) //Short delay before we can sneak attack.
@@ -52,6 +53,7 @@
 	if(!stealth)//sanity check/safeguard
 		return
 	to_chat(src, "<span class='xenodanger'>We emerge from the shadows.</span>")
+	UnregisterSignal(src, COMSIG_MOVABLE_MOVED) //This should be handled on the ability datum or a component.
 	stealth = FALSE
 	can_sneak_attack = FALSE
 	alpha = 255 //no transparency/translucency
@@ -62,14 +64,26 @@
 /datum/action/xeno_action/activable/pounce/hunter
 	plasma_cost = 20
 	range = 7
+	freeze_on_hit_time = 2 SECONDS
 
 /datum/action/xeno_action/activable/pounce/hunter/prepare_to_pounce()
 	. = ..()
 	if(owner.m_intent == MOVE_INTENT_WALK) //Hunter that is currently using its stealth ability, need to unstealth him
-		owner.m_intent = MOVE_INTENT_RUN
+		owner.toggle_move_intent(MOVE_INTENT_RUN)
 		if(owner.hud_used?.move_intent)
 			owner.hud_used.move_intent.icon_state = "running"
 		owner.update_icons()
+
+/datum/action/xeno_action/activable/pounce/hunter/mob_hit(datum/source, mob/living/M)
+	if(M.stat || isxeno(M))
+		return
+	. = ..()
+	var/mob/living/carbon/xenomorph/hunter/X = owner
+	// TODO: remove stealth router in favour of a signal
+	if(X.stealth_router(HANDLE_STEALTH_CHECK))
+		M.adjust_stagger(3)
+		M.add_slowdown(1)
+		to_chat(X, "<span class='xenodanger'>Pouncing from the shadows, we stagger our victim.</span>")
 
 /datum/action/xeno_action/activable/pounce/hunter/sneak_attack()
 	var/mob/living/carbon/xenomorph/hunter/X = owner

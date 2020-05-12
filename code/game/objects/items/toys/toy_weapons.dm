@@ -11,20 +11,18 @@
 */
 /obj/item/toy/gun
 	name = "cap gun"
-	desc = "There are 0 caps left. Looks almost like the real thing! Ages 8 and up. Please recycle in an autolathe when you're out of caps!"
+	desc = "Looks almost like the real thing! Ages 8 and up. Please recycle in an autolathe when you're out of caps!"
 	icon_state = "capgun"
 	item_state = "gun"
 	flags_equip_slot = ITEM_SLOT_BELT
 	w_class = WEIGHT_CLASS_NORMAL
 
-	matter = list("glass" = 10,"metal" = 10)
-
 	attack_verb = list("struck", "pistol whipped", "hit", "bashed")
 	var/bullets = 7.0
 
 	examine(mob/user)
-		desc = "There are [bullets] caps\s left. Looks almost like the real thing! Ages 8 and up."
-		..()
+		. = ..()
+		to_chat(user, "There are [bullets] caps\s left in the [src].")
 
 	attackby(obj/item/toy/gun_ammo/A as obj, mob/user as mob)
 
@@ -64,8 +62,6 @@
 	desc = "There are 7 caps left! Make sure to recyle the box in an autolathe when it gets empty."
 	icon_state = "cap_ammo"
 	w_class = WEIGHT_CLASS_TINY
-
-	matter = list("metal" = 10,"glass" = 10)
 
 	var/amount_left = 7
 
@@ -148,7 +144,7 @@
 			return
 		else if(!bullets && isliving(user))
 			var/mob/living/L = user
-			L.knock_down(5)
+			L.Paralyze(10 SECONDS)
 			visible_message("<span class='warning'>[user] realized they were out of ammo and starting scrounging for some!</span>")
 
 
@@ -156,17 +152,17 @@
 
 // ******* Check
 
-		if (src.bullets > 0 && M.lying)
+		if (bullets > 0 && M.lying_angle)
 			visible_message("<span class='danger'>[user] casually lines up a shot with [M]'s head and pulls the trigger!</span>", null, "<span class='warning'>You hear the sound of foam against skull</span>")
 			visible_message("<span class='warning'>[M] was hit in the head by the foam dart!</span>")
 
 			playsound(user.loc, 'sound/items/syringeproj.ogg', 15, 1)
 			new /obj/item/toy/crossbow_ammo(M.loc)
 			src.bullets--
-		else if(M.lying && !bullets && isliving(M))
+		else if(M.lying_angle && !bullets && isliving(M))
 			var/mob/living/L = M
 			L.visible_message("<span class='danger'>[user] casually lines up a shot with [L]'s head, pulls the trigger, then realizes they are out of ammo and drops to the floor in search of some!</span>")
-			L.knock_down(5)
+			L.Paralyze(10 SECONDS)
 		return
 
 /obj/item/toy/crossbow_ammo
@@ -194,7 +190,6 @@
 	icon = 'icons/obj/items/weapons.dmi'
 	icon_state = "sword0"
 	item_state = "sword0"
-	var/active = 0.0
 	w_class = WEIGHT_CLASS_SMALL
 	attack_verb = list("attacked", "struck", "hit")
 

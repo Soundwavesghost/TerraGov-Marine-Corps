@@ -9,8 +9,7 @@
 	wound_type = "praetorian" //used to match appropriate wound overlays
 
 	// *** Melee Attacks *** //
-	melee_damage_lower = 30
-	melee_damage_upper = 35
+	melee_damage = 30
 
 	// *** Tackle *** //
 	tackle_damage = 40
@@ -20,13 +19,13 @@
 
 	// *** Plasma *** //
 	plasma_max = 800
-	plasma_gain = 25
+	plasma_gain = 50
 
 	// *** Health *** //
-	max_health = 210
+	max_health = 240
 
 	// *** Evolution *** //
-	upgrade_threshold = 400
+	upgrade_threshold = 250
 
 	deevolves_to = /mob/living/carbon/xenomorph/spitter
 
@@ -34,7 +33,7 @@
 	caste_flags = CASTE_CAN_BE_QUEEN_HEALED|CASTE_CAN_BE_GIVEN_PLASMA|CASTE_CAN_BE_LEADER
 
 	// *** Defense *** //
-	armor = list("melee" = 35, "bullet" = 35, "laser" = 35, "energy" = 35, "bomb" = XENO_BOMB_RESIST_0, "bio" = 35, "rad" = 35, "fire" = 35, "acid" = 35)
+	soft_armor = list("melee" = 30, "bullet" = 35, "laser" = 35, "energy" = 35, "bomb" = XENO_BOMB_RESIST_0, "bio" = 28, "rad" = 28, "fire" = 10, "acid" = 28)
 
 	// *** Ranged Attack *** //
 	spit_delay = 1.5 SECONDS
@@ -45,6 +44,17 @@
 	// *** Pheromones *** //
 	aura_strength = 2.5 //Praetorian's aura starts strong. They are the Queen's right hand. Climbs by 1 to 4.5
 	aura_allowed = list("frenzy", "warding", "recovery")
+
+	// *** Abilities *** //
+	actions = list(
+		/datum/action/xeno_action/xeno_resting,
+		/datum/action/xeno_action/regurgitate,
+		/datum/action/xeno_action/activable/corrosive_acid,
+		/datum/action/xeno_action/shift_spits,
+		/datum/action/xeno_action/activable/xeno_spit,
+		/datum/action/xeno_action/activable/spray_acid/cone,
+		/datum/action/xeno_action/toggle_pheromones
+		)
 
 /datum/xeno_caste/praetorian/young
 	upgrade_name = "Young"
@@ -57,27 +67,26 @@
 	upgrade = XENO_UPGRADE_ONE
 
 	// *** Melee Attacks *** //
-	melee_damage_lower = 40
-	melee_damage_upper = 45
+	melee_damage = 34
 
 	// *** Tackle *** //
-	tackle_damage = 50
+	tackle_damage = 42
 
 	// *** Speed *** //
-	speed = -0.15
+	speed = -0.1
 
 	// *** Plasma *** //
 	plasma_max = 900
-	plasma_gain = 30
+	plasma_gain = 60
 
 	// *** Health *** //
-	max_health = 250
+	max_health = 270
 
 	// *** Evolution *** //
-	upgrade_threshold = 800
+	upgrade_threshold = 500
 
 	// *** Defense *** //
-	armor = list("melee" = 40, "bullet" = 40, "laser" = 40, "energy" = 40, "bomb" = XENO_BOMB_RESIST_0, "bio" = 40, "rad" = 40, "fire" = 40, "acid" = 40)
+	soft_armor = list("melee" = 35, "bullet" = 40, "laser" = 40, "energy" = 40, "bomb" = XENO_BOMB_RESIST_0, "bio" = 33, "rad" = 33, "fire" = 13, "acid" = 33)
 
 	// *** Ranged Attack *** //
 	spit_delay = 1.5 SECONDS
@@ -92,27 +101,26 @@
 	upgrade = XENO_UPGRADE_TWO
 
 	// *** Melee Attacks *** //
-	melee_damage_lower = 45
-	melee_damage_upper = 50
+	melee_damage = 35
 
 	// *** Tackle *** //
-	tackle_damage = 57
+	tackle_damage = 47
 
 	// *** Speed *** //
-	speed = -0.22
+	speed = -0.2
 
 	// *** Plasma *** //
 	plasma_max = 1000
-	plasma_gain = 40
+	plasma_gain = 70
 
 	// *** Health *** //
-	max_health = 270
+	max_health = 290
 
 	// *** Evolution *** //
-	upgrade_threshold = 1600
+	upgrade_threshold = 1000
 
 	// *** Defense *** //
-	armor = list("melee" = 43, "bullet" = 43, "laser" = 43, "energy" = 43, "bomb" = XENO_BOMB_RESIST_0, "bio" = 43, "rad" = 43, "fire" = 43, "acid" = 43)
+	soft_armor = list("melee" = 40, "bullet" = 45, "laser" = 45, "energy" = 45, "bomb" = XENO_BOMB_RESIST_0, "bio" = 35, "rad" = 35, "fire" = 15, "acid" = 35)
 
 	// *** Ranged Attack *** //
 	spit_delay = 1.5 SECONDS
@@ -128,24 +136,23 @@
 	ancient_message = "We are the strongest range fighter around. Our spit is devestating and we can fire nearly a constant stream."
 
 	// *** Melee Attacks *** //
-	melee_damage_lower = 48
-	melee_damage_upper = 53
+	melee_damage = 37
 
 	// *** Tackle *** //
-	tackle_damage = 60
+	tackle_damage = 50
 
 	// *** Speed *** //
-	speed = -0.25
+	speed = -0.3
 
 	// *** Plasma *** //
 	plasma_max = 1000
-	plasma_gain = 50
+	plasma_gain = 80
 
 	// *** Health *** //
-	max_health = 280
+	max_health = 310
 
 	// *** Defense *** //
-	armor = list("melee" = 45, "bullet" = 45, "laser" = 45, "energy" = 45, "bomb" = XENO_BOMB_RESIST_0, "bio" = 45, "rad" = 45, "fire" = 45, "acid" = 45)
+	soft_armor = list("melee" = 45, "bullet" = 50, "laser" = 50, "energy" = 50, "bomb" = XENO_BOMB_RESIST_0, "bio" = 38, "rad" = 38, "fire" = 18, "acid" = 38)
 
 	// *** Ranged Attack *** //
 	spit_delay = 1.5 SECONDS
@@ -153,4 +160,4 @@
 
 	// *** Pheromones *** //
 	aura_strength = 4.5
-	
+

@@ -21,15 +21,21 @@
 
 /datum/action/xeno_action/give_action(mob/living/L)
 	. = ..()
+	var/mob/living/carbon/xenomorph/X = L
+	X.xeno_abilities += src
 	if(keybind_signal)
 		RegisterSignal(L, keybind_signal, .proc/keybind_activation)
 
+
 /datum/action/xeno_action/remove_action(mob/living/L)
-	. = ..()
 	if(keybind_signal)
 		UnregisterSignal(L, keybind_signal)
 	if(cooldown_id)
 		deltimer(cooldown_id)
+	var/mob/living/carbon/xenomorph/X = L
+	X.xeno_abilities -= src
+	return ..()
+
 
 /datum/action/xeno_action/proc/keybind_activation()
 	if(can_use_action())
@@ -52,7 +58,7 @@
 			to_chat(owner, "<span class='warning'>We can't do this while incapacitated!</span>")
 		return FALSE
 
-	if(!CHECK_BITFIELD(flags_to_check, XACT_USE_LYING) && X.lying)
+	if(!CHECK_BITFIELD(flags_to_check, XACT_USE_LYING) && X.lying_angle)
 		if(!silent)
 			to_chat(owner, "<span class='warning'>We can't do this while lying down!</span>")
 		return FALSE
@@ -94,7 +100,7 @@
 
 	if(!CHECK_BITFIELD(flags_to_check, XACT_IGNORE_PLASMA) && X.plasma_stored < plasma_cost)
 		if(!silent)
-			to_chat(owner, "<span class='warning'>We don't have enough plasma to do this!</span>")
+			to_chat(owner, "<span class='warning'>We don't have enough plasma, we need [plasma_cost - X.plasma_stored] more.</span>")
 		return FALSE
 
 	return TRUE
@@ -104,7 +110,7 @@
 
 /datum/action/xeno_action/proc/succeed_activate()
 	var/mob/living/carbon/xenomorph/X = owner
-	if(plasma_cost)
+	if(plasma_cost && !QDELETED(owner))
 		X.use_plasma(plasma_cost)
 
 //checks if the linked ability is on some cooldown.
@@ -160,6 +166,14 @@
 /datum/action/xeno_action/activable/New()
 	. = ..()
 
+
+/datum/action/xeno_action/activable/Destroy()
+	var/mob/living/carbon/xenomorph/X = owner
+	if(X.selected_ability == src)
+		deselect()
+	return ..()
+
+
 /datum/action/xeno_action/activable/keybind_activation()
 	. = COMSIG_KB_ACTIVATED
 	if(CHECK_BITFIELD(keybind_flags, XACT_KEYBIND_USE_ABILITY))
@@ -172,13 +186,13 @@
 
 /datum/action/xeno_action/activable/proc/deselect()
 	var/mob/living/carbon/xenomorph/X = owner
-	button.vis_contents -= selected_frame
+	remove_selected_frame()
 	X.selected_ability = null
 	on_deactivation()
 
 /datum/action/xeno_action/activable/proc/select()
 	var/mob/living/carbon/xenomorph/X = owner
-	button.vis_contents += selected_frame
+	add_selected_frame()
 	X.selected_ability = src
 	on_activation()
 
@@ -196,9 +210,10 @@
 
 
 /datum/action/xeno_action/activable/remove_action(mob/living/carbon/xenomorph/X)
-	..()
 	if(X.selected_ability == src)
 		X.selected_ability = null
+	return ..()
+
 
 //the thing to do when the selected action ability is selected and triggered by middle_click
 /datum/action/xeno_action/activable/proc/use_ability(atom/A)
@@ -211,6 +226,9 @@
 
 //override this
 /datum/action/xeno_action/activable/proc/can_use_ability(atom/A, silent = FALSE, override_flags)
+	if(QDELETED(owner))
+		return FALSE
+
 	var/flags_to_check = use_state_flags|override_flags
 
 	var/mob/living/carbon/xenomorph/X = owner

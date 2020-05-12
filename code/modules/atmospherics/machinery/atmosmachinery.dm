@@ -12,13 +12,14 @@
 
 /obj/machinery/atmospherics
 	anchored = TRUE
-	//move_resist = INFINITY				//Moving a connected machine without actually doing the normal (dis)connection things will probably cause a LOT of issues.
+	move_resist = INFINITY				//Moving a connected machine without actually doing the normal (dis)connection things will probably cause a LOT of issues.
 	idle_power_usage = 0
 	active_power_usage = 0
 	power_channel = ENVIRON
 	layer = GAS_PIPE_HIDDEN_LAYER //under wires
 	max_integrity = 200
-	var/can_unwrench = 0
+	resistance_flags = RESIST_ALL
+	var/can_unwrench = FALSE
 	var/initialize_directions = 0
 	var/pipe_color
 	var/piping_layer = PIPING_LAYER_DEFAULT
@@ -44,6 +45,7 @@
 			to_chat(L, "<span class='notice'>Alt-click to crawl through it.</span>")
 
 /obj/machinery/atmospherics/New(loc, process = TRUE, setdir)
+	. = ..()
 	if(!isnull(setdir))
 		setDir(setdir)
 	if(pipe_flags & PIPING_CARDINAL_AUTONORMALIZE)
@@ -51,7 +53,6 @@
 	nodes = new(device_type)
 	if (!armor)
 		armor = list("melee" = 25, "bullet" = 10, "laser" = 10, "energy" = 100, "bomb" = 0, "bio" = 100, "rad" = 100, "fire" = 100, "acid" = 70)
-	..()
 	if(process)
 		SSair.atmos_machinery += src
 	SetInitDirections()
@@ -175,20 +176,8 @@
 		pipe.setPipingLayer(piping_layer) //align it with us
 		return TRUE
 
-	else if(iswrench(I)) // this is just until someone ports the tg tool handling code
-		. = wrench_act(user, I)
+	return ..()
 
-	else if(ismultitool(I))
-		. = multitool_act(user, I)
-
-	else if(isscrewdriver(I))
-		. = screwdriver_act(user, I)	
-
-	else if(iswelder(I))
-		. = welder_act(user, I)
-		
-	if(!.)
-		return ..()
 
 /obj/machinery/atmospherics/wrench_act(mob/living/user, obj/item/I)
 	if(!can_unwrench(user))
@@ -200,8 +189,8 @@
 		return TRUE
 	to_chat(user, "<span class='notice'>You begin to unfasten \the [src]...</span>")
 
-	if(!do_after(user, 20, TRUE, src, BUSY_ICON_BUILD))
-		return FALSE
+	if(!do_after(user, 2 SECONDS, TRUE, src, BUSY_ICON_BUILD))
+		return TRUE
 
 	user.visible_message( \
 		"[user] unfastens \the [src].", \
@@ -257,12 +246,11 @@
 		L.ventcrawl_layer = piping_layer
 	return ..()
 
-#define VENT_SOUND_DELAY 30
 
 /obj/machinery/atmospherics/proc/climb_out(mob/living/user, turf/T)
-	if(user.cooldowns[COOLDOWN_VENTCRAWL])
+	if(COOLDOWN_CHECK(user, COOLDOWN_VENTCRAWL))
 		return FALSE
-	user.cooldowns[COOLDOWN_VENTCRAWL] = addtimer(VARSET_LIST_CALLBACK(user.cooldowns, COOLDOWN_VENTCRAWL, null), 2 SECONDS)
+	COOLDOWN_START(user, COOLDOWN_VENTCRAWL, 2 SECONDS)
 	if(!isxenohunter(user) ) //Hunters silently enter/exit/move through vents.
 		visible_message("<span class='warning'>You hear something squeezing through the ducts.</span>")
 	to_chat(user, "<span class='notice'>You begin to climb out of [src]</span>")
@@ -273,9 +261,8 @@
 	user.visible_message("<span class='warning'>[user] climbs out of [src].</span>", \
 	"<span class='notice'>You climb out of [src].</span>")
 	if(!isxenohunter(user) )
-		pick(playsound(user, 'sound/effects/alien_ventpass1.ogg', 35, 1), playsound(user, 'sound/effects/alien_ventpass2.ogg', 35, 1))
-	if(user.client)
-		user.client.move_delay += 1
+		playsound(src, get_sfx("alien_ventpass"), 35, TRUE)
+
 
 /obj/machinery/atmospherics/relaymove(mob/living/user, direction)
 	direction &= initialize_directions
@@ -293,9 +280,10 @@
 					user.update_pipe_vision(target_move)
 				user.forceMove(target_move)
 				user.client.eye = target_move  //Byond only updates the eye every tick, This smooths out the movement
-				if(world.time - user.last_played_vent > VENT_SOUND_DELAY)
-					user.last_played_vent = world.time
-					playsound(src, pick('sound/effects/alien_ventcrawl1.ogg','sound/effects/alien_ventcrawl2.ogg'), 50, 1, -3)
+				if(COOLDOWN_CHECK(user, COOLDOWN_VENTSOUND))
+					return
+				COOLDOWN_START(user, COOLDOWN_VENTSOUND, 3 SECONDS)
+				playsound(src, pick('sound/effects/alien_ventcrawl1.ogg','sound/effects/alien_ventcrawl2.ogg'), 50, TRUE, -3)
 	else if((direction & initialize_directions) || is_type_in_typecache(src, GLOB.ventcrawl_machinery) && can_crawl_through()) //if we move in a way the pipe can connect, but doesn't - or we're in a vent
 		climb_out(user, src.loc)
 

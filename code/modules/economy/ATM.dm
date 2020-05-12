@@ -20,7 +20,7 @@ log transactions
 	icon = 'icons/obj/terminals.dmi'
 	icon_state = "atm"
 	anchored = TRUE
-	use_power = 1
+	use_power = IDLE_POWER_USE
 	idle_power_usage = 10
 	var/datum/money_account/authenticated_account
 	var/number_incorrect_tries = 0
@@ -106,11 +106,7 @@ log transactions
 	if(.)
 		return
 
-	if(issilicon(user))
-		to_chat(user, "<span class='warning'>[icon2html(src, user)] Artificial unit recognized. Artificial units do not currently receive monetary compensation, as per Nanotrasen regulation #1005.</span>")
-		return
-
-	var/dat = "<h1>Nanotrasen Automatic Teller Machine</h1>"
+	var/dat
 	dat += "For all your monetary needs!<br>"
 	dat += "<i>This terminal is</i> [machine_id]. <i>Report this code when contacting Nanotrasen IT Support</i><br/>"
 
@@ -118,7 +114,7 @@ log transactions
 
 	if(ticks_left_locked_down > 0)
 		dat += "<span class='alert'>Maximum number of pin attempts exceeded! Access to this ATM has been temporarily disabled.</span>"
-	
+
 	else if(authenticated_account)
 		if(authenticated_account.suspended)
 			dat += "<span class='warning'><b>Access to this account has been suspended, and the funds within frozen.</b></span>"
@@ -195,7 +191,9 @@ log transactions
 		dat += "<input type='submit' value='Submit'><br>"
 		dat += "</form>"
 
-	user << browse(dat,"window=atm;size=550x650")
+	var/datum/browser/popup = new(user, "atm", "<div align='center'>Nanotrasen Automatic Teller Machine</div>", 550, 650)
+	popup.set_content(dat)
+	popup.open()
 
 
 /obj/machinery/atm/Topic(href, href_list)

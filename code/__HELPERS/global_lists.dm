@@ -88,33 +88,23 @@ GLOBAL_LIST_EMPTY(randomized_pill_icons)
 		var/datum/emote/E = new path()
 		E.emote_list[E.key] = E
 
-	// Keybindings (classic)
-	for(var/KB in (subtypesof(/datum/keybinding) - list(/datum/keybinding/human, /datum/keybinding/xeno)))
-		var/datum/keybinding/instance = new KB
-		if(!instance.name || !instance.key)
+	// Keybindings
+	for(var/KB in subtypesof(/datum/keybinding))
+		var/datum/keybinding/keybinding = KB
+		if(!initial(keybinding.keybind_signal))
 			continue
+		var/datum/keybinding/instance = new keybinding
 		GLOB.keybindings_by_name[instance.name] = instance
 
 		// Classic
-		if(instance.classic_key)
-			if (!(instance.classic_key in GLOB.classic_keybinding_list_by_key))
-				GLOB.classic_keybinding_list_by_key[instance.classic_key] = list()
-			GLOB.classic_keybinding_list_by_key[instance.classic_key] += instance.name
+		if(LAZYLEN(instance.classic_keys))
+			for(var/bound_key in instance.classic_keys)
+				LAZYADD(GLOB.classic_keybinding_list_by_key[bound_key], list(instance.name))
 
 		// Hotkey
-		if(instance.hotkey_key)
-			if (!(instance.hotkey_key in GLOB.hotkey_keybinding_list_by_key))
-				GLOB.hotkey_keybinding_list_by_key[instance.hotkey_key] = list()
-			GLOB.hotkey_keybinding_list_by_key[instance.hotkey_key] += instance.name
-
-	// Sort all the keybindings by their weight
-	// Classic mode first
-	for(var/key in GLOB.classic_keybinding_list_by_key)
-		GLOB.classic_keybinding_list_by_key[key] = sortList(GLOB.classic_keybinding_list_by_key[key])
-
-	// Then hotkey mode
-	for(var/key in GLOB.hotkey_keybinding_list_by_key)
-		GLOB.hotkey_keybinding_list_by_key[key] = sortList(GLOB.hotkey_keybinding_list_by_key[key])
+		if(LAZYLEN(instance.hotkey_keys))
+			for(var/bound_key in instance.hotkey_keys)
+				LAZYADD(GLOB.hotkey_keybinding_list_by_key[bound_key], list(instance.name))
 
 	for(var/i in 1 to 21)
 		GLOB.randomized_pill_icons += "pill[i]"
@@ -123,19 +113,25 @@ GLOBAL_LIST_EMPTY(randomized_pill_icons)
 	shuffle(GLOB.fruit_icon_states)
 	shuffle(GLOB.reagent_effects)
 
+
+	for(var/path in subtypesof(/datum/material))
+		var/datum/material/M = new path
+		GLOB.materials[path] = M
+
+
 	for(var/R in typesof(/datum/autolathe/recipe)-/datum/autolathe/recipe)
 		var/datum/autolathe/recipe/recipe = new R
 		GLOB.autolathe_recipes += recipe
 		GLOB.autolathe_categories |= recipe.category
 
 		var/obj/item/I = new recipe.path
-		if(I.matter && !recipe.resources) //This can be overidden in the datums.
+		if(I.materials && !recipe.resources) //This can be overidden in the datums.
 			recipe.resources = list()
-			for(var/material in I.matter)
+			for(var/material in I.materials)
 				if(istype(I,/obj/item/stack/sheet))
-					recipe.resources[material] = I.matter[material] //Doesn't take more if it's just a sheet or something. Get what you put in.
+					recipe.resources[material] = I.materials[material] //Doesn't take more if it's just a sheet or something. Get what you put in.
 				else
-					recipe.resources[material] = round(I.matter[material]*1.25) // More expensive to produce than they are to recycle.
+					recipe.resources[material] = round(I.materials[material]*1.25) // More expensive to produce than they are to recycle.
 			qdel(I)
 
 	for(var/path in subtypesof(/datum/reagent))

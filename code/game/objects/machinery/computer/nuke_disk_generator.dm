@@ -13,8 +13,8 @@
 	resistance_flags = INDESTRUCTIBLE|UNACIDABLE
 
 	var/generate_time = 1.5 MINUTES // time for the machine to generate the disc
-	var/segment_time = 15 SECONDS // time to start the hack 
-	var/printing_time = 15 SECONDS // time to print a disk 
+	var/segment_time = 15 SECONDS // time to start the hack
+	var/printing_time = 15 SECONDS // time to print a disk
 
 	var/total_segments = 5 // total number of times the hack is required
 	var/completed_segments = 0 // what segment we are on, (once this hits total, disk is printed)
@@ -63,17 +63,12 @@
 /obj/machinery/computer/nuke_disk_generator/attackby(obj/item/I, mob/living/user, params)
 	return attack_hand(user)
 
-/obj/machinery/computer/nuke_disk_generator/attack_hand(mob/living/user)
+
+/obj/machinery/computer/nuke_disk_generator/interact(mob/user)
 	. = ..()
 	if(.)
 		return
-
-	interact(user)
-
-/obj/machinery/computer/nuke_disk_generator/interact(mob/user)
-	user.set_interaction(src)
 	var/dat = ""
-	dat += "<a href='?src=[REF(src)];mach_close=computer'>Close</a><br><br>"
 	dat += "<div align='center'><a href='?src=[REF(src)];generate=1'>Run Program</a></div>"
 	dat += "<br/>"
 	dat += "<hr/>"
@@ -140,7 +135,7 @@
 
 
 /obj/machinery/computer/nuke_disk_generator/proc/complete_segment()
-	playsound(src, 'sound/machines/ping.ogg', 25, 1)	
+	playsound(src, 'sound/machines/ping.ogg', 25, 1)
 	current_timer = null
 	completed_segments = min(completed_segments + 1, total_segments)
 

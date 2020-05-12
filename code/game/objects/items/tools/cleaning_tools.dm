@@ -82,6 +82,7 @@
 	throw_range = 20
 
 /obj/item/tool/soap/Crossed(atom/movable/AM)
+	. = ..()
 	if (iscarbon(AM))
 		var/mob/living/carbon/C =AM
 		C.slip("soap", 3, 2)
@@ -118,7 +119,8 @@
 /obj/item/tool/soap/deluxe
 	icon_state = "soapdeluxe"
 
-/obj/item/tool/soap/deluxe/New()
+/obj/item/tool/soap/deluxe/Initialize()
+	. = ..()
 	desc = "A deluxe Waffle Co. brand bar of soap. Smells of [pick("lavender", "vanilla", "strawberry", "chocolate" ,"space")]."
 
 /obj/item/tool/soap/syndie

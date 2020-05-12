@@ -2,7 +2,7 @@
 	name = "infrared emitter"
 	desc = "Emits a visible or invisible beam and is triggered when the beam is interrupted."
 	icon_state = "infrared"
-	matter = list("metal" = 1000, "metal" = 500)
+	materials = list(/datum/material/metal = 1000, /datum/material/glass = 500)
 	is_position_sensitive = TRUE
 
 	var/on = FALSE
@@ -10,7 +10,7 @@
 	var/maxlength = 8
 	var/list/obj/effect/beam/i_beam/beams
 	var/olddir = 0
-	var/datum/component/redirect/listener
+	var/turf/listeningTo
 	var/hearing_range = 3
 
 
@@ -18,12 +18,12 @@
 	. = ..()
 	beams = list()
 	START_PROCESSING(SSobj, src)
-	AddComponent(
-		/datum/component/simple_rotation,
-		ROTATION_ALTCLICK | ROTATION_CLOCKWISE | ROTATION_COUNTERCLOCKWISE | ROTATION_FLIP | ROTATION_VERBS,
-		null,
-		null,
-		CALLBACK(src,.proc/after_rotation)
+	AddComponent(\
+		/datum/component/simple_rotation,\
+		ROTATION_ALTCLICK | ROTATION_CLOCKWISE | ROTATION_COUNTERCLOCKWISE | ROTATION_FLIP | ROTATION_VERBS,\
+		null,\
+		null,\
+		CALLBACK(src,.proc/after_rotation)\
 		)
 
 
@@ -33,7 +33,7 @@
 
 /obj/item/assembly/infra/Destroy()
 	STOP_PROCESSING(SSobj, src)
-	QDEL_NULL(listener)
+	listeningTo = null
 	QDEL_LIST(beams)
 	return ..()
 
@@ -177,8 +177,12 @@
 
 
 /obj/item/assembly/infra/proc/switchListener(turf/newloc)
-	QDEL_NULL(listener)
-	listener = newloc.AddComponent(/datum/component/redirect, list(COMSIG_ATOM_EXITED = CALLBACK(src, .proc/check_exit)))
+	if(listeningTo == newloc)
+		return
+	if(listeningTo)
+		UnregisterSignal(listeningTo, COMSIG_ATOM_EXITED)
+	RegisterSignal(newloc, COMSIG_ATOM_EXITED, .proc/check_exit)
+	listeningTo = newloc
 
 
 /obj/item/assembly/infra/proc/check_exit(datum/source, atom/movable/offender)
@@ -193,27 +197,35 @@
 	return refreshBeam()
 
 
-/obj/item/assembly/infra/ui_interact(mob/user)
+/obj/item/assembly/signaler/can_interact(mob/user)
 	. = ..()
-	if(is_secured(user))
-		user.set_interaction(src)
-		var/dat = "<TT><B>Infrared Laser</B></TT>"
-		dat += "<BR><B>Status</B>: [on ? "<A href='?src=[REF(src)];state=0'>On</A>" : "<A href='?src=[REF(src)];state=1'>Off</A>"]"
-		dat += "<BR><B>Visibility</B>: [visible ? "<A href='?src=[REF(src)];visible=0'>Visible</A>" : "<A href='?src=[REF(src)];visible=1'>Invisible</A>"]"
-		dat += "<BR><BR><A href='?src=[REF(src)];refresh=1'>Refresh</A>"
-		dat += "<BR><BR><A href='?src=[REF(src)];close=1'>Close</A>"
-		user << browse(dat, "window=infra")
-		onclose(user, "infra")
+	if(!.)
+		return FALSE
+
+	if(!is_secured(user))
+		return FALSE
+
+	return TRUE
+
+
+/obj/item/assembly/infra/interact(mob/user)
+	. = ..()
+	if(.)
 		return
+
+	var/dat
+	dat += "<BR><B>Status</B>: [on ? "<A href='?src=[REF(src)];state=0'>On</A>" : "<A href='?src=[REF(src)];state=1'>Off</A>"]"
+	dat += "<BR><B>Visibility</B>: [visible ? "<A href='?src=[REF(src)];visible=0'>Visible</A>" : "<A href='?src=[REF(src)];visible=1'>Invisible</A>"]"
+	dat += "<BR><BR><A href='?src=[REF(src)];refresh=1'>Refresh</A>"
+
+	var/datum/browser/popup = new(user, "infra", name)
+	popup.set_content(dat)
+	popup.open()
 
 
 /obj/item/assembly/infra/Topic(href, href_list)
 	. = ..()
 	if(.)
-		return
-	if(!usr.canUseTopic(src, TRUE))
-		usr << browse(null, "window=infra")
-		onclose(usr, "infra")
 		return
 
 	if(href_list["state"])
@@ -226,12 +238,7 @@
 		update_icon()
 		refreshBeam()
 
-	if(href_list["close"])
-		usr << browse(null, "window=infra")
-		return
-		
-	if(usr)
-		attack_self(usr)
+	updateUsrDialog()
 
 
 /obj/item/assembly/infra/setDir()
@@ -251,6 +258,7 @@
 
 
 /obj/effect/beam/i_beam/Crossed(atom/movable/AM)
+	. = ..()
 	if(istype(AM, /obj/effect/beam))
 		return
 	if(isitem(AM))

@@ -12,6 +12,13 @@
 	var/list/cryopods = list()
 	var/max_capacity // set this to override determining capacity by number of cryopods
 
+/obj/docking_port/mobile/escape_pod/escape_shuttle
+	name = "escape shuttle"
+	dir = EAST
+	dwidth = 3
+	width = 7
+	height = 9
+
 /obj/docking_port/mobile/escape_pod/register()
 	. = ..()
 	SSshuttle.escape_pods += src
@@ -53,7 +60,7 @@
 /obj/docking_port/mobile/escape_pod/proc/explode()
 	var/turf/T = return_center_turf()
 	var/average_dimension = (width+height)*0.25
-	explosion(T, -1, -1, average_dimension, average_dimension)
+	explosion(T, 0, 0, average_dimension, average_dimension)
 	launch_status = NOLAUNCH
 	open_all_doors()
 	SSshuttle.escape_pods -= src // no longer a valid pod
@@ -90,6 +97,16 @@
 
 	roundstart_template = /datum/map_template/shuttle/escape_pod
 
+/obj/docking_port/stationary/escape_pod/escape_shuttle
+	name = "escape shuttle"
+	id = "escape hangar"
+	dir = EAST
+	dwidth = 3
+	width = 7
+	height = 9
+
+	roundstart_template = /datum/map_template/shuttle/escape_shuttle
+
 /obj/docking_port/stationary/escape_pod/right
 	dir = WEST
 
@@ -106,9 +123,11 @@
 	power_channel = ENVIRON
 	density = FALSE
 
+/obj/machinery/computer/shuttle/escape_pod/escape_shuttle
+	name = "escape shuttle controller"
+
 /obj/machinery/computer/shuttle/escape_pod/ui_interact(mob/user)
 	var/dat = "<A href='?src=[REF(src)];launch=1'>Launch</A><br>"
-	dat += "<a href='?src=[REF(user)];mach_close=computer'>Close</a>"
 
 	var/datum/browser/popup = new(user, "computer", "escape pod", 300, 200)
 	popup.set_content("<center>[dat]</center>")
@@ -119,23 +138,19 @@
 	. = ..()
 	if(.)
 		return
-	if(!ishuman(usr))
-		return
-	var/mob/living/carbon/human/H = usr
-	if(H.incapacitated())
-		return
+
 	if(!href_list["launch"])
 		return
 
 	var/obj/docking_port/mobile/escape_pod/M = SSshuttle.getShuttle(shuttleId)
-
 	if(!M)
 		return
+
 	if(!M.can_launch)
-		to_chat(H, "<span class='warning'>Evacuation is not enabled!</span>")
+		to_chat(usr, "<span class='warning'>Evacuation is not enabled!</span>")
 		return
 
-	to_chat(H, "<span class='highdanger'>You slam your fist down on the launch button!</span>")
+	to_chat(usr, "<span class='highdanger'>You slam your fist down on the launch button!</span>")
 	M.launch(TRUE)
 
 //=========================================================================================
@@ -143,7 +158,7 @@
 //=========================================================================================
 
 /obj/machinery/cryopod/evacuation
-	resistance_flags = UNACIDABLE
+	resistance_flags = RESIST_ALL
 	var/being_forced = 0 //Simple variable to prevent sound spam.
 	var/linked_to_shuttle = FALSE
 
@@ -158,7 +173,7 @@
 		linked_to_shuttle = TRUE
 
 /obj/machinery/cryopod/evacuation/ex_act(severity)
-	return FALSE
+	return
 
 /obj/machinery/cryopod/evacuation/attackby(obj/item/grab/G, mob/user)
 	if(istype(G))
@@ -193,7 +208,7 @@
 /obj/machinery/cryopod/evacuation/go_out() //When the system ejects the occupant.
 	if(occupant)
 		occupant.forceMove(get_turf(src))
-		occupant.in_stasis = FALSE
+		REMOVE_TRAIT(occupant, TRAIT_STASIS, CRYOPOD_TRAIT)
 		occupant = null
 		icon_state = orient_right ? "body_scanner_0-r" : "body_scanner_0"
 
@@ -240,18 +255,17 @@
 	if(occupant)
 		to_chat(M, "<span class='warning'>The cryogenic pod is already in use. You will need to find another.</span>")
 		return FALSE
-		return
 	M.forceMove(src)
 	to_chat(M, "<span class='notice'>You feel cool air surround you as your mind goes blank and the pod locks.</span>")
 	occupant = M
-	occupant.in_stasis = STASIS_IN_CRYO_CELL
+	ADD_TRAIT(occupant, TRAIT_STASIS, CRYOPOD_TRAIT)
 	icon_state = orient_right ? "body_scanner_1-r" : "body_scanner_1"
 
 /obj/machinery/door/airlock/evacuation
 	name = "\improper Evacuation Airlock"
 	icon = 'icons/obj/doors/mainship/pod_doors.dmi'
 	icon_state = "door_locked"
-	resistance_flags = UNACIDABLE|INDESTRUCTIBLE
+	resistance_flags = RESIST_ALL
 	density = TRUE
 	opacity = TRUE
 	locked = TRUE
@@ -282,14 +296,18 @@
 		M.doors += src
 		linked_to_shuttle = TRUE
 
-	//Can't interact with them, mostly to prevent grief and meta.
+
+/obj/machinery/door/airlock/evacuation/can_interact(mob/user)
+	return FALSE
+
 /obj/machinery/door/airlock/evacuation/Bumped()
 	return FALSE
+
 /obj/machinery/door/airlock/evacuation/attackby()
 	return FALSE
+
 /obj/machinery/door/airlock/evacuation/attack_hand(mob/living/user)
 	return TRUE
+
 /obj/machinery/door/airlock/evacuation/attack_alien()
 	return FALSE //Probably a better idea that these cannot be forced open.
-/obj/machinery/door/airlock/evacuation/attack_ai()
-	return FALSE

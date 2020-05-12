@@ -38,7 +38,11 @@
 	// This shouldn't be modified directly, use the helper procs.
 	var/list/baseturfs = /turf/baseturf_bottom
 	var/obj/effect/xenomorph/acid/current_acid = null //If it has acid spewed on it
+
 	var/changing_turf = FALSE
+
+	var/datum/armor/armor
+
 
 /turf/Initialize(mapload)
 	if(flags_atom & INITIALIZED)
@@ -67,6 +71,13 @@
 	if(opacity)
 		has_opaque_atom = TRUE
 
+	if(islist(armor))
+		armor = getArmor(arglist(armor))
+	else if (!armor)
+		armor = getArmor()
+	else if (!istype(armor, /datum/armor))
+		stack_trace("Invalid type [armor.type] found in .armor during /turf Initialize()")
+
 	return INITIALIZE_HINT_NORMAL
 
 
@@ -87,12 +98,6 @@
 	visibilityChanged()
 	DISABLE_BITFIELD(flags_atom, INITIALIZED)
 	..()
-
-/turf/ex_act(severity)
-	return 0
-
-/turf/proc/update_icon() //Base parent. - Abby
-	return
 
 
 /turf/Enter(atom/movable/mover, atom/oldloc)
@@ -118,13 +123,13 @@
 		var/atom/movable/thing = i
 		if(thing.Cross(mover))
 			continue
-		switch(SEND_SIGNAL(mover, COMSIG_MOVABLE_PREBUMP_MOVABLE, thing))
-			if(COMPONENT_MOVABLE_PREBUMP_STOPPED)
-				return FALSE //Stopped, bump no longer necessary.
-			if(COMPONENT_MOVABLE_PREBUMP_PLOWED)
-				continue //We've plowed through.
-			if(COMPONENT_MOVABLE_PREBUMP_ENTANGLED)
-				return TRUE //We've entered the tile and gotten entangled inside it.
+		var/signalreturn = SEND_SIGNAL(mover, COMSIG_MOVABLE_PREBUMP_MOVABLE, thing)
+		if(signalreturn & COMPONENT_MOVABLE_PREBUMP_STOPPED)
+			return FALSE //Stopped, bump no longer necessary.
+		if(signalreturn & COMPONENT_MOVABLE_PREBUMP_PLOWED)
+			continue //We've plowed through.
+		if(signalreturn & COMPONENT_MOVABLE_PREBUMP_ENTANGLED)
+			return TRUE //We've entered the tile and gotten entangled inside it.
 		if(QDELETED(mover)) //Mover deleted from Cross/CanPass, do not proceed.
 			return FALSE
 		else if(!firstbump || ((thing.layer > firstbump.layer || thing.flags_atom & ON_BORDER) && !(firstbump.flags_atom & ON_BORDER)))
@@ -147,6 +152,11 @@
 		var/atom/movable/thing = i
 		if(!thing.Uncross(mover, newloc))
 			if(thing.flags_atom & ON_BORDER)
+				var/signalreturn = SEND_SIGNAL(mover, COMSIG_MOVABLE_PREBUMP_EXIT_MOVABLE, thing)
+				if(signalreturn & COMPONENT_MOVABLE_PREBUMP_STOPPED)
+					return FALSE
+				if(signalreturn & COMPONENT_MOVABLE_PREBUMP_PLOWED)
+					continue // no longer in the way
 				mover.Bump(thing)
 				return FALSE
 		if(QDELETED(mover))
@@ -246,7 +256,6 @@
 		W.baseturfs = new_baseturfs
 	else
 		W.baseturfs = old_baseturfs
-
 
 	if(!(flags & CHANGETURF_DEFER_CHANGE))
 		W.AfterChange(flags)
@@ -492,16 +501,20 @@ GLOBAL_LIST_INIT(unweedable_areas, typecacheof(list(
 	return !is_type_in_typecache((get_area(src)), GLOB.unweedable_areas) //so we can spawn weeds on the walls
 
 
-/turf/proc/check_alien_construction(mob/living/L, silent = FALSE)
+/turf/proc/check_alien_construction(mob/living/builder, silent = FALSE, planned_building)
 	var/has_obstacle
 	for(var/obj/O in contents)
 		if(istype(O, /obj/item/clothing/mask/facehugger))
 			if(!silent)
-				to_chat(L, "<span class='warning'>There is a little one here already. Best move it.</span>")
+				to_chat(builder, "<span class='warning'>There is a little one here already. Best move it.</span>")
 			return FALSE
 		if(istype(O, /obj/effect/alien/egg))
 			if(!silent)
-				to_chat(L, "<span class='warning'>There's already an egg.</span>")
+				to_chat(builder, "<span class='warning'>There's already an egg.</span>")
+			return FALSE
+		if(istype(O, /obj/effect/alien/resin/trap))
+			if(!silent)
+				to_chat(builder, "<span class='warning'>There is already a trap here!</span>")
 			return FALSE
 		if(istype(O, /obj/structure/mineral_door) || istype(O, /obj/effect/alien/resin))
 			has_obstacle = TRUE
@@ -518,6 +531,9 @@ GLOBAL_LIST_INIT(unweedable_areas, typecacheof(list(
 			else
 				has_obstacle = TRUE
 				break
+		if(istype(O, /obj/effect/alien/hivemindcore))
+			has_obstacle = TRUE
+			break
 
 		if(O.density && !(O.flags_atom & ON_BORDER))
 			has_obstacle = TRUE
@@ -525,13 +541,13 @@ GLOBAL_LIST_INIT(unweedable_areas, typecacheof(list(
 
 	if(density || has_obstacle)
 		if(!silent)
-			to_chat(L, "<span class='warning'>There's something built here already.</span>")
+			to_chat(builder, "<span class='warning'>There's something built here already.</span>")
 		return FALSE
 	return TRUE
 
-/turf/closed/check_alien_construction(mob/living/L, silent = FALSE)
+/turf/closed/check_alien_construction(mob/living/builder, silent = FALSE, planned_building)
 	if(!silent)
-		to_chat(L, "<span class='warning'>There's something built here already.</span>")
+		to_chat(builder, "<span class='warning'>There's something built here already.</span>")
 	return FALSE
 
 /turf/proc/can_dig_xeno_tunnel()
@@ -829,11 +845,30 @@ GLOBAL_LIST_INIT(blacklisted_automated_baseturfs, typecacheof(list(
 	return TRUE
 
 
-/turf/contents_explosion(severity, target)
-	for(var/i in contents)
-		var/atom/A = i
-		if(!QDELETED(A) && A.level >= severity)
-			A.ex_act(severity, target)
+/turf/contents_explosion(severity)
+	for(var/thing in contents)
+		var/atom/movable/thing_in_turf = thing
+		if(thing_in_turf.resistance_flags & INDESTRUCTIBLE)
+			continue
+		switch(severity)
+			if(EXPLODE_DEVASTATE)
+				SSexplosions.highMovAtom[thing_in_turf] += list(src)
+				if(thing_in_turf.flags_atom & PREVENT_CONTENTS_EXPLOSION)
+					continue
+				for(var/a in thing_in_turf.contents)
+					SSexplosions.highMovAtom[a] += list(src)
+			if(EXPLODE_HEAVY)
+				SSexplosions.medMovAtom[thing_in_turf] += list(src)
+				if(thing_in_turf.flags_atom & PREVENT_CONTENTS_EXPLOSION)
+					continue
+				for(var/a in thing_in_turf.contents)
+					SSexplosions.medMovAtom[a] += list(src)
+			if(EXPLODE_LIGHT)
+				SSexplosions.lowMovAtom[thing_in_turf] += list(src)
+				if(thing_in_turf.flags_atom & PREVENT_CONTENTS_EXPLOSION)
+					continue
+				for(var/a in thing_in_turf.contents)
+					SSexplosions.lowMovAtom[a] += list(src)
 
 
 /turf/vv_edit_var(var_name, new_value)

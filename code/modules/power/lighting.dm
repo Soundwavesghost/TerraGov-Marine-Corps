@@ -23,9 +23,9 @@
 	var/sheets_refunded = 2
 	var/obj/machinery/light/newlight = null
 
-/obj/machinery/light_construct/New()
-	..()
-	if (fixture_type == "bulb")
+/obj/machinery/light_construct/Initialize()
+	. = ..()
+	if(fixture_type == "bulb")
 		icon_state = "bulb-construct-stage1"
 
 /obj/machinery/light_construct/examine(mob/user)
@@ -101,7 +101,7 @@
 				icon_state = "tube-empty"
 			if("bulb")
 				icon_state = "bulb-empty"
-		
+
 		stage = 3
 		user.visible_message("[user] closes [src]'s casing.", \
 			"You close [src]'s casing.", "You hear a noise.")
@@ -136,7 +136,7 @@
 	desc = "A lighting fixture."
 	anchored = TRUE
 	layer = FLY_LAYER
-	use_power = 2
+	use_power = ACTIVE_POWER_USE
 	idle_power_usage = 2
 	active_power_usage = 20
 	power_channel = LIGHT //Lights are calc'd via area so they dont need to be in the machine list
@@ -211,7 +211,7 @@
 /obj/machinery/light/LateInitialize()
 	var/area/A = get_area(src)
 	seton(A.lightswitch && A.power_light)
-	
+
 
 /obj/machinery/light/Destroy()
 	var/area/A = get_area(src)
@@ -367,7 +367,7 @@
 			s.set_up(3, 1, src)
 			s.start()
 			if(prob(75))
-				electrocute_mob(user, get_area(src), src, rand(0.7, 1))
+				electrocute_mob(user, get_area(src), src, rand(7, 10) * 0.1)
 
 
 // returns whether this light has power
@@ -395,15 +395,14 @@
 // ai attack - make lights flicker, because why not
 
 /obj/machinery/light/attack_ai(mob/user)
-	src.flicker(1)
-	return
+	flicker(1)
 
 
 //Xenos smashing lights
 /obj/machinery/light/attack_alien(mob/living/carbon/xenomorph/M)
 	if(status == 2) //Ignore if broken.
 		return FALSE
-	M.do_attack_animation(src)
+	M.do_attack_animation(src, ATTACK_EFFECT_SMASH)
 	M.visible_message("<span class='danger'>\The [M] smashes [src]!</span>", \
 	"<span class='danger'>We smash [src]!</span>", null, 5)
 	broken() //Smashola!
@@ -494,13 +493,13 @@
 
 /obj/machinery/light/ex_act(severity)
 	switch(severity)
-		if(1.0)
+		if(EXPLODE_DEVASTATE)
 			qdel(src)
 			return
-		if(2.0)
+		if(EXPLODE_HEAVY)
 			if (prob(75))
 				broken()
-		if(3.0)
+		if(EXPLODE_LIGHT)
 			if (prob(50))
 				broken()
 	return
@@ -529,13 +528,12 @@
 // explode the light
 
 /obj/machinery/light/proc/explode()
-	var/turf/T = get_turf(src.loc)
-	spawn(0)
-		broken()	// break it first to give a warning
-		sleep(2)
-		explosion(T, 0, 0, 2, 2)
-		sleep(1)
-		qdel(src)
+	broken()	// break it first to give a warning
+	addtimer(CALLBACK(src, .proc/delayed_explosion), 0.5 SECONDS)
+
+/obj/machinery/light/proc/delayed_explosion()
+	explosion(loc, 0, 1, 3, 2)
+	qdel(src)
 
 // the light item
 // can be tube or bulb subtypes
@@ -549,7 +547,6 @@
 	var/status = 0		// LIGHT_OK, LIGHT_BURNED or LIGHT_BROKEN
 	var/base_state
 	var/switchcount = 0	// number of times switched
-	matter = list("metal" = 60)
 	var/rigged = 0		// true if rigged to explode
 	var/brightness = 2 //how much light it gives off
 
@@ -563,7 +560,7 @@
 	icon_state = "ltube"
 	base_state = "ltube"
 	item_state = "c_tube"
-	matter = list("glass" = 100)
+	materials = list(/datum/material/glass = 100)
 	brightness = 8
 
 /obj/item/light_bulb/tube/large
@@ -577,7 +574,7 @@
 	icon_state = "lbulb"
 	base_state = "lbulb"
 	item_state = "contvapour"
-	matter = list("glass" = 100)
+	materials = list(/datum/material/glass = 100)
 	brightness = 5
 
 /obj/item/light_bulb/bulb/fire
@@ -586,7 +583,6 @@
 	icon_state = "fbulb"
 	base_state = "fbulb"
 	item_state = "egg4"
-	matter = list("glass" = 100)
 	brightness = 5
 
 // update the icon state and description of the light
@@ -604,8 +600,8 @@
 			desc = "A broken [name]."
 
 
-/obj/item/light_bulb/New()
-	..()
+/obj/item/light_bulb/Initialize()
+	. = ..()
 	switch(name)
 		if("light tube")
 			brightness = rand(6,9)
@@ -619,8 +615,8 @@
 /obj/item/light_bulb/attackby(obj/item/I, mob/user, params)
 	. = ..()
 
-	if(istype(I, /obj/item/reagent_container/syringe))
-		var/obj/item/reagent_container/syringe/S = I
+	if(istype(I, /obj/item/reagent_containers/syringe))
+		var/obj/item/reagent_containers/syringe/S = I
 
 		to_chat(user, "You inject the solution into the [src].")
 
@@ -661,13 +657,14 @@
 	anchored = TRUE
 	density = FALSE
 	layer = BELOW_TABLE_LAYER
-	use_power = 2
+	use_power = ACTIVE_POWER_USE
 	idle_power_usage = 2
 	active_power_usage = 20
 	power_channel = LIGHT //Lights are calc'd via area so they dont need to be in the machine list
 	resistance_flags = UNACIDABLE|INDESTRUCTIBLE
 
-/obj/machinery/landinglight/New()
+/obj/machinery/landinglight/Initialize()
+	. = ..()
 	turn_off()
 
 /obj/machinery/landinglight/proc/turn_off()

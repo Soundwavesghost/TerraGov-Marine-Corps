@@ -4,16 +4,11 @@
 # In the event that multiple org members are to be informed of changes
 # to the same file or dir, add them to the end under Multiple Owners
 
-# Alterist
-
-/_maps/ @Alterist
-/icons/ @Alterist
-
-# LaKiller8
-
-/code/modules/admin/ @DominikPanic
-/code/modules/mob/living/silicon/ @DominikPanic
-
 # PsyKzz
 /code/datum/gamemodes/ @psykzz
 
+# KwinOriginal
+/_maps/ @KwinOriginal
+
+# TheBimmer231
+/icons/ @TheBimmer231

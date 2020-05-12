@@ -15,6 +15,18 @@
 	msg = "## WARNING: [msg]"
 	log_world(msg)
 
+#ifdef UNIT_TESTS
+/proc/log_test(text)
+	WRITE_LOG(GLOB.test_log, text)
+	SEND_TEXT(world.log, text)
+#endif
+
+//print a testing-mode debug message to world.log and world
+#ifdef TESTING
+#define testing(msg) log_world("## TESTING: [msg]"); to_chat(world, "## TESTING: [msg]")
+#else
+#define testing(msg)
+#endif
 
 /* Items with private are stripped from public logs. */
 /proc/log_admin(text)
@@ -176,6 +188,10 @@
 /proc/log_paper(text)
 	WRITE_LOG(GLOB.world_paper_log, "PAPER: [text]")
 
+/* ui logging */ 
+ 
+/proc/log_tgui(text)
+	WRITE_LOG(GLOB.tgui_log, text)
 
 /* For logging round startup. */
 /proc/start_log(log)

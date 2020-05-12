@@ -21,21 +21,26 @@
 	. = ..()
 	to_chat(user, "<span class='notice'>You need a crowbar to pry this open!</span>")
 
+
 /obj/structure/largecrate/attackby(obj/item/I, mob/user, params)
 	. = ..()
+	if(.)
+		return TRUE
 
-	if(iscrowbar(I))
-		user.visible_message("<span class='notice'>[user] pries \the [src] open.</span>", \
-							"<span class='notice'>You pry open \the [src].</span>", \
-							"<span class='notice'>You hear splitting wood.</span>")
-		new /obj/item/stack/sheet/wood(src)
-		deconstruct(TRUE)
-		return
-	
 	if(istype(I, /obj/item/powerloader_clamp))
 		return
-	
+
 	return attack_hand(user)
+
+
+/obj/structure/largecrate/crowbar_act(mob/living/user, obj/item/I)
+	. = ..()
+	user.visible_message("<span class='notice'>[user] pries \the [src] open.</span>",
+		"<span class='notice'>You pry open \the [src].</span>",
+		"<span class='notice'>You hear splitting wood.</span>")
+	new /obj/item/stack/sheet/wood(loc)
+	deconstruct(TRUE)
+	return TRUE
 
 
 /obj/structure/largecrate/proc/spawn_stuff()
@@ -91,14 +96,14 @@
 						/obj/item/multitool,
 						/obj/item/tool/crowbar,
 						/obj/item/flashlight,
-						/obj/item/reagent_container/food/snacks/donkpocket,
+						/obj/item/reagent_containers/food/snacks/donkpocket,
 						/obj/item/explosive/grenade/smokebomb,
 						/obj/item/circuitboard/airlock,
 						/obj/item/assembly/igniter,
 						/obj/item/tool/weldingtool,
 						/obj/item/tool/wirecutters,
 						/obj/item/analyzer,
-						/obj/item/clothing/under/marine,
+						/obj/item/clothing/under/marine/standard,
 						/obj/item/clothing/shoes/marine
 						)
 
@@ -139,21 +144,20 @@
 	return ..()
 
 
-/obj/structure/largecrate/random/barrel/attackby(obj/item/I, mob/user, params)
-	. = ..()
-	
-	if(iswelder(I))
-		var/obj/item/tool/weldingtool/WT = I
-		if(!do_after(user, 50, TRUE, src, BUSY_ICON_BUILD))
-			return
-		WT.remove_fuel(1, user)
-		user.visible_message("<span class='notice'>[user] welds \the [src] open.</span>", \
-							"<span class='notice'>You weld open \the [src].</span>", \
-							"<span class='notice'>You hear loud hissing and the sound of metal falling over.</span>")
-		playsound(loc, 'sound/items/welder2.ogg', 25, 1)
-		deconstruct(TRUE)
-	else
-		return attack_hand(user)
+/obj/structure/largecrate/random/barrel/welder_act(mob/living/user, obj/item/tool/weldingtool/welder)
+	if(!welder.isOn())
+		return FALSE
+	if(!do_after(user, 5 SECONDS, TRUE, src, BUSY_ICON_BUILD))
+		return TRUE
+	if(!welder.remove_fuel(1, user))
+		return TRUE
+	user.visible_message("<span class='notice'>[user] welds \the [src] open.</span>",
+		"<span class='notice'>You weld open \the [src].</span>",
+		"<span class='notice'>You hear loud hissing and the sound of metal falling over.</span>")
+	playsound(loc, 'sound/items/welder2.ogg', 25, TRUE)
+	deconstruct(TRUE)
+	return TRUE
+
 
 /obj/structure/largecrate/random/barrel/examine(mob/user)
 	. = ..()
@@ -197,24 +201,24 @@
 	icon_state = "secure_crate_strapped"
 	var/strapped = 1
 
-/obj/structure/largecrate/random/secure/attackby(obj/item/I, mob/user, params)
+
+/obj/structure/largecrate/random/secure/crowbar_act(mob/living/user, obj/item/I)
+	if(strapped)
+		return FALSE
+	return ..()
+
+
+/obj/structure/largecrate/random/secure/wirecutter_act(mob/living/user, obj/item/I)
 	. = ..()
-
-	if(!strapped)
-		return
-
-	else if(!I.sharp)
-		return attack_hand(user)
-
 	to_chat(user, "<span class='notice'>You begin to cut the straps off \the [src]...</span>")
-
-	if(!do_after(user, 15, TRUE, src, BUSY_ICON_GENERIC))
-		return
-
+	if(!do_after(user, 1.5 SECONDS, TRUE, src, BUSY_ICON_GENERIC))
+		return TRUE
 	playsound(loc, 'sound/items/wirecutter.ogg', 25, 1)
 	to_chat(user, "<span class='notice'>You cut the straps away.</span>")
 	icon_state = "secure_crate"
 	strapped = FALSE
+	return TRUE
+
 
 /obj/structure/largecrate/random/barrel/examine(mob/user)
 	. = ..()
@@ -229,18 +233,13 @@
 					/obj/item/weapon/gun/pistol/m4a3 = /obj/item/ammo_magazine/pistol/ap,
 					/obj/item/weapon/gun/revolver/m44 = /obj/item/ammo_magazine/revolver/marksman,
 					/obj/item/weapon/gun/revolver/m44 = /obj/item/ammo_magazine/revolver/heavy,
-					/obj/item/weapon/gun/rifle/m41a = /obj/item/ammo_magazine/rifle/extended,
-					/obj/item/weapon/gun/rifle/m41a = /obj/item/ammo_magazine/rifle/ap,
-					/obj/item/weapon/gun/shotgun/pump = /obj/item/ammo_magazine/shotgun,
-					/obj/item/weapon/gun/shotgun/pump = /obj/item/ammo_magazine/shotgun/incendiary,
-					/obj/item/weapon/gun/shotgun/combat = /obj/item/ammo_magazine/shotgun/beanbag,
-					/obj/item/weapon/gun/smg/m39 = /obj/item/ammo_magazine/smg/m39/ap,
-					/obj/item/weapon/gun/smg/m39 = /obj/item/ammo_magazine/smg/m39/extended,
-					/obj/item/weapon/gun/smg/m39/elite = /obj/item/ammo_magazine/smg/m39/ap,
+					/obj/item/weapon/gun/shotgun/pump/t35 = /obj/item/ammo_magazine/shotgun,
+					/obj/item/weapon/gun/shotgun/pump/t35 = /obj/item/ammo_magazine/shotgun/incendiary,
+					/obj/item/weapon/gun/shotgun/combat = /obj/item/ammo_magazine/shotgun,
 					/obj/item/weapon/gun/flamer = /obj/item/ammo_magazine/flamer_tank,
 					/obj/item/weapon/gun/pistol/m4a3/custom = /obj/item/ammo_magazine/pistol/incendiary,
-					/obj/item/weapon/gun/rifle/m41aMK1 = /obj/item/ammo_magazine/rifle/m41aMK1,
-					/obj/item/weapon/gun/rifle/lmg = /obj/item/ammo_magazine/rifle/lmg,
+					/obj/item/weapon/gun/rifle/standard_assaultrifle = /obj/item/ammo_magazine/rifle/standard_assaultrifle,
+					/obj/item/weapon/gun/rifle/standard_lmg = /obj/item/ammo_magazine/standard_lmg,
 					/obj/item/weapon/gun/launcher/m81 = /obj/item/explosive/grenade/phosphorus
 					)
 
@@ -264,8 +263,8 @@
 					/obj/item/weapon/gun/revolver/upp = /obj/item/ammo_magazine/revolver/upp,
 					/obj/item/weapon/gun/pistol/c99 = /obj/item/ammo_magazine/pistol/c99,
 					/obj/item/weapon/gun/pistol/kt42 = /obj/item/ammo_magazine/pistol/automatic,
-					/obj/item/weapon/gun/rifle/mar40 = /obj/item/ammo_magazine/rifle/mar40,
-					/obj/item/weapon/gun/rifle/mar40/carbine = /obj/item/ammo_magazine/rifle/mar40/extended,
+					/obj/item/weapon/gun/rifle/ak47 = /obj/item/ammo_magazine/rifle/ak47,
+					/obj/item/weapon/gun/rifle/ak47/carbine = /obj/item/ammo_magazine/rifle/ak47/extended,
 					/obj/item/weapon/gun/rifle/sniper/svd = /obj/item/ammo_magazine/sniper/svd,
 					/obj/item/weapon/gun/smg/ppsh = /obj/item/ammo_magazine/smg/ppsh,
 					/obj/item/weapon/gun/rifle/type71 = /obj/item/ammo_magazine/rifle/type71,

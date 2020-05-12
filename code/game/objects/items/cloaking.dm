@@ -12,13 +12,12 @@
 	throw_speed = 1
 	throw_range = 5
 	w_class = WEIGHT_CLASS_SMALL
-	origin_tech = "syndicate=4;magnets=4"
 	var/chameleon_on = FALSE
 	var/datum/effect_system/spark_spread/spark_system
 	var/chameleon_cooldown
 
-/obj/item/chameleon/New()
-	..()
+/obj/item/chameleon/Initialize()
+	. = ..()
 	spark_system = new
 	spark_system.set_up(5, 0, src)
 	spark_system.attach(src)
@@ -33,6 +32,7 @@
 	disrupt(user)
 
 /obj/item/chameleon/equipped(mob/user, slot)
+	. = ..()
 	disrupt(user)
 
 /obj/item/chameleon/attack_self(mob/user)
@@ -67,14 +67,12 @@
 	name = "cloaking device"
 	desc = "Use this to become invisible to the human eyesocket."
 	icon_state = "shield0"
-	var/active = 0.0
 	flags_atom = CONDUCT
 	item_state = "electronic"
 	throwforce = 10.0
 	throw_speed = 2
 	throw_range = 10
 	w_class = WEIGHT_CLASS_SMALL
-	origin_tech = "magnets=3;syndicate=4"
 
 
 /obj/item/cloaking_device/attack_self(mob/user as mob)

@@ -22,7 +22,7 @@
 /mob/living/silicon/ai/ClickOn(atom/A, params)
 	if(world.time <= next_click)
 		return
-		
+
 	next_click = world.time + 1
 
 	if(multicam_on)
@@ -34,9 +34,6 @@
 					break
 
 	if(check_click_intercept(params, A))
-		return
-
-	if(level_locked && A.z != z)
 		return
 
 	if(control_disabled || incapacitated())
@@ -53,8 +50,7 @@
 	if(modifiers["shift"] && modifiers["ctrl"])
 		CtrlShiftClickOn(A)
 		return
-	if(modifiers["shift"])
-		ShiftClickOn(A)
+	if(modifiers["shift"] && ShiftClickOn(A))
 		return
 	if(modifiers["alt"]) // alt and alt-gr (rightalt)
 		AltClickOn(A)
@@ -91,10 +87,14 @@
 */
 /mob/living/silicon/ai/CtrlShiftClickOn(atom/A)
 	A.AICtrlShiftClick(src)
+
 /mob/living/silicon/ai/ShiftClickOn(atom/A)
 	A.AIShiftClick(src)
+	return TRUE
+
 /mob/living/silicon/ai/CtrlClickOn(atom/A)
 	A.AICtrlClick(src)
+
 /mob/living/silicon/ai/AltClickOn(atom/A)
 	A.AIAltClick(src)
 

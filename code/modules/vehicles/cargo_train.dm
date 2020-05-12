@@ -25,13 +25,12 @@
 	icon_state = "cargo_trailer"
 	anchored = FALSE
 	locked = 0
-	can_buckle = FALSE
 
 //-------------------------------------------
 // Standard procs
 //-------------------------------------------
-/obj/vehicle/train/cargo/engine/New()
-	..()
+/obj/vehicle/train/cargo/engine/Initialize()
+	. = ..()
 	cell = new /obj/item/cell/apc
 	key = new()
 	var/image/I = new(icon = 'icons/obj/vehicles.dmi', icon_state = "cargo_engine_overlay", layer = src.layer + 0.2) //over mobs
@@ -114,8 +113,8 @@
 // Interaction procs
 //-------------------------------------------
 /obj/vehicle/train/cargo/engine/relaymove(mob/user, direction)
-	if(user != buckled_mob)
-		return 0
+	if(!(user in buckled_mobs))
+		return FALSE
 
 	if(is_train_head())
 		if(direction == reverse_direction(dir) && tow)
@@ -178,7 +177,7 @@
 	if(!ishuman(usr))
 		return
 
-	if(!key || (buckled_mob && buckled_mob != usr))
+	if(!key || !(usr in buckled_mobs))
 		return
 
 	if(on)

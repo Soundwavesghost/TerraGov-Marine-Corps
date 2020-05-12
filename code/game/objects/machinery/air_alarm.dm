@@ -28,7 +28,7 @@
 	pixel_x = -16
 	pixel_y = -16
 	anchored = TRUE
-	use_power = 1
+	use_power = IDLE_POWER_USE
 	idle_power_usage = 80
 	active_power_usage = 1000 //For heating/cooling rooms. 1000 joules equates to about 1 degree every 2 seconds for a single tile of air.
 	power_channel = ENVIRON
@@ -300,39 +300,31 @@
 
 	frequency.post_signal(src, alert_signal)
 
-/obj/machinery/alarm/attack_ai(mob/user)
-	return interact(user)
 
-/obj/machinery/alarm/attack_hand(mob/living/user)
+/obj/machinery/alarm/can_interact(mob/user)
 	. = ..()
-	if (.)
-		return
-	return interact(user)
+	if(!.)
+		return FALSE
+
+	if(buildstage != 2)
+		return FALSE
+
+	if(shorted)
+		return FALSE
+
+	if(issilicon(user) && aidisabled)
+		return FALSE
+
+	return TRUE
+
 
 /obj/machinery/alarm/interact(mob/user)
-	user.set_interaction(src)
-
-	if(buildstage!=2)
+	. = ..()
+	if(.)
 		return
-
-	if ( (get_dist(src, user) > 1 ))
-		if (!issilicon(user))
-			user.unset_interaction()
-			user << browse(null, "window=air_alarm")
-			user << browse(null, "window=AAlarmwires")
-			return
-
-
-		else if (issilicon(user) && aidisabled)
-			to_chat(user, "AI control for this Air Alarm interface has been disabled.")
-			user << browse(null, "window=air_alarm")
-			return
-
-	if(!shorted)
-		var/datum/browser/popup = new(user, "air_alarm", "<div align='center'>[alarm_area.name] Air Alarm</div>")
-		popup.set_content(return_text(user))
-		popup.open(FALSE)
-		onclose(user, "air_alarm")
+	var/datum/browser/popup = new(user, "air_alarm", "<div align='center'>[alarm_area.name] Air Alarm</div>")
+	popup.set_content(return_text(user))
+	popup.open()
 
 
 /obj/machinery/alarm/proc/return_text(mob/user)
@@ -518,11 +510,11 @@ Nitrous Oxide
 		if (AALARM_SCREEN_MODE)
 			output += "<a href='?src=\ref[src];screen=[AALARM_SCREEN_MAIN]'>Main menu</a><br><b>Air machinery mode for the area:</b><ul>"
 			var/list/modes = list(AALARM_MODE_SCRUBBING   = "Filtering - Scrubs out contaminants",\
-				AALARM_MODE_REPLACEMENT = "<font color='blue'>Replace Air - Siphons out air while replacing</font>",\
+				AALARM_MODE_REPLACEMENT = "<span class='notice'>Replace Air - Siphons out air while replacing</span>",\
 				AALARM_MODE_PANIC       = "<font color='red'>Panic - Siphons air out of the room</font>",\
 				AALARM_MODE_CYCLE       = "<font color='red'>Cycle - Siphons air before replacing</font>",\
 				AALARM_MODE_FILL        = "<font color='green'>Fill - Shuts off scrubbers and opens vents</font>",\
-				AALARM_MODE_OFF         = "<font color='blue'>Off - Shuts off vents and scrubbers</font>",)
+				AALARM_MODE_OFF         = "<span class='notice'>Off - Shuts off vents and scrubbers</span>",)
 			for (var/m=1,m<=modes.len,m++)
 				if (mode==m)
 					output += "<li><A href='?src=\ref[src];mode=[m]'><b>[modes[m]]</b></A> (selected)</li>"
@@ -577,13 +569,8 @@ table tr:first-child th:first-child { border: none;}
 
 /obj/machinery/alarm/Topic(href, href_list)
 	. = ..()
-	if(. || !( Adjacent(usr) || issilicon(usr)) ) // dont forget calling super in machine Topics -walter0o
-		usr.unset_interaction()
-		usr << browse(null, "window=air_alarm")
-		usr << browse(null, "window=AAlarmwires")
+	if(.)
 		return
-
-	usr.set_interaction(src)
 
 	// hrefs that can always be called -walter0o
 	if(href_list["rcon"])
@@ -609,97 +596,94 @@ table tr:first-child th:first-child { border: none;}
 		else
 			target_temperature = input_temperature + T0C
 
-	// hrefs that need the AA unlocked -walter0o
-	if(!locked || issilicon(usr))
+	if(href_list["command"])
+		var/device_id = href_list["id_tag"]
+		switch(href_list["command"])
+			if( "power",
+				"adjust_external_pressure",
+				"set_external_pressure",
+				"checks",
+				"co2_scrub",
+				"tox_scrub",
+				"n2o_scrub",
+				"panic_siphon",
+				"scrubbing")
 
-		if(href_list["command"])
-			var/device_id = href_list["id_tag"]
-			switch(href_list["command"])
-				if( "power",
-					"adjust_external_pressure",
-					"set_external_pressure",
-					"checks",
-					"co2_scrub",
-					"tox_scrub",
-					"n2o_scrub",
-					"panic_siphon",
-					"scrubbing")
+				send_signal(device_id, list(href_list["command"] = text2num(href_list["val"]) ) )
 
-					send_signal(device_id, list(href_list["command"] = text2num(href_list["val"]) ) )
+			if("set_threshold")
+				var/env = href_list["env"]
+				var/threshold = text2num(href_list["var"])
+				var/list/selected = TLV[env]
+				var/list/thresholds = list("lower bound", "low warning", "high warning", "upper bound")
+				var/newval = input("Enter [thresholds[threshold]] for [env]", "Alarm triggers", selected[threshold]) as null|num
+				if (isnull(newval) || ..() || (locked && !issilicon(usr)))
+					return
+				if (newval<0)
+					selected[threshold] = -1.0
+				else if (env=="temperature" && newval>5000)
+					selected[threshold] = 5000
+				else if (env=="pressure" && newval>50*ONE_ATMOSPHERE)
+					selected[threshold] = 50*ONE_ATMOSPHERE
+				else if (env!="temperature" && env!="pressure" && newval>200)
+					selected[threshold] = 200
+				else
+					newval = round(newval,0.01)
+					selected[threshold] = newval
+				if(threshold == 1)
+					if(selected[1] > selected[2])
+						selected[2] = selected[1]
+					if(selected[1] > selected[3])
+						selected[3] = selected[1]
+					if(selected[1] > selected[4])
+						selected[4] = selected[1]
+				if(threshold == 2)
+					if(selected[1] > selected[2])
+						selected[1] = selected[2]
+					if(selected[2] > selected[3])
+						selected[3] = selected[2]
+					if(selected[2] > selected[4])
+						selected[4] = selected[2]
+				if(threshold == 3)
+					if(selected[1] > selected[3])
+						selected[1] = selected[3]
+					if(selected[2] > selected[3])
+						selected[2] = selected[3]
+					if(selected[3] > selected[4])
+						selected[4] = selected[3]
+				if(threshold == 4)
+					if(selected[1] > selected[4])
+						selected[1] = selected[4]
+					if(selected[2] > selected[4])
+						selected[2] = selected[4]
+					if(selected[3] > selected[4])
+						selected[3] = selected[4]
 
-				if("set_threshold")
-					var/env = href_list["env"]
-					var/threshold = text2num(href_list["var"])
-					var/list/selected = TLV[env]
-					var/list/thresholds = list("lower bound", "low warning", "high warning", "upper bound")
-					var/newval = input("Enter [thresholds[threshold]] for [env]", "Alarm triggers", selected[threshold]) as null|num
-					if (isnull(newval) || ..() || (locked && !issilicon(usr)))
-						return
-					if (newval<0)
-						selected[threshold] = -1.0
-					else if (env=="temperature" && newval>5000)
-						selected[threshold] = 5000
-					else if (env=="pressure" && newval>50*ONE_ATMOSPHERE)
-						selected[threshold] = 50*ONE_ATMOSPHERE
-					else if (env!="temperature" && env!="pressure" && newval>200)
-						selected[threshold] = 200
-					else
-						newval = round(newval,0.01)
-						selected[threshold] = newval
-					if(threshold == 1)
-						if(selected[1] > selected[2])
-							selected[2] = selected[1]
-						if(selected[1] > selected[3])
-							selected[3] = selected[1]
-						if(selected[1] > selected[4])
-							selected[4] = selected[1]
-					if(threshold == 2)
-						if(selected[1] > selected[2])
-							selected[1] = selected[2]
-						if(selected[2] > selected[3])
-							selected[3] = selected[2]
-						if(selected[2] > selected[4])
-							selected[4] = selected[2]
-					if(threshold == 3)
-						if(selected[1] > selected[3])
-							selected[1] = selected[3]
-						if(selected[2] > selected[3])
-							selected[2] = selected[3]
-						if(selected[3] > selected[4])
-							selected[4] = selected[3]
-					if(threshold == 4)
-						if(selected[1] > selected[4])
-							selected[1] = selected[4]
-						if(selected[2] > selected[4])
-							selected[2] = selected[4]
-						if(selected[3] > selected[4])
-							selected[3] = selected[4]
+				apply_mode()
 
-					apply_mode()
+	if(href_list["screen"])
+		screen = text2num(href_list["screen"])
 
-		if(href_list["screen"])
-			screen = text2num(href_list["screen"])
+	if(href_list["atmos_unlock"])
+		switch(href_list["atmos_unlock"])
+			if("0")
+				alarm_area.air_doors_close()
+			if("1")
+				alarm_area.air_doors_open()
 
-		if(href_list["atmos_unlock"])
-			switch(href_list["atmos_unlock"])
-				if("0")
-					alarm_area.air_doors_close()
-				if("1")
-					alarm_area.air_doors_open()
+	if(href_list["atmos_alarm"])
+		if (alarm_area.atmosalert(2))
+			apply_danger_level(2)
+		update_icon()
 
-		if(href_list["atmos_alarm"])
-			if (alarm_area.atmosalert(2))
-				apply_danger_level(2)
-			update_icon()
+	if(href_list["atmos_reset"])
+		if (alarm_area.atmosalert(0))
+			apply_danger_level(0)
+		update_icon()
 
-		if(href_list["atmos_reset"])
-			if (alarm_area.atmosalert(0))
-				apply_danger_level(0)
-			update_icon()
-
-		if(href_list["mode"])
-			mode = text2num(href_list["mode"])
-			apply_mode()
+	if(href_list["mode"])
+		mode = text2num(href_list["mode"])
+		apply_mode()
 
 	updateUsrDialog()
 

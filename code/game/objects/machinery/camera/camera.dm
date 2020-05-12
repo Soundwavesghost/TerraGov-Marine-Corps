@@ -29,7 +29,7 @@
 
 	switch(dir)
 		if(NORTH)
-			pixel_y = -16 
+			pixel_y = -16
 		if(SOUTH)
 			pixel_y = 16
 		if(EAST)
@@ -54,7 +54,7 @@
 /obj/machinery/camera/Destroy()
 	if(can_use())
 		toggle_cam(null, 0) //kick anyone viewing out and remove from the camera chunks
-	
+
 	GLOB.cameranet.cameras -= src
 	if(isarea(myarea))
 		LAZYREMOVE(myarea.cameras, src)
@@ -158,7 +158,7 @@
 		to_chat(X, "<span class='warning'>The camera is already disabled.</span>")
 		return
 
-	X.do_attack_animation(src)
+	X.do_attack_animation(src, ATTACK_EFFECT_CLAW)
 	X.visible_message("<span class='danger'>[X] slashes \the [src]!</span>", \
 	"<span class='danger'>We slash \the [src]!</span>")
 	playsound(loc, "alien_claw_metal", 25, 1)
@@ -259,17 +259,12 @@
 	for(var/obj/machinery/camera/C in oview(4, M))
 		if(C.can_use())	// check if camera disabled
 			return C
-			break
-	return null
 
 
 /proc/near_range_camera(mob/M)
 	for(var/obj/machinery/camera/C in range(4, M))
 		if(C.can_use())	// check if camera disabled
 			return C
-			break
-
-	return null
 
 
 /obj/machinery/camera/proc/Togglelight(on = FALSE)
@@ -334,7 +329,7 @@
 	network = list("laser targets")
 	resistance_flags = UNACIDABLE|INDESTRUCTIBLE
 
-/obj/machinery/camera/laser_cam/New(loc, laser_name)
+/obj/machinery/camera/laser_cam/Initialize(mapload, laser_name)
 	. = ..()
 	if(!c_tag && laser_name)
 		var/area/A = get_area(src)
@@ -350,7 +345,7 @@
 /obj/machinery/camera/beacon_cam/bomb
 	network = list("bomb beacons")
 
-/obj/machinery/camera/beacon_cam/New(loc, beacon_name)
+/obj/machinery/camera/beacon_cam/Initialize(mapload, beacon_name)
 	. = ..()
 	if(!c_tag && beacon_name)
 		var/area/A = get_area(src)

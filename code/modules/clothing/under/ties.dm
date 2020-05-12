@@ -8,8 +8,8 @@
 	var/obj/item/clothing/under/has_suit = null		//the suit the tie may be attached to
 	var/image/inv_overlay = null	//overlay used when attached to clothing.
 
-/obj/item/clothing/tie/New()
-	..()
+/obj/item/clothing/tie/Initialize()
+	. = ..()
 	inv_overlay = image("icon" = 'icons/obj/clothing/ties_overlay.dmi', "icon_state" = "[item_state? "[item_state]" : "[icon_state]"]")
 
 
@@ -78,7 +78,7 @@
 				var/sound = "pulse"
 				var/sound_strength
 
-				if(M.stat == DEAD || (M.status_flags&FAKEDEATH))
+				if(M.stat == DEAD || HAS_TRAIT(M, TRAIT_FAKEDEATH))
 					sound_strength = "cannot hear"
 					sound = "anything"
 				else
@@ -361,9 +361,9 @@
 /mob/living/carbon/human/proc/do_holster()
 	. = COMSIG_KB_ACTIVATED //The return value must be a flag compatible with the signals triggering this.
 
-	if(incapacitated() || lying) 
+	if(incapacitated() || lying_angle)
 		return
-	
+
 	if(!istype(w_uniform, /obj/item/clothing/under))
 		return
 
@@ -383,7 +383,7 @@
 		H.unholster(src)
 
 
-/obj/item/clothing/tie/holster/m4a3/New()
+/obj/item/clothing/tie/holster/m4a3/Initialize()
 	. = ..()
 	holstered = new /obj/item/weapon/gun/pistol/m4a3(src)
 
@@ -558,13 +558,13 @@
 	can_hold = list(
 	/obj/item/stack/medical,
 	/obj/item/healthanalyzer,
-	/obj/item/reagent_container/dropper,
-	/obj/item/reagent_container/glass/beaker,
-	/obj/item/reagent_container/glass/bottle,
-	/obj/item/reagent_container/pill,
-	/obj/item/reagent_container/syringe,
+	/obj/item/reagent_containers/dropper,
+	/obj/item/reagent_containers/glass/beaker,
+	/obj/item/reagent_containers/glass/bottle,
+	/obj/item/reagent_containers/pill,
+	/obj/item/reagent_containers/syringe,
 	/obj/item/storage/pill_bottle,
-	/obj/item/reagent_container/hypospray,
+	/obj/item/reagent_containers/hypospray,
 	/obj/item/bodybag,
 	/obj/item/roller,
 	/obj/item/clothing/glasses/hud/health)

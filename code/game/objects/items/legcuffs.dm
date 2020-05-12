@@ -8,7 +8,6 @@
 	flags_atom = CONDUCT
 	throwforce = 0
 	w_class = WEIGHT_CLASS_NORMAL
-	origin_tech = "materials=1"
 	breakouttime = 30 SECONDS
 
 
@@ -55,4 +54,4 @@
 					armed = FALSE
 					var/mob/living/simple_animal/SA = AM
 					SA.health -= 20
-	..()
+	return ..()
